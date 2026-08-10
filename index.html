@@ -60,133 +60,76 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        padding: 10px 22px;
-        background: rgba(255, 253, 248, .88);
-        backdrop-filter: blur(18px) saturate(1.6);
-        -webkit-backdrop-filter: blur(18px) saturate(1.6);
-        border-bottom: 1px solid rgba(223, 209, 172, .45);
-        box-shadow: 0 2px 20px rgba(42, 39, 33, .07);
-        transition: box-shadow .3s ease, background .3s ease;
-    }
-    .site-header.scrolled {
-        background: rgba(255, 253, 248, .95);
-        box-shadow: 0 4px 28px rgba(42, 39, 33, .10);
+        gap: 12px;
+        padding: 12px 20px;
+        background: rgba(243, 236, 221, .72);
+        backdrop-filter: blur(14px) saturate(1.4);
+        -webkit-backdrop-filter: blur(14px) saturate(1.4);
+        border-bottom: 1px solid rgba(223, 209, 172, .55);
+        box-shadow: 0 4px 24px rgba(42, 39, 33, .06);
     }
     .logo {
         display: flex;
         align-items: center;
-        gap: 10px;
-        font-size: 1.55rem;
+        gap: 9px;
+        font-size: 1.5rem;
         color: var(--green-dark);
-        transition: transform .2s ease;
     }
-    .logo:hover { transform: translateY(-1px); }
     .logo .logo-badge {
-        width: 42px;
-        height: 42px;
-        border-radius: 14px;
-        background: linear-gradient(145deg, var(--green-bright), var(--green-dark));
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--green-bright), var(--green-dark));
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
-        box-shadow: 0 4px 14px rgba(58, 90, 64, .28);
-        transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+        font-size: 1.25rem;
+        box-shadow: var(--shadow);
+        transition: transform .25s ease;
     }
-    .logo:hover .logo-badge {
-        transform: rotate(-10deg) scale(1.08);
-        box-shadow: 0 6px 20px rgba(58, 90, 64, .35);
-    }
-    .logo-text {
-        letter-spacing: .5px;
-        background: linear-gradient(135deg, var(--green-dark), var(--green));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    .header-right { display: flex; align-items: center; gap: 12px; }
+    .logo:hover .logo-badge { transform: rotate(-8deg) scale(1.05); }
+    .header-right { display: flex; align-items: center; gap: 14px; }
 
     /* ── DROPDOWN MENU ── */
     .menu-wrap { position: relative; }
     .menu-btn {
-        background: linear-gradient(180deg, #fff, var(--bg-soft));
+        background: rgba(255, 255, 255, .55);
         border: 1.5px solid var(--line);
-        border-radius: 14px;
-        width: 48px;
-        height: 48px;
-        padding: 0;
+        border-radius: 999px;
+        padding: 8px 14px;
         font-weight: 700;
+        font-size: .88rem;
         color: var(--green-dark);
         display: flex;
         align-items: center;
-        justify-content: center;
-        transition: all .22s ease;
-        box-shadow: 0 2px 8px rgba(42, 39, 33, .05);
+        gap: 6px;
+        transition: background .2s, border-color .2s, box-shadow .2s;
     }
     .menu-btn:hover {
         background: #fff;
         border-color: var(--orange-bright);
-        box-shadow: 0 0 0 3px rgba(217, 118, 43, .12), 0 4px 12px rgba(42, 39, 33, .08);
-        transform: translateY(-1px);
-    }
-    .menu-btn .hamburger {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        width: 20px;
-    }
-    .menu-btn .hamburger span {
-        display: block;
-        height: 2.5px;
-        background: var(--green-dark);
-        border-radius: 2px;
-        transition: transform .25s ease, opacity .2s ease;
-    }
-    .menu-wrap.open .menu-btn {
-        background: #fff;
-        border-color: var(--orange);
         box-shadow: 0 0 0 3px rgba(217, 118, 43, .15);
     }
-    .menu-wrap.open .menu-btn .hamburger span:nth-child(1) {
-        transform: translateY(7.5px) rotate(45deg);
-    }
-    .menu-wrap.open .menu-btn .hamburger span:nth-child(2) {
-        opacity: 0;
-    }
-    .menu-wrap.open .menu-btn .hamburger span:nth-child(3) {
-        transform: translateY(-7.5px) rotate(-45deg);
-    }
+    .menu-btn .chev { transition: transform .2s; font-size: .75rem; }
+    .menu-wrap.open .menu-btn .chev { transform: rotate(180deg); }
 
     .dropdown {
         position: absolute;
-        top: calc(100% + 12px);
+        top: calc(100% + 10px);
         left: 0;
-        min-width: 230px;
-        width: max(230px, 26vw);
+        min-width: 240px;
+        width: max(240px, 28vw);
         background: #ffffff;
+        backdrop-filter: blur(0);
         border: 1px solid var(--line);
-        border-radius: 16px;
-        box-shadow: 0 20px 50px rgba(42, 39, 33, .16), 0 4px 14px rgba(0,0,0,.05);
-        padding: 8px;
+        border-radius: 18px;
+        box-shadow: 0 16px 48px rgba(42, 39, 33, .18), 0 4px 12px rgba(0,0,0,.06);
+        padding: 10px 8px;
         opacity: 0;
         pointer-events: none;
-        transform: translateY(-10px) scale(.96);
-        transition: opacity .22s ease, transform .22s cubic-bezier(.34,1.3,.64,1);
+        transform: translateY(-8px) scale(.97);
+        transition: opacity .25s ease, transform .25s ease;
         z-index: 50;
-        overflow: hidden;
-    }
-    .dropdown::before {
-        content: '';
-        position: absolute;
-        top: -6px;
-        left: 28px;
-        width: 12px;
-        height: 12px;
-        background: #fff;
-        border-left: 1px solid var(--line);
-        border-top: 1px solid var(--line);
-        transform: rotate(45deg);
     }
     .menu-wrap.open .dropdown {
         opacity: 1;
@@ -194,69 +137,64 @@
         transform: translateY(0) scale(1);
     }
     .dropdown a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 13px 16px;
-        border-radius: 11px;
+        display: block;
+        padding: 12px 16px;
+        border-radius: 12px;
         text-decoration: none;
         font-weight: 600;
-        font-size: .93rem;
+        font-size: .92rem;
         color: var(--ink);
-        transition: all .18s ease;
+        transition: background .15s, color .15s, transform .12s;
         border-right: 3px solid transparent;
     }
     .dropdown a:hover {
-        background: linear-gradient(90deg, var(--bg-soft), rgba(243,236,221,.4));
+        background: var(--bg-soft);
         color: var(--green-dark);
         border-right-color: var(--orange-bright);
-        transform: translateX(-3px);
-        padding-right: 18px;
+        transform: translateX(-4px);
     }
 
     /* ── CART BTN ── */
     .cart-btn {
         position: relative;
-        background: linear-gradient(145deg, var(--green), var(--green-dark));
+        background: var(--green);
         color: #fff;
         border: none;
-        border-radius: 14px;
-        width: 48px;
-        height: 48px;
+        border-radius: 999px;
+        width: 46px;
+        height: 46px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 16px rgba(58, 90, 64, .28);
-        transition: transform .18s ease, box-shadow .25s ease;
+        box-shadow: var(--shadow);
+        transition: transform .15s, box-shadow .2s;
     }
     .cart-btn:hover {
-        transform: translateY(-2px) scale(1.04);
-        box-shadow: 0 8px 24px rgba(58, 90, 64, .38);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(58, 90, 64, .30);
     }
     .cart-badge {
         position: absolute;
-        top: -7px;
-        left: -7px;
-        background: linear-gradient(135deg, var(--red), #a33a32);
+        top: -6px;
+        left: -6px;
+        background: var(--red);
         color: #fff;
         font-family: 'Tajawal', sans-serif;
         font-weight: 800;
-        font-size: .7rem;
-        width: 23px;
-        height: 23px;
+        font-size: .72rem;
+        width: 22px;
+        height: 22px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 2.5px solid var(--paper);
-        box-shadow: 0 2px 6px rgba(193, 68, 58, .35);
+        border: 2px solid var(--bg);
         transition: transform .25s ease;
     }
-    .cart-badge.pop { animation: badgePop .4s cubic-bezier(.34,1.56,.64,1); }
+    .cart-badge.pop { animation: badgePop .35s ease; }
     @keyframes badgePop {
         0% { transform: scale(1); }
-        40% { transform: scale(1.5); background: var(--orange-bright); }
+        40% { transform: scale(1.45); background: var(--orange-bright); }
         100% { transform: scale(1); }
     }
 
@@ -265,16 +203,16 @@
         max-width: 900px;
         margin: 0 auto;
         text-align: center;
-        padding: 32px 20px 28px;
+        padding: 40px 20px 30px;
         background: linear-gradient(to bottom, rgba(58, 90, 64, .06), transparent);
         border-radius: 0 0 40px 40px;
         position: relative;
     }
     .hero h1 {
-        font-size: clamp(1.9rem, 4.8vw, 3.2rem);
+        font-size: clamp(2rem, 5vw, 3.4rem);
         color: var(--green-dark);
-        margin: 0 0 8px;
-        line-height: 1.2;
+        margin: 0 0 14px;
+        line-height: 1.25;
         letter-spacing: .5px;
     }
     .hero h1 em {
@@ -287,20 +225,13 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
-    .hero .hero-sub {
+    .hero p {
         font-size: 1.05rem;
         color: var(--ink-soft);
         max-width: 560px;
-        margin: 0 auto 14px;
-        line-height: 1.85;
+        margin: 0 auto 20px;
+        line-height: 1.9;
         font-weight: 500;
-    }
-    .hero .hero-cta-wrap {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin: 14px 0 18px;
     }
     .cta {
         display: inline-block;
@@ -328,20 +259,19 @@
         box-shadow: var(--glow-orange);
     }
     .cta:hover::after { opacity: 1; }
-    /* تم حذف .hero-why */
     .hero-badges {
         display: flex;
         gap: 10px;
         justify-content: center;
         flex-wrap: wrap;
-        margin-top: 14px;
+        margin-top: 20px;
     }
     .hero-badges span {
         background: var(--paper);
         border: 1px solid var(--line);
         border-radius: 999px;
         padding: 6px 14px;
-        font-size: .8rem;
+        font-size: .82rem;
         font-weight: 700;
         color: var(--green-dark);
         transition: .2s;
@@ -354,69 +284,45 @@
 
     /* ── TAB BAR ── */
     .tab-bar {
-        max-width: 520px;
-        margin: 0 auto 28px;
-        padding: 6px;
+        max-width: 1180px;
+        margin: 0 auto 24px;
+        padding: 0 20px;
         display: flex;
-        gap: 6px;
-        flex-wrap: nowrap;
+        gap: 8px;
+        flex-wrap: wrap;
         justify-content: center;
-        background: var(--paper);
-        border: 1.5px solid var(--line);
-        border-radius: 18px;
-        box-shadow: 0 4px 20px rgba(42, 39, 33, .06);
-        position: relative;
-        overflow: hidden;
     }
     .tab-btn {
-        padding: 12px 20px;
-        border: none;
-        border-radius: 13px;
-        background: transparent;
+        padding: 10px 28px;
+        border: 2px solid var(--line);
+        border-radius: 999px;
+        background: var(--paper);
         color: var(--ink-soft);
         font-weight: 700;
         font-size: .95rem;
-        transition: all .25s cubic-bezier(.4,0,.2,1);
-        flex: 1 1 0;
-        min-width: 0;
-        position: relative;
-        z-index: 1;
-        white-space: nowrap;
-        letter-spacing: .2px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
+        transition: all .2s ease;
+        box-shadow: var(--shadow);
+        flex: 1 1 auto;
+        min-width: 100px;
+        max-width: 200px;
     }
-    .tab-btn .tab-ico { font-size: 1.2rem; line-height: 1; }
-    .tab-btn:hover:not(.active) {
+    .tab-btn:hover {
+        border-color: var(--orange-bright);
         color: var(--green-dark);
-        background: rgba(58, 90, 64, .07);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(42,39,33,.10);
     }
     .tab-btn.active {
-        background: linear-gradient(145deg, var(--green), var(--green-dark));
+        background: var(--green);
         color: #fff;
-        box-shadow: 0 4px 14px rgba(58, 90, 64, .3);
-        transform: translateY(0);
+        border-color: var(--green-dark);
+        box-shadow: var(--glow-green);
     }
     .tab-btn.active:hover {
-        background: linear-gradient(145deg, var(--green-dark), #1a2f1f);
-        box-shadow: 0 6px 18px rgba(58, 90, 64, .35);
+        background: var(--green-dark);
+        box-shadow: var(--glow-green);
     }
-    @media (max-width: 540px) {
-        .tab-bar {
-            max-width: 100%;
-            margin: 0 12px 20px;
-            padding: 5px;
-            gap: 4px;
-            border-radius: 14px;
-        }
-        .tab-btn {
-            padding: 10px 12px;
-            font-size: .82rem;
-            border-radius: 10px;
-        }
-    }
+    .tab-btn .tab-icon { margin-left: 6px; }
 
     /* ── MAIN GRID ── */
     main {
@@ -434,18 +340,11 @@
     }
     .cat-header {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
+        align-items: baseline;
+        gap: 14px;
         margin-bottom: 16px;
         border-bottom: 2px dashed var(--line);
         padding-bottom: 10px;
-    }
-    .cat-header-top {
-        display: flex;
-        align-items: baseline;
-        gap: 14px;
-        width: 100%;
     }
     .cat-header h2 {
         font-size: 1.7rem;
@@ -453,14 +352,11 @@
         margin: 0;
         letter-spacing: .3px;
     }
-    .cat-header .cat-desc {
+    .cat-header p {
         color: var(--ink-soft);
-        font-size: .92rem;
-        font-weight: 500;
         margin: 0;
-        padding-right: 4px;
-        border-right: 3px solid var(--orange-bright);
-        padding-right: 10px;
+        font-size: .9rem;
+        font-weight: 500;
     }
 
     .grid {
@@ -481,51 +377,48 @@
         background: var(--paper);
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        padding: 18px 14px 14px;
+        padding: 15px 13px 13px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         box-shadow: var(--shadow);
         transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
-        min-height: 280px;
     }
     .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 14px 36px rgba(42, 39, 33, .15);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(42, 39, 33, .14);
         border-color: var(--orange-bright);
     }
     .product-card.out-of-stock { opacity: .72; }
     .product-card .p-icon {
-        font-size: 2.9rem;
+        font-size: 2.6rem;
         line-height: 1;
-        width: 82px;
-        height: 82px;
+        width: 74px;
+        height: 74px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: var(--bg-soft);
         border-radius: 50%;
-        margin: 4px 0 12px;
+        margin: 6px 0 10px;
         transition: transform .3s ease, background .3s ease;
-        flex-shrink: 0;
     }
     .product-card:hover .p-icon {
-        transform: scale(1.08) rotate(-5deg);
+        transform: scale(1.06) rotate(-4deg);
         background: linear-gradient(135deg, var(--bg-soft), #f5eddb);
     }
     .product-card h3 {
-        font-size: 1.05rem;
-        margin: 0 0 5px;
+        font-size: 1.02rem;
+        margin: 0 0 4px;
         font-family: 'Cairo';
         font-weight: 700;
         color: var(--green-dark);
-        line-height: 1.3;
     }
     .unit-label {
-        font-size: .84rem;
+        font-size: .82rem;
         color: var(--ink-soft);
-        margin: 0 0 14px;
+        margin: 0 0 12px;
     }
     .unit-label b {
         color: var(--green-dark);
@@ -645,20 +538,18 @@
     /* ── TRUST SECTION ── */
     .trust-section {
         max-width: 1180px;
-        margin: 44px auto 0;
+        margin: 40px auto 0;
         padding: 0 20px;
     }
-    .trust-section .trust-head {
-        text-align: center;
-        margin-bottom: 10px;
-    }
     .trust-section h2 {
+        text-align: center;
         color: var(--green-dark);
-        font-size: 2rem;
-        margin: 0 0 4px;
+        font-size: 1.9rem;
+        margin: 0 0 6px;
         letter-spacing: .5px;
     }
     .trust-section .sub {
+        text-align: center;
         color: var(--ink-soft);
         margin: 0 0 24px;
         font-size: .95rem;
@@ -672,9 +563,6 @@
     @media (max-width: 900px) {
         .trust-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    @media (max-width: 500px) {
-        .trust-grid { grid-template-columns: 1fr; }
-    }
     .trust-card {
         background: var(--paper);
         border: 1px solid var(--line);
@@ -685,19 +573,19 @@
         transition: transform .18s, box-shadow .25s, border-color .25s;
     }
     .trust-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(42,39,33,.13);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(42,39,33,.12);
         border-color: var(--orange-bright);
     }
     .trust-card .ico {
-        width: 60px;
-        height: 60px;
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
         background: var(--bg-soft);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         margin: 0 auto 12px;
         transition: transform .3s ease, background .3s ease;
     }
@@ -707,16 +595,14 @@
     }
     .trust-card h4 {
         margin: 0 0 6px;
-        font-size: 1.05rem;
+        font-size: 1rem;
         color: var(--green-dark);
-        font-family: 'Cairo';
-        font-weight: 700;
     }
     .trust-card p {
         margin: 0;
-        font-size: .84rem;
+        font-size: .82rem;
         color: var(--ink-soft);
-        line-height: 1.75;
+        line-height: 1.7;
     }
 
     /* ── FOOTER ── */
@@ -901,6 +787,42 @@
         margin-top: 60px;
     }
     .cart-empty .emoji { font-size: 2.8rem; display: block; margin-bottom: 10px; }
+
+    /* ── FRESHNESS METER ── */
+    .freshness-wrap {
+        margin: 0 0 14px;
+        padding: 12px 14px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+    .freshness-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: .8rem;
+        font-weight: 700;
+        color: var(--ink-soft);
+        margin-bottom: 8px;
+    }
+    .freshness-label .val {
+        color: var(--green-dark);
+        font-family: 'Tajawal';
+        font-weight: 800;
+    }
+    .freshness-bar {
+        height: 10px;
+        background: var(--bg-soft);
+        border-radius: 999px;
+        overflow: hidden;
+    }
+    .freshness-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        transition: width .35s ease;
+        background: linear-gradient(90deg, var(--green-bright), var(--yellow-bright), var(--orange-bright));
+    }
 
     .cart-line {
         display: flex;
@@ -1177,64 +1099,6 @@
         margin: 8px 0 18px;
     }
 
-    /* ── DELIVERY TIME SELECTOR ── */
-    .delivery-time-section {
-        margin: 16px 0 18px;
-        padding: 14px 16px;
-        background: var(--bg-soft);
-        border-radius: 14px;
-        border: 1.5px solid var(--line);
-    }
-    .delivery-time-section .dt-title {
-        font-size: .95rem;
-        font-weight: 700;
-        color: var(--green-dark);
-        margin: 0 0 12px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .delivery-options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .delivery-option {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 10px 14px;
-        background: #fff;
-        border: 1.5px solid var(--line);
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all .2s ease;
-    }
-    .delivery-option:hover {
-        border-color: var(--green-bright);
-        background: rgba(58,90,64,.04);
-    }
-    .delivery-option.selected {
-        border-color: var(--green);
-        background: rgba(58,90,64,.08);
-        box-shadow: 0 0 0 3px rgba(58,90,64,.12);
-    }
-    .delivery-option input[type="radio"] {
-        width: 18px;
-        height: 18px;
-        accent-color: var(--green);
-        flex-shrink: 0;
-    }
-    .delivery-option .dt-label {
-        font-weight: 600;
-        font-size: .92rem;
-        color: var(--ink);
-    }
-    .delivery-option .dt-desc {
-        font-size: .78rem;
-        color: var(--ink-soft);
-    }
-
     .loading-spinner {
         grid-column: 1/-1;
         text-align: center;
@@ -1269,29 +1133,16 @@
         color: var(--green-dark);
         font-size: 1.8rem;
         margin: 0 0 16px;
-        letter-spacing: .3px;
     }
     .info-page p {
-        line-height: 1.95;
+        line-height: 1.9;
         color: var(--ink-soft);
         margin: 0 0 14px;
-        font-size: .98rem;
-    }
-    .info-page p strong {
-        color: var(--green-dark);
-        font-weight: 700;
     }
     .info-page ul {
-        padding-right: 22px;
+        padding-right: 20px;
         color: var(--ink-soft);
-        line-height: 1.95;
-        margin: 0 0 16px;
-    }
-    .info-page ul li {
-        margin-bottom: 8px;
-    }
-    .info-page ul li strong {
-        color: var(--green-dark);
+        line-height: 1.9;
     }
     .back-shop {
         display: inline-block;
@@ -1299,197 +1150,19 @@
         color: var(--orange);
         font-weight: 700;
         transition: .2s;
-        padding: 6px 0;
     }
     .back-shop:hover {
         text-decoration: underline;
         color: var(--orange-dark);
     }
 
-    /* ── PAYMENT METHODS ── */
-    .pay-methods {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin: 16px 0 18px;
-    }
-    .pay-option {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 14px 16px;
-        border: 2px solid var(--line);
-        border-radius: 14px;
-        background: #fff;
-        cursor: pointer;
-        transition: all .2s ease;
-        text-align: right;
-    }
-    .pay-option:hover {
-        border-color: var(--green-bright);
-        background: rgba(58,90,64,.04);
-    }
-    .pay-option.selected {
-        border-color: var(--green);
-        background: rgba(58,90,64,.08);
-        box-shadow: 0 0 0 3px rgba(58,90,64,.12);
-    }
-    .pay-option .pay-ico {
-        font-size: 1.8rem;
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--bg-soft);
-        border-radius: 12px;
-        flex-shrink: 0;
-    }
-    .pay-option .pay-text h4 {
-        margin: 0 0 3px;
-        font-size: 1rem;
-        color: var(--green-dark);
-        font-family: 'Cairo';
-        font-weight: 700;
-    }
-    .pay-option .pay-text p {
-        margin: 0;
-        font-size: .82rem;
-        color: var(--ink-soft);
-    }
-    .pay-option input { display: none; }
-
-    /* ── BANKS GRID ── */
-    .banks-section {
-        display: none;
-        margin-top: 8px;
-    }
-    .banks-section.show { display: block; }
-    .banks-title {
-        font-size: .95rem;
-        font-weight: 700;
-        color: var(--green-dark);
-        margin: 0 0 12px;
-        text-align: center;
-    }
-    .banks-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-    .bank-card {
-        background: #fff;
-        border: 1.5px solid var(--line);
-        border-radius: 14px;
-        padding: 16px 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        transition: all .2s ease;
-        text-align: center;
-    }
-    .bank-card:hover {
-        border-color: var(--green-bright);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(42,39,33,.1);
-    }
-    .bank-card .bank-emoji {
-        font-size: 2.2rem;
-        line-height: 1;
-    }
-    .bank-card span {
-        font-size: .85rem;
-        font-weight: 700;
-        color: var(--ink);
-    }
-
-    /* ── BANK PAY MODAL ── */
-    .bank-pay-modal .modal-body {
-        max-height: 70vh;
-        overflow-y: auto;
-    }
-    .bank-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 16px;
-        padding-bottom: 14px;
-        border-bottom: 1px dashed var(--line);
-    }
-    .bank-header .bank-emoji {
-        font-size: 2.8rem;
-    }
-    .bank-header h3 {
-        margin: 0;
-        font-size: 1.25rem;
-        color: var(--green-dark);
-    }
-    .account-box {
-        background: #1e293b;
-        color: #fff;
-        border-radius: 12px;
-        padding: 14px 16px;
-        margin-bottom: 16px;
-        position: relative;
-    }
-    .account-box .acc-label {
-        font-size: .78rem;
-        opacity: .75;
-        margin-bottom: 4px;
-    }
-    .account-box .acc-value {
-        font-family: 'Tajawal', sans-serif;
-        font-weight: 800;
-        font-size: 1.05rem;
-        letter-spacing: .5px;
-        direction: ltr;
-        text-align: left;
-        word-break: break-all;
-    }
-    .account-box .copy-btn {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(255,255,255,.15);
-        border: none;
-        color: #fff;
-        padding: 5px 12px;
-        border-radius: 8px;
-        font-size: .78rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background .15s;
-    }
-    .account-box .copy-btn:hover { background: rgba(255,255,255,.28); }
-    .account-box .copy-btn.copied { background: var(--green-bright); }
-    .file-input-wrap {
-        border: 1.5px dashed var(--line);
-        border-radius: 10px;
-        padding: 12px;
-        text-align: center;
-        background: var(--bg-soft);
-        transition: border-color .15s;
-    }
-    .file-input-wrap:hover { border-color: var(--orange); }
-    .file-input-wrap input[type="file"] {
-        width: 100%;
-        font-size: .85rem;
-    }
-    .file-name {
-        margin-top: 6px;
-        font-size: .8rem;
-        color: var(--green-dark);
-        font-weight: 600;
-    }
-
     @media (prefers-reduced-motion: reduce) {
         * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
     }
     @media (max-width: 700px) {
+        .cat-nav { display: none; }
         .dropdown { min-width: 200px; width: 82vw; left: -20px; }
+        .tab-btn { padding: 8px 16px; font-size: .82rem; min-width: 80px; }
     }
 </style>
 </head>
@@ -1501,21 +1174,19 @@
             <span class="logo-badge">🌿</span>
             <span class="logo-text">خُضرة</span>
         </a>
+        <nav class="cat-nav">
+            <a href="#" data-tab="veg">خضروات</a>
+            <a href="#" data-tab="fruit">فواكه</a>
+            <a href="#" data-tab="grocery">بقالة</a>
+        </nav>
         <div class="header-right">
             <div class="menu-wrap" id="menuWrap">
-                <button class="menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-label="القائمة">
-                    <span class="hamburger" aria-hidden="true">
-                        <span></span><span></span><span></span>
-                    </span>
+                <button class="menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false">
+                    القائمة <span class="chev">▾</span>
                 </button>
                 <div class="dropdown" id="dropdown" role="menu">
-                    <a href="#" data-tab="veg">🥬 خضروات</a>
-                    <a href="#" data-tab="fruit">🍎 فواكه</a>
-                    <a href="#" data-tab="grocery">🛒 بقالة</a>
-                    <a href="#" data-tab="all">🌟 جميع المنتجات</a>
                     <a href="#" data-page="about">✨ من نحن</a>
                     <a href="#" data-page="policy">📋 سياسة الإرجاع</a>
-                    <a href="#" data-page="privacy">🔒 سياسة الخصوصية</a>
                 </div>
             </div>
             <button class="cart-btn" id="cartBtn" aria-label="فتح سلة المشتريات">
@@ -1528,87 +1199,77 @@
     <!-- ─── SHOP VIEW ─── -->
     <div id="shopView">
         <section class="hero">
-            <h1>خضرة داركم، من الحقل مباشرة <em>لباب الدار</em> 🌿</h1>
-            <p class="hero-sub">ما تقلقوش على السوق! كنقطفو ليكم أطيب الخضر والفواكه كل صباح، ونوصلوها ليكم نفس اليوم. اطلبوا دابا وخلصوا، بكل ثقة.</p>
-            <div class="hero-cta-wrap">
-                <a href="#" class="cta" id="shopNowBtn">اطلبوا الآن 🛒</a>
-            </div>
+            <h1>خضرة داركم، من الحقل مباشرة <em>لباب الدار</em></h1>
+            <p>مبقاش تقلق على السوق! كنقطفو ليكم أطيب الخضر والفواكه كل صباح، ونوصلوها ليكم نفس النهار. اطلبو دابا وخلصو فحضرتكم، بكل ثقة وراحة.</p>
+            <a href="#" class="cta" id="shopNowBtn">اطلب دابا 🛒</a>
             <div class="hero-badges">
                 <span>🚚 التوصيل نفس اليوم</span>
-                <span>💵 دفع عند الاستلام أو تحويل</span>
+                <span>💵 خلص عند الاستلام</span>
                 <span>🌱 طازج من الفلاح مباشرة</span>
             </div>
         </section>
 
         <!-- ─── TAB BAR ─── -->
         <div class="tab-bar" id="tabBar">
-            <button class="tab-btn active" data-tab="veg"><span class="tab-ico">🥬</span> خضروات</button>
-            <button class="tab-btn" data-tab="fruit"><span class="tab-ico">🍎</span> فواكه</button>
-            <button class="tab-btn" data-tab="grocery"><span class="tab-ico">🛒</span> بقالة</button>
+            <button class="tab-btn active" data-tab="veg">
+                <span class="tab-icon">🥬</span> خضروات
+            </button>
+            <button class="tab-btn" data-tab="fruit">
+                <span class="tab-icon">🍎</span> فواكه
+            </button>
+            <button class="tab-btn" data-tab="grocery">
+                <span class="tab-icon">🛒</span> بقالة
+            </button>
+            <button class="tab-btn" data-tab="all">
+                <span class="tab-icon">🌟</span> الكل
+            </button>
         </div>
 
         <main>
             <section class="category" id="veg">
-                <div class="cat-header">
-                    <div class="cat-header-top">
-                        <h2>🥬 خضروات طازجة</h2>
-                    </div>
-                    <p class="cat-desc">مقطوفة اليوم من الحقل، طازجة و غنية بالفيتامينات</p>
-                </div>
+                <div class="cat-header"><h2>🥬 خضروات طازجة</h2><p>مقطوفة اليوم من الحقل</p></div>
                 <div class="grid" id="grid-veg">
                     <div class="loading-spinner"><div class="spinner"></div>جاري تحميل المنتجات...</div>
                 </div>
             </section>
 
             <section class="category hidden" id="fruit">
-                <div class="cat-header">
-                    <div class="cat-header-top">
-                        <h2>🍎 فواكه موسمية</h2>
-                    </div>
-                    <p class="cat-desc">حلاوة الطبيعة في موسمها، غنية بالفوائد والنكهة</p>
-                </div>
+                <div class="cat-header"><h2>🍎 فواكه موسمية</h2><p>حلاوة طبيعية بلا انتظار</p></div>
                 <div class="grid" id="grid-fruit">
                     <div class="loading-spinner"><div class="spinner"></div>جاري تحميل المنتجات...</div>
                 </div>
             </section>
 
             <section class="category hidden" id="grocery">
-                <div class="cat-header">
-                    <div class="cat-header-top">
-                        <h2>🛒 بقالة ومنتجات المنزل</h2>
-                    </div>
-                    <p class="cat-desc">أساسيات مطبخك اليومية بجودة ممتازة وأسعار منافسة</p>
-                </div>
+                <div class="cat-header"><h2>🛒 بقالة ومنتجات المنزل</h2><p>أساسيات مطبخك اليومية</p></div>
                 <div class="grid" id="grid-grocery">
                     <div class="loading-spinner"><div class="spinner"></div>جاري تحميل المنتجات...</div>
                 </div>
             </section>
 
             <section class="trust-section">
-                <div class="trust-head">
-                    <h2>علاش خضرة هي الخيار الأول؟ ✨</h2>
-                    <p class="sub">الزبناء كيثقو فينا كل نهار</p>
-                </div>
+                <h2>علاش تختار خُضرة؟</h2>
+                <p class="sub">آلاف الزبناء كيثقو فينا كل نهار</p>
                 <div class="trust-grid">
                     <div class="trust-card">
                         <div class="ico">🌱</div>
-                        <h4>جودة المنتجات</h4>
-                        <p>كنجيبو المنتجات، بلا وسطاء، لضمان الطراوة والجودة اللي تستحق.</p>
+                        <h4>طازج من الفلاح</h4>
+                        <p>كنجيبو المنتجات مباشرة من الحقل، بلا وسطاء، لضمان الطراوة.</p>
                     </div>
                     <div class="trust-card">
                         <div class="ico">🚚</div>
-                        <h4>توصيل بسرعة وفي الوقت لي تختار</h4>
-                        <p>طلبك كيوصلك نفس النهار، فالساعة المناسبة ليك.</p>
+                        <h4>توصيل بسرعة</h4>
+                        <p>طلبك كيوصلك نفس النهار، فالوقت المناسب ليك.</p>
                     </div>
                     <div class="trust-card">
                         <div class="ico">💵</div>
-                        <h4>دفع من غير قلق</h4>
-                        <p>ما تخلص حتى توصل السلعة وتأكد من الجودة — إلى كنتي راضي عاد خلص.</p>
+                        <h4>خلص عند الاستلام</h4>
+                        <p>ما كتخلصش حتى توصلك السلعة وتتأكد من جودتها.</p>
                     </div>
                     <div class="trust-card">
                         <div class="ico">🤝</div>
-                        <h4>ثقة وضمان 100%</h4>
-                        <p>شي حاجة ما عجبتك؟ نتواصلو معاك ونحلو المشكل — خدمة الزبون أولوية خاصة بالنسبة لمتجر خضرة.</p>
+                        <h4>ثقة وضمان</h4>
+                        <p>ماشي عاجبتك السلعة؟ نتواصلو معاك ونحلو المشكل بسرعة.</p>
                     </div>
                 </div>
             </section>
@@ -1645,49 +1306,6 @@
         <p><em>ملاحظة: الدفع عند الاستلام كيعطيك الحق باش تتفقد السلعة قبل ما تخلص، هادشي كيحمي حقك 100%.</em></p>
     </div>
 
-    <div class="info-page" id="page-privacy">
-        <a href="#" class="back-shop" data-back>← العودة للمتجر</a>
-        <h2>سياسة الخصوصية</h2>
-        <p>في <strong>خُضرة</strong>، نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضح هذه السياسة كيف نجمع معلوماتك ونستخدمها ونحميها عند استخدامك لمتجرنا.</p>
-        <p><strong>1. المعلومات التي نجمعها</strong></p>
-        <ul>
-            <li><strong>بيانات الطلب:</strong> الاسم الكامل، رقم الهاتف، وعنوان التوصيل — نحتاجها فقط لإتمام طلبك وتوصيله إليك.</li>
-            <li><strong>محتوى السلة والطلبات:</strong> المنتجات والكميات التي تطلبها لمعالجة الطلب ومتابعته.</li>
-            <li><strong>بيانات تقنية محدودة:</strong> مثل نوع الجهاز أو المتصفح بشكل عام لتحسين تجربة الاستخدام (لا نتتبعك بشكل شخصي).</li>
-        </ul>
-        <p><strong>2. كيف نستخدم معلوماتك</strong></p>
-        <ul>
-            <li>معالجة طلباتك وتوصيل المنتجات إلى عنوانك.</li>
-            <li>التواصل معك عبر الهاتف أو واتساب لتأكيد الطلب أو موعد التوصيل أو حل أي مشكلة.</li>
-            <li>تحسين خدمتنا وتجربة التسوق (مثل معرفة المنتجات الأكثر طلباً بشكل عام).</li>
-            <li>الرد على استفساراتك أو شكاويك.</li>
-        </ul>
-        <p><strong>3. مشاركة البيانات</strong></p>
-        <p>لا نبيع بياناتك الشخصية لأي طرف ثالث. قد نشارك الحد الأدنى اللازم فقط مع:</p>
-        <ul>
-            <li>فريق التوصيل لتوصيل طلبك (الاسم، الهاتف، العنوان).</li>
-            <li>مزودي الخدمات التقنية (مثل قاعدة البيانات) الذين يساعدوننا في تشغيل المتجر، مع التزامهم بحماية البيانات.</li>
-        </ul>
-        <p><strong>4. تخزين البيانات وحمايتها</strong></p>
-        <ul>
-            <li>نحفظ بيانات الطلبات لمدة معقولة لمتابعة الخدمة وتحسينها، ثم نحذفها أو نجعلها غير قابلة للتعريف عندما لم تعد ضرورية.</li>
-            <li>نستخدم وسائل تقنية وتنظيمية مناسبة لحماية بياناتك من الوصول غير المصرح به أو الفقدان أو التعديل.</li>
-            <li>الدفع يتم نقداً عند الاستلام، لذلك لا نخزن أي بيانات بطاقات بنكية.</li>
-        </ul>
-        <p><strong>5. حقوقك</strong></p>
-        <ul>
-            <li>يمكنك طلب معرفة البيانات التي نحتفظ بها عنك.</li>
-            <li>يمكنك طلب تصحيح أو حذف بياناتك الشخصية (مع مراعاة الاحتفاظ بما يلزم قانونياً أو لمتابعة طلبات سابقة).</li>
-            <li>للتواصل بخصوص الخصوصية: راسلنا عبر واتساب على الرقم الموجود في أسفل الصفحة.</li>
-        </ul>
-        <p><strong>6. ملفات تعريف الارتباط (Cookies)</strong></p>
-        <p>نستخدم التخزين المحلي للمتصفح (localStorage) فقط لحفظ سلة مشترياتك مؤقتاً على جهازك، حتى لا تفقد محتوياتها عند تحديث الصفحة. لا نستخدم ملفات تعريف ارتباط تتبّع لأغراض إعلانية.</p>
-        <p><strong>7. تحديث السياسة</strong></p>
-        <p>قد نحدّث هذه السياسة من وقت لآخر. أي تغييرات جوهرية ستُنشر على هذه الصفحة. استمرارك في استخدام المتجر بعد التحديث يعني موافقتك على السياسة المعدّلة.</p>
-        <p><em>آخر تحديث: غشت 2026</em></p>
-        <p>إذا كان لديك أي سؤال حول سياسة الخصوصية، لا تتردد في التواصل معنا عبر واتساب — نحن هنا لمساعدتك.</p>
-    </div>
-
     <!-- ─── FOOTER ─── -->
     <footer>
         <h3>🌿 خُضرة</h3>
@@ -1700,7 +1318,6 @@
         <div class="footer-links">
             <a href="#" data-page="about">من نحن</a>
             <a href="#" data-page="policy">سياسة الإرجاع</a>
-            <a href="#" data-page="privacy">سياسة الخصوصية</a>
         </div>
         <a class="footer-whatsapp" href="https://wa.me/212704274830" target="_blank" rel="noopener">📲 تواصل معنا عبر واتساب</a>
         <p class="footer-note">خدمة الزبناء متوفرة يومياً من 8 صباحاً إلى 9 ليلاً</p>
@@ -1737,17 +1354,8 @@
     <div class="modal" id="checkoutModal" role="dialog" aria-modal="true">
         <button class="modal-close" id="closeCheckout" aria-label="إغلاق">✕</button>
         <h2>تأكيد الطلب</h2>
-        <p class="sub">أدخل بياناتك واختر طريقة الدفع ووقت التوصيل</p>
+        <p class="sub">أدخل بياناتك لإتمام الطلب — الدفع عند الاستلام</p>
         <div class="modal-summary" id="checkoutSummary"></div>
-
-        <!-- قسم اختيار وقت التوصيل -->
-        <div class="delivery-time-section">
-            <div class="dt-title">⏱️ اختر وقت التوصيل المناسب لك</div>
-            <div class="delivery-options" id="deliveryOptions">
-                <!-- ستُملأ بواسطة JavaScript -->
-            </div>
-        </div>
-
         <form id="checkoutForm" novalidate>
             <div class="field" id="f-name">
                 <label for="c-name">الاسم الكامل</label>
@@ -1764,90 +1372,7 @@
                 <textarea id="c-address" rows="2" placeholder="المدينة، الحي، الشارع، رقم المنزل" autocomplete="street-address"></textarea>
                 <div class="err-msg">يرجى إدخال العنوان بالتفصيل</div>
             </div>
-
-            <div class="pay-methods">
-                <label class="pay-option selected" data-method="cod">
-                    <input type="radio" name="payMethod" value="cod" checked>
-                    <div class="pay-ico">🚚</div>
-                    <div class="pay-text">
-                        <h4>الدفع عند الاستلام</h4>
-                        <p>ادفع نقدًا عندما يصلك طلبك</p>
-                    </div>
-                </label>
-                <label class="pay-option" data-method="online">
-                    <input type="radio" name="payMethod" value="online">
-                    <div class="pay-ico">💻</div>
-                    <div class="pay-text">
-                        <h4>الدفع أونلاين</h4>
-                        <p>حوّل عبر البنك أو التطبيق ثم أرسل الوصل</p>
-                    </div>
-                </label>
-            </div>
-
-            <div class="banks-section" id="banksSection">
-                <p class="banks-title">اختر وسيلة الدفع:</p>
-                <div class="banks-grid" id="banksGrid">
-                    <div class="bank-card" data-bank="cih">
-                        <span class="bank-emoji">🏦</span>
-                        <span>CIH Bank</span>
-                    </div>
-                    <div class="bank-card" data-bank="barid">
-                        <span class="bank-emoji">📮</span>
-                        <span>Barid Bank</span>
-                    </div>
-                    <div class="bank-card" data-bank="chaabi">
-                        <span class="bank-emoji">🏛️</span>
-                        <span>Chaabi Bank</span>
-                    </div>
-                    <div class="bank-card" data-bank="cashplus">
-                        <span class="bank-emoji">💳</span>
-                        <span>Cashplus</span>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="submit-btn" id="checkoutSubmitBtn">تأكيد الطلب — الدفع عند الاستلام</button>
-        </form>
-    </div>
-
-    <!-- ─── BANK PAYMENT MODAL ─── -->
-    <div class="modal bank-pay-modal" id="bankPayModal" role="dialog" aria-modal="true">
-        <button class="modal-close" id="closeBankPay" aria-label="إغلاق">✕</button>
-        <div class="bank-header">
-            <span class="bank-emoji" id="bankEmoji">🏦</span>
-            <h3 id="bankName">البنك</h3>
-        </div>
-        <div class="account-box">
-            <div class="acc-label" id="accLabel">رقم الحساب</div>
-            <div class="acc-value" id="accValue">—</div>
-            <button type="button" class="copy-btn" id="copyAccBtn">نسخ</button>
-        </div>
-        <p style="font-size:.85rem;color:var(--ink-soft);margin:0 0 12px;text-align:center;">حوّل المبلغ ثم املأ البيانات وارفع صورة الوصل</p>
-        <form id="bankPayForm" novalidate>
-            <div class="field" id="f-bp-name">
-                <label for="bp-name">اسم حسابك البنكي (المرسل)</label>
-                <input type="text" id="bp-name" placeholder="الاسم كما يظهر في حسابك">
-                <div class="err-msg">يرجى إدخال اسم الحساب</div>
-            </div>
-            <div class="field" id="f-bp-phone">
-                <label for="bp-phone">رقم هاتفك (للتواصل)</label>
-                <input type="tel" id="bp-phone" placeholder="0612345678">
-                <div class="err-msg">يرجى إدخال رقم هاتف صحيح</div>
-            </div>
-            <div class="field" id="f-bp-address">
-                <label for="bp-address">عنوانك (لتوصيل الطلب)</label>
-                <textarea id="bp-address" rows="2" placeholder="المدينة، الحي، الشارع، رقم المنزل"></textarea>
-                <div class="err-msg">يرجى إدخال العنوان بالتفصيل</div>
-            </div>
-            <div class="field" id="f-bp-receipt">
-                <label>إثبات التحويل (صورة الوصل)</label>
-                <div class="file-input-wrap">
-                    <input type="file" id="bp-receipt" accept="image/*">
-                    <div class="file-name" id="receiptFileName"></div>
-                </div>
-                <div class="err-msg">يرجى رفع صورة الوصل</div>
-            </div>
-            <button type="submit" class="submit-btn">أؤكد الدفع وأرسل المعلومات</button>
+            <button type="submit" class="submit-btn">تأكيد الطلب — الدفع عند الاستلام</button>
         </form>
     </div>
 
@@ -1891,6 +1416,7 @@
         const CURRENCY = "د.م";
         const WEIGHT_STEP = 0.5;
         const WEIGHT_MAX = 10;
+        const FRESHNESS_MAX_ITEMS = 12;
 
         let allProducts = [];
         const selection = {};
@@ -2217,6 +1743,11 @@
 
         function cartCount() { return cart.reduce((sum, c) => sum + c.qty, 0); }
 
+        function freshnessPercent() {
+            const n = cart.length;
+            return Math.min(100, Math.round((n / FRESHNESS_MAX_ITEMS) * 100));
+        }
+
         function renderCart() {
             const itemsEl = document.getElementById('cartItems');
             const badge = document.getElementById('cartBadge');
@@ -2236,7 +1767,15 @@
                 return;
             }
 
-            let html = '';
+            const pct = freshnessPercent();
+            let html = `
+            <div class="freshness-wrap">
+              <div class="freshness-label">
+                <span>🌱 مقياس الطراوة</span>
+                <span class="val">${pct}%</span>
+              </div>
+              <div class="freshness-bar"><div class="freshness-fill" style="width:${pct}%"></div></div>
+            </div>`;
 
             cart.forEach(item => {
                 html += `
@@ -2286,9 +1825,8 @@
 
         function closeDrawer() {
             cartDrawer.classList.remove('open');
-            const bankPayModal = document.getElementById('bankPayModal');
             if (!checkoutModal.classList.contains('show') && !confirmModal.classList.contains('show') && !warnModal
-                .classList.contains('show') && !(bankPayModal && bankPayModal.classList.contains('show'))) {
+                .classList.contains('show')) {
                 overlay.classList.remove('show');
             }
         }
@@ -2299,138 +1837,15 @@
             closeModal(checkoutModal);
             closeModal(confirmModal);
             closeModal(warnModal);
-            closeModal(document.getElementById('bankPayModal'));
         });
 
         function openModal(modal) { modal.classList.add('show');
             overlay.classList.add('show'); }
 
         function closeModal(modal) {
-            if (!modal) return;
             modal.classList.remove('show');
-            const bankPayModal = document.getElementById('bankPayModal');
-            if (!cartDrawer.classList.contains('open') &&
-                !checkoutModal.classList.contains('show') &&
-                !confirmModal.classList.contains('show') &&
-                !warnModal.classList.contains('show') &&
-                !(bankPayModal && bankPayModal.classList.contains('show'))) {
-                overlay.classList.remove('show');
-            }
+            if (!cartDrawer.classList.contains('open')) { overlay.classList.remove('show'); }
         }
-
-        // ── Delivery time logic ──
-        function getAvailableTimeSlots() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const currentMinutes = hours * 60 + minutes;
-
-            // تعريف الفتحات مع شروطها
-            const slots = [];
-
-            // اليوم
-            if (currentMinutes < 10 * 60) { // قبل 10:00
-                slots.push({ label: 'اليوم بين 10:00 و 14:00', value: 'today-10-14' });
-            }
-            if (currentMinutes < 12 * 60) { // قبل 12:00
-                slots.push({ label: 'اليوم بين 12:00 و 16:00', value: 'today-12-16' });
-            }
-            if (currentMinutes < 14 * 60) { // قبل 14:00
-                slots.push({ label: 'اليوم بين 14:00 و 18:00', value: 'today-14-18' });
-            }
-            if (currentMinutes < 18 * 60) { // قبل 18:00
-                slots.push({ label: 'اليوم بين 18:00 و 22:00', value: 'today-18-22' });
-            }
-            if (currentMinutes < 20 * 60) { // قبل 20:00
-                slots.push({ label: 'اليوم بين 20:00 و 22:00', value: 'today-20-22' });
-            }
-
-            // غداً دائماً متاح
-            slots.push({ label: 'غداً بين 10:00 و 14:00', value: 'tomorrow-10-14' });
-
-           slots.push({ label: 'غداً بين 14:00 و 20:00', value: 'tomorrow-14-18' });
-
-            // إزالة المكررات (قد تظهر فتحات متداخلة، نكتفي بالتمييز عبر القيمة)
-            const seen = new Set();
-            const unique = slots.filter(s => {
-                if (seen.has(s.value)) return false;
-                seen.add(s.value);
-                return true;
-            });
-
-            return unique;
-        }
-
-        function renderDeliveryOptions() {
-            const container = document.getElementById('deliveryOptions');
-            const slots = getAvailableTimeSlots();
-            if (slots.length === 0) {
-                container.innerHTML = '<p style="color:var(--ink-soft);">لا توجد خيارات توصيل متاحة حالياً، يرجى المحاولة لاحقاً.</p>';
-                return;
-            }
-            let html = '';
-            slots.forEach((slot, index) => {
-                const checked = index === 0 ? 'checked' : '';
-                html += `
-                <label class="delivery-option ${index === 0 ? 'selected' : ''}" data-value="${slot.value}">
-                    <input type="radio" name="deliveryTime" value="${slot.value}" ${checked}>
-                    <span class="dt-label">${slot.label}</span>
-                </label>
-                `;
-            });
-            container.innerHTML = html;
-
-            // تفعيل تحديد الخيار
-            container.querySelectorAll('.delivery-option').forEach(opt => {
-                opt.addEventListener('click', function() {
-                    container.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input[type="radio"]').checked = true;
-                });
-            });
-        }
-
-        function getSelectedDeliveryTime() {
-            const selected = document.querySelector('input[name="deliveryTime"]:checked');
-            if (!selected) return 'غير محدد';
-            // استخراج النص المعروض
-            const label = selected.closest('.delivery-option');
-            return label ? label.querySelector('.dt-label').textContent : selected.value;
-        }
-
-        // ── Bank data ──
-        const BANKS = {
-            cih: {
-                name: 'CIH Bank',
-                emoji: '🏦',
-                label: 'رقم الحساب',
-                value: '8974516',
-                recipient: 'متجر خضرة'
-            },
-            barid: {
-                name: 'Barid Bank',
-                emoji: '📮',
-                label: 'رقم الحساب',
-                value: '52862241',
-                recipient: 'متجر خضرة'
-            },
-            chaabi: {
-                name: 'Chaabi Bank',
-                emoji: '🏛️',
-                label: 'رقم الحساب',
-                value: '09126680',
-                recipient: 'متجر خضرة'
-            },
-            cashplus: {
-                name: 'Cashplus',
-                emoji: '💳',
-                label: 'رقم الهاتف',
-                value: '8974516',
-                recipient: 'متجر خضرة'
-            }
-        };
-
-        let selectedBank = null;
 
         function openCheckout() {
             if (cart.length === 0) { openModal(warnModal); return; }
@@ -2439,15 +1854,6 @@
                     `<div class="foot-row"><span>${i.name} (${i.variantLabel}${i.qty>1?' ×'+i.qty:''})</span><span>${fmt(i.lineTotal)} ${CURRENCY}</span></div>`
                 ).join('') +
                 `<div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;"><span>الإجمالي</span><span class="total-amount">${fmt(cartTotal())} ${CURRENCY}</span></div>`;
-            // reset pay method
-            document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('selected'));
-            document.querySelector('.pay-option[data-method="cod"]').classList.add('selected');
-            document.querySelector('input[name="payMethod"][value="cod"]').checked = true;
-            document.getElementById('banksSection').classList.remove('show');
-            document.getElementById('checkoutSubmitBtn').textContent = 'تأكيد الطلب — الدفع عند الاستلام';
-            document.getElementById('checkoutSubmitBtn').disabled = false;
-            // تحديث خيارات التوصيل
-            renderDeliveryOptions();
             closeDrawer();
             openModal(checkoutModal);
         }
@@ -2458,90 +1864,10 @@
         document.getElementById('closeCheckout').addEventListener('click', () => closeModal(checkoutModal));
         document.getElementById('closeWarn').addEventListener('click', () => closeModal(warnModal));
         document.getElementById('warnOkBtn').addEventListener('click', () => closeModal(warnModal));
-        document.getElementById('closeBankPay').addEventListener('click', () => closeModal(document.getElementById('bankPayModal')));
-
-        // Pay method toggle
-        document.querySelectorAll('.pay-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('selected'));
-                opt.classList.add('selected');
-                opt.querySelector('input').checked = true;
-                const method = opt.dataset.method;
-                const banksSec = document.getElementById('banksSection');
-                const submitBtn = document.getElementById('checkoutSubmitBtn');
-                if (method === 'online') {
-                    banksSec.classList.add('show');
-                    submitBtn.textContent = 'متابعة — اختر البنك أولاً';
-                    submitBtn.disabled = true;
-                } else {
-                    banksSec.classList.remove('show');
-                    submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
-                    submitBtn.disabled = false;
-                }
-            });
-        });
-
-        // Bank card click
-        document.querySelectorAll('.bank-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const bankKey = card.dataset.bank;
-                selectedBank = BANKS[bankKey];
-                if (!selectedBank) return;
-
-                const name = document.getElementById('c-name').value.trim();
-                const phone = document.getElementById('c-phone').value.trim();
-                const address = document.getElementById('c-address').value.trim();
-
-                document.getElementById('bankEmoji').textContent = selectedBank.emoji;
-                document.getElementById('bankName').textContent = selectedBank.name;
-                document.getElementById('accLabel').textContent = selectedBank.label + ' — ' + selectedBank.recipient;
-                document.getElementById('accValue').textContent = selectedBank.value;
-                document.getElementById('bp-name').value = name || '';
-                document.getElementById('bp-phone').value = phone || '';
-                document.getElementById('bp-address').value = address || '';
-                document.getElementById('bp-receipt').value = '';
-                document.getElementById('receiptFileName').textContent = '';
-                ['bp-name', 'bp-phone', 'bp-address', 'bp-receipt'].forEach(f => {
-                    const el = document.getElementById('f-' + f);
-                    if (el) el.classList.remove('error');
-                });
-
-                closeModal(checkoutModal);
-                openModal(document.getElementById('bankPayModal'));
-            });
-        });
-
-        // Copy account
-        document.getElementById('copyAccBtn').addEventListener('click', function() {
-            const val = document.getElementById('accValue').textContent;
-            navigator.clipboard.writeText(val).then(() => {
-                this.textContent = 'تم!';
-                this.classList.add('copied');
-                setTimeout(() => {
-                    this.textContent = 'نسخ';
-                    this.classList.remove('copied');
-                }, 1800);
-            }).catch(() => {
-                const ta = document.createElement('textarea');
-                ta.value = val;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                this.textContent = 'تم!';
-                setTimeout(() => { this.textContent = 'نسخ'; }, 1800);
-            });
-        });
-
-        // Receipt file name
-        document.getElementById('bp-receipt').addEventListener('change', function() {
-            const name = this.files[0] ? this.files[0].name : '';
-            document.getElementById('receiptFileName').textContent = name ? '📎 ' + name : '';
-        });
 
         function validateField(inputId, condition) {
             const field = document.getElementById('f-' + inputId);
-            if (field) field.classList.toggle('error', !condition);
+            field.classList.toggle('error', !condition);
             return condition;
         }
 
@@ -2551,47 +1877,8 @@
             return true;
         }
 
-        function finishOrderSuccess(orderCode, name, phone, address, total, payMethodLabel, deliveryTime) {
-            document.getElementById('orderId').textContent = orderCode;
-            document.getElementById('confirmSummary').innerHTML = `
-              <div class="foot-row"><span>الاسم</span><span>${name}</span></div>
-              <div class="foot-row"><span>الهاتف</span><span>${phone}</span></div>
-              <div class="foot-row"><span>العنوان</span><span>${address}</span></div>
-              <div class="foot-row"><span>طريقة الدفع</span><span>${payMethodLabel}</span></div>
-              <div class="foot-row"><span>وقت التوصيل المختار</span><span>${deliveryTime}</span></div>
-              <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
-                <span>الإجمالي</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
-              </div>`;
-
-            const orderText = buildOrderMessage(orderCode, { name, phone, address }, payMethodLabel, deliveryTime);
-            const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
-            document.getElementById('whatsappBtn').href = waLink;
-
-            closeModal(checkoutModal);
-            closeModal(document.getElementById('bankPayModal'));
-            closeDrawer();
-            openModal(confirmModal);
-
-            cart = [];
-            saveCart();
-            renderCart();
-            updateAllAddButtons();
-            document.getElementById('checkoutForm').reset();
-            document.getElementById('bankPayForm').reset();
-            ['name', 'phone', 'address'].forEach(f => {
-                const el = document.getElementById('f-' + f);
-                if (el) el.classList.remove('error');
-            });
-        }
-
         document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-
-            const method = document.querySelector('input[name="payMethod"]:checked').value;
-            if (method === 'online') {
-                alert('يرجى اختيار البنك أو وسيلة الدفع أولاً');
-                return;
-            }
 
             const name = document.getElementById('c-name').value.trim();
             const phone = document.getElementById('c-phone').value.trim();
@@ -2603,9 +1890,6 @@
 
             if (!(okName && okPhone && okAddress)) return;
 
-            // الحصول على وقت التوصيل المختار
-            const deliveryTime = getSelectedDeliveryTime();
-
             const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
             const items = cart.map(i => ({
                 id: i.id,
@@ -2623,115 +1907,57 @@
                 phone: phone,
                 city: address.split(/[،,]/)[0].trim() || '—',
                 address: address,
-                note: 'وقت التوصيل المختار: ' + deliveryTime,
+                note: null,
                 items: items,
                 total: total,
-                status: 'جديد',
-                payment_method: 'عند الاستلام'
-            };
-
-async function saveOrder(orderData) {
-    try {
-        // تأكد من أن البيانات تحتوي على كل الحقول المطلوبة
-        // إذا كان الحقل 'note' غير موجود، ضعه كـ null
-        if (!orderData.note) orderData.note = null;
-        if (!orderData.payment_method) orderData.payment_method = 'عند الاستلام';
-
-        const { data, error } = await supabase
-            .from('orders')
-            .insert([orderData])
-            .select(); // نطلب إرجاع البيانات المدرجة للتحقق
-
-        if (error) {
-            console.error('❌ خطأ Supabase أثناء الحفظ:', error);
-            // عرض تفاصيل الخطأ للمطور
-            console.error('تفاصيل:', {
-                code: error.code,
-                message: error.message,
-                details: error.details,
-                hint: error.hint
-            });
-            throw error;
-        }
-
-        console.log('✅ تم حفظ الطلب بنجاح:', data);
-        return true;
-    } catch (err) {
-        // إعادة رفع الخطأ مع رسالة أوضح
-        throw new Error(`فشل حفظ الطلب: ${err.message || err}`);
-    }
-}
-        document.getElementById('bankPayForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if (!selectedBank) return;
-
-            const name = document.getElementById('bp-name').value.trim();
-            const phone = document.getElementById('bp-phone').value.trim();
-            const address = document.getElementById('bp-address').value.trim();
-            const receipt = document.getElementById('bp-receipt').files[0];
-
-            const okName = validateField('bp-name', name.length >= 3);
-            const okPhone = validateField('bp-phone', /^[0-9+\s]{8,15}$/.test(phone));
-            const okAddress = validateField('bp-address', address.length >= 8);
-            const okReceipt = validateField('bp-receipt', !!receipt);
-
-            if (!(okName && okPhone && okAddress && okReceipt)) return;
-
-            // الحصول على وقت التوصيل المختار (من نموذج الدفع العادي، لكنه مغلق الآن، لذا نأخذ القيمة المخزنة)
-            // في هذه الحالة، نستخدم نفس دالة getSelectedDeliveryTime لكنها تعمل على الـ radio في الـ checkout modal
-            // ولكن قد لا يكون موجوداً لأننا أغلقنا الـ modal، لذا نأخذ القيمة من التخزين المؤقت أو نطلب من المستخدم
-            // الحل: نخزن القيمة المختارة في متغير عند فتح الـ checkout
-            // سنقوم بتخزينها في متغير عام
-            const deliveryTime = window._selectedDeliveryTime || 'غير محدد';
-
-            const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
-            const items = cart.map(i => ({
-                id: i.id,
-                name: i.name,
-                variant: i.variantLabel,
-                qty: i.qty,
-                unitTotal: i.unitTotal,
-                lineTotal: i.lineTotal
-            }));
-            const total = cartTotal();
-            const payLabel = 'تحويل بنكي — ' + selectedBank.name;
-
-            const orderData = {
-                order_code: orderCode,
-                customer_name: name,
-                phone: phone,
-                city: address.split(/[،,]/)[0].trim() || '—',
-                address: address,
-                note: 'الدفع عبر ' + selectedBank.name + ' | حساب المستلم: ' + selectedBank.value + ' | وقت التوصيل: ' +
-                    deliveryTime,
-                items: items,
-                total: total,
-                status: 'بانتظار التحقق من الدفع',
-                payment_method: payLabel
+                status: 'جديد'
             };
 
             try {
                 await saveOrder(orderData);
-                finishOrderSuccess(orderCode, name, phone, address, total, payLabel, deliveryTime);
+
+                document.getElementById('orderId').textContent = orderCode;
+                document.getElementById('confirmSummary').innerHTML = `
+              <div class="foot-row"><span>الاسم</span><span>${name}</span></div>
+              <div class="foot-row"><span>الهاتف</span><span>${phone}</span></div>
+              <div class="foot-row"><span>العنوان</span><span>${address}</span></div>
+              <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
+                <span>الإجمالي (عند الاستلام)</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
+              </div>`;
+
+                const orderText = buildOrderMessage(orderCode, { name, phone, address });
+                const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
+                document.getElementById('whatsappBtn').href = waLink;
+
+                closeModal(checkoutModal);
+                closeDrawer();
+                openModal(confirmModal);
+
+                cart = [];
+                saveCart();
+                renderCart();
+                updateAllAddButtons();
+                this.reset();
+                ['name', 'phone', 'address'].forEach(f => document.getElementById('f-' + f).classList.remove('error'));
+
             } catch (err) {
                 alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
                 console.error(err);
             }
         });
 
-        function buildOrderMessage(orderId, customer, payMethod, deliveryTime) {
+        function buildOrderMessage(orderId, customer) {
             const lines = [
                 `🛒 *طلب جديد ${orderId}*`,
                 `👤 الاسم: ${customer.name}`,
                 `📞 الهاتف: ${customer.phone}`,
                 `📍 العنوان: ${customer.address}`,
-                `⏱️ وقت التوصيل المختار: ${deliveryTime}`,
                 ``,
                 `*المنتجات:*`,
                 ...cart.map(i => `• ${i.name} (${i.variantLabel}${i.qty>1 ? ' ×'+i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
                 ``,
                 `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`,
-                `💵 طريقة الدفع: ${payMethod || 'عند الاستلام'}`
+                `💵 طريقة الدفع: عند الاستلام`
             ];
             return lines.join('\n');
         }
@@ -2745,7 +1971,6 @@ async function saveOrder(orderData) {
                 closeModal(checkoutModal);
                 closeModal(confirmModal);
                 closeModal(warnModal);
-                closeModal(document.getElementById('bankPayModal'));
                 closeMenu();
             }
         });
@@ -2770,7 +1995,7 @@ async function saveOrder(orderData) {
         // ── Info pages ──
         function showPage(pageId) {
             document.getElementById('shopView').style.display = pageId ? 'none' : '';
-            ['about', 'policy', 'privacy'].forEach(p => {
+            ['about', 'policy'].forEach(p => {
                 document.getElementById('page-' + p).classList.toggle('show', p === pageId);
             });
             closeMenu();
@@ -2803,15 +2028,13 @@ async function saveOrder(orderData) {
             });
         });
 
-        // ── Dropdown "جميع المنتجات" and category links ──
-        document.querySelectorAll('.dropdown a[data-tab]').forEach(link => {
+        // ── Navigation links as tabs ──
+        document.querySelectorAll('.cat-nav a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const tab = this.dataset.tab;
                 if (tab) {
-                    showPage(null);
                     switchTab(tab);
-                    closeMenu();
                 }
             });
         });
@@ -2819,6 +2042,7 @@ async function saveOrder(orderData) {
         // ── Shop Now button scrolls to tab ──
         document.getElementById('shopNowBtn').addEventListener('click', function(e) {
             e.preventDefault();
+            // Switch to veg tab and scroll
             switchTab('veg');
         });
 
@@ -2838,6 +2062,15 @@ async function saveOrder(orderData) {
                 }, 4000);
             }
         });
+
+        setInterval(() => {
+            const fill = document.querySelector('.freshness-fill');
+            if (fill && fill.style.width && parseFloat(fill.style.width) > 0) {
+                const hue = (Date.now() / 30) % 60;
+                fill.style.background =
+                    `linear-gradient(90deg, hsl(${hue+20}, 75%, 50%), hsl(${hue+60}, 85%, 60%), hsl(${hue+100}, 70%, 50%))`;
+            }
+        }, 1500);
 
         const totalEl = document.getElementById('cartTotal');
         let lastTotal = 0;
@@ -2865,41 +2098,9 @@ async function saveOrder(orderData) {
             }, 400);
         });
 
-        // ── Header scroll effect ──
-        const siteHeader = document.querySelector('.site-header');
-        window.addEventListener('scroll', () => {
-            siteHeader.classList.toggle('scrolled', window.scrollY > 20);
-        }, { passive: true });
-
         // ── Boot ──
         loadCart();
         loadProducts();
-
-        // تخزين وقت التوصيل المختار في متغير عام للاستخدام في الدفع البنكي
-        window._selectedDeliveryTime = '';
-
-        // تحديث الوقت عند فتح checkout
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('#checkoutBtn') || e.target.closest('#stickyCheckoutBtn')) {
-                // سيتم تحديث الخيارات عند فتح الـ modal
-                setTimeout(() => {
-                    const selected = document.querySelector('input[name="deliveryTime"]:checked');
-                    if (selected) {
-                        const label = selected.closest('.delivery-option');
-                        window._selectedDeliveryTime = label ? label.querySelector('.dt-label')
-                        .textContent : selected.value;
-                    }
-                }, 200);
-            }
-        });
-
-        // تحديث المتغير عند تغيير اختيار التوصيل
-        document.addEventListener('change', function(e) {
-            if (e.target && e.target.name === 'deliveryTime') {
-                const label = e.target.closest('.delivery-option');
-                window._selectedDeliveryTime = label ? label.querySelector('.dt-label').textContent : e.target.value;
-            }
-        });
 
     })();
 </script>
