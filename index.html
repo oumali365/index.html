@@ -2630,15 +2630,37 @@
                 payment_method: 'عند الاستلام'
             };
 
-            try {
-                await saveOrder(orderData);
-                finishOrderSuccess(orderCode, name, phone, address, total, 'عند الاستلام', deliveryTime);
-            } catch (err) {
-                alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
-                console.error(err);
-            }
-        });
+async function saveOrder(orderData) {
+    try {
+        // تأكد من أن البيانات تحتوي على كل الحقول المطلوبة
+        // إذا كان الحقل 'note' غير موجود، ضعه كـ null
+        if (!orderData.note) orderData.note = null;
+        if (!orderData.payment_method) orderData.payment_method = 'عند الاستلام';
 
+        const { data, error } = await supabase
+            .from('orders')
+            .insert([orderData])
+            .select(); // نطلب إرجاع البيانات المدرجة للتحقق
+
+        if (error) {
+            console.error('❌ خطأ Supabase أثناء الحفظ:', error);
+            // عرض تفاصيل الخطأ للمطور
+            console.error('تفاصيل:', {
+                code: error.code,
+                message: error.message,
+                details: error.details,
+                hint: error.hint
+            });
+            throw error;
+        }
+
+        console.log('✅ تم حفظ الطلب بنجاح:', data);
+        return true;
+    } catch (err) {
+        // إعادة رفع الخطأ مع رسالة أوضح
+        throw new Error(`فشل حفظ الطلب: ${err.message || err}`);
+    }
+}
         document.getElementById('bankPayForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             if (!selectedBank) return;
