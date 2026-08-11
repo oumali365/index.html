@@ -11,6 +11,101 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNL0B7G424">
 </script>
+<!-- Website Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "خُضرة",
+    "url": "https://your-domain.com",
+    "description": "متجر إلكتروني للخضر والفواكه الطازجة في المغرب",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://your-domain.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
+
+<!-- Local Business Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "خُضرة",
+    "description": "متجر خضر وفواكه طازجة في المغرب - توصيل سريع إلى جميع المدن",
+    "url": "https://your-domain.com",
+    "telephone": "+212704274830",
+    "email": "contact@khodra.com",
+    "priceRange": "$$",
+    "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "MA"
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "المغرب"
+    },
+    "paymentAccepted": ["Cash", "Bank Transfer"],
+    "openingHours": "Mo-Su 08:00-21:00"
+}
+</script>
+
+<!-- Product Schema (مثال لمنتج) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "منتجات خضرة",
+    "description": "قائمة بأفضل الخضر والفواكه الطازجة",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@type": "Product",
+                "name": "طماطم طازجة",
+                "description": "طماطم مغربية طازجة من الحقل مباشرة",
+                "image": "https://your-domain.com/images/tomato.jpg",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "10.00",
+                    "priceCurrency": "MAD",
+                    "availability": "https://schema.org/InStock"
+                }
+            }
+        }
+    ]
+}
+</script>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "الرئيسية",
+            "item": "https://your-domain.com"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "خضروات",
+            "item": "https://your-domain.com#veg"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "فواكه",
+            "item": "https://your-domain.com#fruit"
+        }
+    ]
+}
+</script>
 <script>
     window.dataLayer = window.dataLayer || [];
 
