@@ -1,121 +1,152 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>خُضرة | خضر وفواكه طازجة توصل لبابك</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VNL0B7G424">
-</script>
-<!-- Website Schema -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "خُضرة",
-    "url": "https://your-domain.com",
-    "description": "متجر إلكتروني للخضر والفواكه الطازجة في المغرب",
-    "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://your-domain.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-    }
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خُضرة | خضر وفواكه طازجة توصل لبابك</title>
 
-<!-- Local Business Schema -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "خُضرة",
-    "description": "متجر خضر وفواكه طازجة في المغرب - توصيل سريع إلى جميع المدن",
-    "url": "https://your-domain.com",
-    "telephone": "+212704274830",
-    "email": "contact@khodra.com",
-    "priceRange": "$$",
-    "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "MA"
-    },
-    "areaServed": {
-        "@type": "City",
-        "name": "المغرب"
-    },
-    "paymentAccepted": ["Cash", "Bank Transfer"],
-    "openingHours": "Mo-Su 08:00-21:00"
-}
-</script>
+    <!-- ============================================ -->
+    <!-- 1. META TAGS - تحسين محركات البحث (SEO)       -->
+    <!-- ============================================ -->
+    <meta name="description" content="خُضرة - متجر إلكتروني للخضر والفواكه الطازجة في المغرب. توصيل سريع لباب الدار، دفع عند الاستلام." />
+    <meta name="keywords" content="خضر, فواكه, متجر إلكتروني, توصيل, طازج, المغرب, خضرة, سوق, فلاح, خضروات, فواكه موسمية" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="خُضرة" />
+    <meta name="language" content="Arabic" />
 
-<!-- Product Schema (مثال لمنتج) -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "منتجات خضرة",
-    "description": "قائمة بأفضل الخضر والفواكه الطازجة",
-    "itemListElement": [
+    <!-- ============================================ -->
+    <!-- 2. GOOGLE SEARCH CONSOLE - التحقق من الملكية  -->
+    <!-- ============================================ -->
+    <meta name="google-site-verification" content="v6rbqN2Ha0Va0ev2EFSTMra_B6ZFbYaDdNebJlQrWdQ" />
+
+    <!-- ============================================ -->
+    <!-- 3. GOOGLE ANALYTICS - معرف القياس             -->
+    <!-- ============================================ -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNL0B7G424">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-VNL0B7G424');
+    </script>
+
+    <!-- ============================================ -->
+    <!-- 4. OPEN GRAPH - مشاركة مواقع التواصل          -->
+    <!-- ============================================ -->
+    <meta property="og:title" content="خُضرة - خضر وفواكه طازجة توصلك لبابك" />
+    <meta property="og:description" content="اطلب الخضر والفواكه الطازجة من الحقل مباشرة، نوصلها لك في نفس اليوم. جودة مضمونة ودفع عند الاستلام." />
+    <meta property="og:image" content="https://khodrafresh.vercel.app/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://khodrafresh.vercel.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar_MA" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="خُضرة - خضر وفواكه طازجة" />
+    <meta name="twitter:description" content="أفضل خضر وفواكه في المغرب، توصيل سريع وجودة مضمونة" />
+    <meta name="twitter:image" content="https://khodrafresh.vercel.app/images/og-image.jpg" />
+
+    <!-- ============================================ -->
+    <!-- 5. SCHEMA.ORG - بيانات منظمة لمحركات البحث    -->
+    <!-- ============================================ -->
+
+    <!-- Website Schema -->
+    <script type="application/ld+json">
         {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-                "@type": "Product",
-                "name": "طماطم طازجة",
-                "description": "طماطم مغربية طازجة من الحقل مباشرة",
-                "image": "https://your-domain.com/images/tomato.jpg",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "10.00",
-                    "priceCurrency": "MAD",
-                    "availability": "https://schema.org/InStock"
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "خُضرة",
+            "url": "https://khodrafresh.vercel.app",
+            "description": "متجر إلكتروني للخضر والفواكه الطازجة في المغرب"
+        }
+    </script>
+
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "خُضرة",
+            "description": "متجر خضر وفواكه طازجة في المغرب - توصيل سريع إلى جميع المدن",
+            "url": "https://khodrafresh.vercel.app",
+            "telephone": "+212704274830",
+            "email": "contact@khodra.com",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "MA"
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": "المغرب"
+            },
+            "paymentAccepted": ["Cash", "Bank Transfer"],
+            "openingHours": "Mo-Su 08:00-21:00"
+        }
+    </script>
+
+    <!-- Product Schema -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "منتجات خضرة",
+            "description": "قائمة بأفضل الخضر والفواكه الطازجة",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@type": "Product",
+                    "name": "طماطم طازجة",
+                    "description": "طماطم مغربية طازجة من الحقل مباشرة",
+                    "image": "https://khodrafresh.vercel.app/images/tomato.jpg",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "10.00",
+                        "priceCurrency": "MAD",
+                        "availability": "https://schema.org/InStock"
+                    }
                 }
-            }
+            }]
         }
-    ]
-}
-</script>
+    </script>
 
-<!-- Breadcrumb Schema -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
         {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "الرئيسية",
-            "item": "https://your-domain.com"
-        },
-        {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "خضروات",
-            "item": "https://your-domain.com#veg"
-        },
-        {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "فواكه",
-            "item": "https://your-domain.com#fruit"
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "الرئيسية",
+                "item": "https://khodrafresh.vercel.app"
+            }, {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "خضروات",
+                "item": "https://khodrafresh.vercel.app#veg"
+            }, {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "فواكه",
+                "item": "https://khodrafresh.vercel.app#fruit"
+            }]
         }
-    ]
-}
-</script>
-<script>
-    window.dataLayer = window.dataLayer || [];
+    </script>
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'G-VNL0B7G424');
-</script>
+    <!-- ============================================ -->
+    <!-- 6. FONTS & LIBRARIES                         -->
+    <!-- ============================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
 <style>
     /* ── RESET & ROOT ── */
     * { box-sizing: border-box; margin: 0; }
