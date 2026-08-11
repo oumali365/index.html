@@ -282,29 +282,74 @@
         transform: translateY(-2px);
     }
 
-    /* ── TAB BAR ── */
-    .tab-bar {
+    /* ── TAB BAR (redesigned) ── */
+    .tab-bar-wrap {
         max-width: 1180px;
         margin: 0 auto 24px;
         padding: 0 20px;
+    }
+    .tab-bar-title {
         display: flex;
-        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 14px;
+        font-family: 'Lalezar', sans-serif;
+        color: var(--green-dark);
+        font-size: 1.35rem;
+        letter-spacing: .5px;
+    }
+    .tab-bar-title::before,
+    .tab-bar-title::after {
+        content: '';
+        flex: 1;
+        max-width: 90px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--orange-bright), transparent);
+        border-radius: 2px;
+    }
+    .tab-bar-title .ico {
+        font-size: 1.4rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--orange), var(--orange-bright));
+        color: #fff;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        box-shadow: var(--glow-orange);
+    }
+    .tab-bar {
+        display: flex;
+        gap: 10px;
         flex-wrap: wrap;
         justify-content: center;
+        padding: 10px;
+        background: linear-gradient(135deg, rgba(255,253,248,.85), rgba(234,225,203,.55));
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: 0 4px 16px rgba(42,39,33,.06);
+        backdrop-filter: blur(6px);
     }
     .tab-btn {
-        padding: 10px 28px;
-        border: 2px solid var(--line);
+        position: relative;
+        padding: 11px 24px;
+        border: 2px solid transparent;
         border-radius: 999px;
         background: var(--paper);
         color: var(--ink-soft);
         font-weight: 700;
         font-size: .95rem;
-        transition: all .2s ease;
-        box-shadow: var(--shadow);
+        transition: all .25s ease;
+        box-shadow: 0 2px 6px rgba(42,39,33,.05);
         flex: 1 1 auto;
-        min-width: 100px;
-        max-width: 200px;
+        min-width: 110px;
+        max-width: 220px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
     }
     .tab-btn:hover {
         border-color: var(--orange-bright);
@@ -313,16 +358,17 @@
         box-shadow: 0 6px 16px rgba(42,39,33,.10);
     }
     .tab-btn.active {
-        background: var(--green);
+        background: linear-gradient(135deg, var(--green), var(--green-dark));
         color: #fff;
         border-color: var(--green-dark);
         box-shadow: var(--glow-green);
+        transform: translateY(-1px);
     }
     .tab-btn.active:hover {
-        background: var(--green-dark);
+        background: linear-gradient(135deg, var(--green-dark), #172a1c);
         box-shadow: var(--glow-green);
     }
-    .tab-btn .tab-icon { margin-left: 6px; }
+    .tab-btn .tab-icon { margin-left: 4px; font-size: 1.05rem; }
 
     /* ── MAIN GRID ── */
     main {
@@ -1161,8 +1207,301 @@
     }
     @media (max-width: 700px) {
         .cat-nav { display: none; }
-        .dropdown { min-width: 200px; width: 82vw; left: -20px; }
-        .tab-btn { padding: 8px 16px; font-size: .82rem; min-width: 80px; }
+        .dropdown { min-width: 220px; width: 82vw; left: -20px; }
+        .tab-btn { padding: 8px 14px; font-size: .82rem; min-width: 90px; }
+        .tab-bar-title { font-size: 1.1rem; }
+        .tab-bar-title::before, .tab-bar-title::after { max-width: 40px; }
+    }
+
+    /* ── HIDE CENTER CAT-NAV (moved to menu) ── */
+    .cat-nav { display: none !important; }
+
+    /* ── MENU BUTTON AS ICON ── */
+    .menu-btn.menu-btn-icon {
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffffff, #f7efd9);
+        border: 1.5px solid var(--line);
+        font-size: 1.1rem;
+        color: var(--green-dark);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(42,39,33,.08), inset 0 0 0 1px rgba(255,255,255,.6);
+        position: relative;
+        overflow: hidden;
+    }
+    .menu-btn.menu-btn-icon::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, transparent, rgba(217,118,43,.35), transparent 40%);
+        opacity: 0;
+        transition: opacity .3s;
+        animation: spin 4s linear infinite;
+    }
+    .menu-btn.menu-btn-icon:hover::before { opacity: 1; }
+    .menu-btn.menu-btn-icon:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(217,118,43,.20), inset 0 0 0 1px rgba(255,255,255,.6);
+        border-color: var(--orange-bright);
+    }
+    .menu-btn.menu-btn-icon .chev { display: none; }
+    .menu-btn.menu-btn-icon .menu-lines {
+        position: relative;
+        z-index: 1;
+        width: 20px;
+        height: 14px;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .menu-btn.menu-btn-icon .menu-lines span {
+        display: block;
+        height: 2.5px;
+        background: var(--green-dark);
+        border-radius: 2px;
+        transition: transform .25s ease, width .25s ease, background .2s;
+    }
+    .menu-btn.menu-btn-icon .menu-lines span:nth-child(1) { width: 100%; }
+    .menu-btn.menu-btn-icon .menu-lines span:nth-child(2) { width: 70%; }
+    .menu-btn.menu-btn-icon .menu-lines span:nth-child(3) { width: 100%; }
+    .menu-wrap.open .menu-btn.menu-btn-icon .menu-lines span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); width: 100%; background: var(--orange); }
+    .menu-wrap.open .menu-btn.menu-btn-icon .menu-lines span:nth-child(2) { opacity: 0; }
+    .menu-wrap.open .menu-btn.menu-btn-icon .menu-lines span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); width: 100%; background: var(--orange); }
+
+    .dropdown a .dd-ico { display: inline-block; margin-left: 6px; }
+    .dropdown .dd-sep { height: 1px; background: var(--line); margin: 6px 8px; opacity: .7; }
+    .dropdown .dd-label { font-size: .72rem; color: var(--ink-soft); padding: 6px 16px 2px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase; }
+
+    /* ── DELIVERY TIME PICKER ── */
+    .delivery-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+    }
+    .delivery-opt {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border: 1.5px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        cursor: pointer;
+        transition: border-color .18s, background .18s, box-shadow .18s;
+        font-size: .88rem;
+        font-weight: 600;
+        color: var(--ink);
+    }
+    .delivery-opt:hover { border-color: var(--orange-bright); background: #fffaf1; }
+    .delivery-opt input[type="radio"] { accent-color: var(--orange); width: 16px; height: 16px; }
+    .delivery-opt.selected { border-color: var(--orange); background: #fff5e6; box-shadow: 0 0 0 3px rgba(217,118,43,.10); }
+    .delivery-opt.disabled { opacity: .45; cursor: not-allowed; background: #f5efdc; }
+    .delivery-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 8px 10px;
+        background: #fff5e6;
+        border-right: 3px solid var(--orange);
+        border-radius: 8px;
+        font-size: .78rem;
+        color: var(--ink-soft);
+        font-weight: 600;
+    }
+
+    /* ── PAYMENT METHOD ── */
+    .pay-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .pay-opt {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        cursor: pointer;
+        transition: .18s;
+        font-weight: 700;
+        color: var(--ink);
+        font-size: .92rem;
+    }
+    .pay-opt:hover { border-color: var(--orange-bright); background: #fffaf1; }
+    .pay-opt input[type="radio"] { accent-color: var(--orange); width: 18px; height: 18px; }
+    .pay-opt.selected { border-color: var(--orange); background: #fff5e6; box-shadow: 0 0 0 3px rgba(217,118,43,.10); }
+    .pay-opt .pay-ico { font-size: 1.3rem; }
+
+    /* ── BANK PANEL (redesigned - clean & simple) ── */
+    .bank-panel {
+        margin-top: 12px;
+        background: #f8f4e9;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+        animation: fadeSlide .3s ease;
+    }
+    .bank-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    .bank-tab {
+        background: #fff;
+        border: 1.5px solid var(--line);
+        color: var(--ink-soft);
+        padding: 10px 8px;
+        border-radius: 10px;
+        font-family: 'Cairo', sans-serif;
+        font-weight: 700;
+        font-size: .82rem;
+        cursor: pointer;
+        transition: .2s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }
+    .bank-tab:hover { border-color: var(--orange-bright); background: #fffaf1; }
+    .bank-tab.active {
+        background: linear-gradient(135deg, var(--green), var(--green-dark));
+        color: #fff;
+        border-color: var(--green-dark);
+        box-shadow: var(--glow-green);
+    }
+    .bank-info {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+    }
+    .bank-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 0;
+        border-bottom: 1px dashed var(--line);
+        font-size: .88rem;
+    }
+    .bank-row:last-child { border-bottom: none; }
+    .bank-row .lbl { color: var(--ink-soft); font-weight: 600; font-size: .78rem; }
+    .bank-row .val {
+        color: var(--ink);
+        font-family: 'Tajawal', sans-serif;
+        font-weight: 800;
+        letter-spacing: .5px;
+    }
+    .bank-row .val.account {
+        color: var(--green-dark);
+        font-size: 1rem;
+        direction: ltr;
+        unicode-bidi: embed;
+    }
+    .copy-btn {
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        color: var(--ink-soft);
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: .74rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: .18s;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: 'Cairo', sans-serif;
+    }
+    .copy-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
+    .copy-btn.copied { background: var(--green-bright); color: #fff; border-color: var(--green-bright); }
+
+    /* ── RECEIPT UPLOAD - redesigned to match other fields ── */
+    .receipt-upload-field {
+        margin-top: 12px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+    }
+    .receipt-upload-field label {
+        display: block;
+        font-size: .85rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: var(--ink-soft);
+    }
+    .upload-area-simple {
+        border: 1.5px dashed var(--line);
+        border-radius: 10px;
+        padding: 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: .2s;
+        background: #fff;
+    }
+    .upload-area-simple:hover { border-color: var(--orange-bright); background: #fffaf1; }
+    .upload-area-simple.has-file { border-color: var(--green-bright); background: rgba(79,138,90,.06); border-style: solid; }
+    .upload-area-simple .up-ico { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+    .upload-area-simple .up-txt { font-size: .84rem; font-weight: 700; color: var(--ink-soft); }
+    .upload-area-simple .up-hint { display: block; font-size: .72rem; color: var(--ink-soft); margin-top: 4px; font-weight: 500; }
+    .upload-area-simple input[type="file"] { display: none; }
+    .file-preview-simple {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(79,138,90,.10);
+        border: 1px solid var(--green-bright);
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: .82rem;
+        color: var(--ink);
+    }
+    .file-preview-simple .fp-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-preview-simple .fp-remove {
+        background: none;
+        border: none;
+        color: var(--red);
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 2px 6px;
+        border-radius: 6px;
+    }
+    .file-preview-simple .fp-remove:hover { background: rgba(193,68,58,.1); }
+    .receipt-err-msg {
+        display: none;
+        color: var(--red);
+        font-size: .76rem;
+        margin-top: 4px;
+    }
+    .field.error .receipt-err-msg { display: block; }
+
+    .section-label {
+        font-size: .82rem;
+        font-weight: 800;
+        color: var(--green-dark);
+        margin: 4px 0 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .section-label::before {
+        content: '';
+        width: 4px;
+        height: 16px;
+        background: linear-gradient(180deg, var(--orange), var(--orange-bright));
+        border-radius: 2px;
     }
 </style>
 </head>
@@ -1174,19 +1513,23 @@
             <span class="logo-badge">🌿</span>
             <span class="logo-text">خُضرة</span>
         </a>
-        <nav class="cat-nav">
-            <a href="#" data-tab="veg">خضروات</a>
-            <a href="#" data-tab="fruit">فواكه</a>
-            <a href="#" data-tab="grocery">بقالة</a>
-        </nav>
         <div class="header-right">
             <div class="menu-wrap" id="menuWrap">
-                <button class="menu-btn" id="menuBtn" aria-haspopup="true" aria-expanded="false">
-                    القائمة <span class="chev">▾</span>
+                <button class="menu-btn menu-btn-icon" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-label="القائمة">
+                    <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+                    <span class="chev">▾</span>
                 </button>
                 <div class="dropdown" id="dropdown" role="menu">
-                    <a href="#" data-page="about">✨ من نحن</a>
-                    <a href="#" data-page="policy">📋 سياسة الإرجاع</a>
+                    <div class="dd-label">الفئات</div>
+                    <a href="#" data-tab="veg"><span class="dd-ico">🥬</span> خضروات</a>
+                    <a href="#" data-tab="fruit"><span class="dd-ico">🍎</span> فواكه</a>
+                    <a href="#" data-tab="grocery"><span class="dd-ico">🛒</span> بقالة</a>
+                    <a href="#" data-tab="all"><span class="dd-ico">🌟</span> الكل</a>
+                    <div class="dd-sep"></div>
+                    <div class="dd-label">معلومات</div>
+                    <a href="#" data-page="about"><span class="dd-ico">✨</span> من نحن</a>
+                    <a href="#" data-page="policy"><span class="dd-ico">📋</span> سياسة الإرجاع</a>
+                    <a href="#" data-page="privacy"><span class="dd-ico">🔒</span> سياسة الخصوصية</a>
                 </div>
             </div>
             <button class="cart-btn" id="cartBtn" aria-label="فتح سلة المشتريات">
@@ -1209,67 +1552,73 @@
             </div>
         </section>
 
-        <!-- ─── TAB BAR ─── -->
-        <div class="tab-bar" id="tabBar">
-            <button class="tab-btn active" data-tab="veg">
-                <span class="tab-icon">🥬</span> خضروات
-            </button>
-            <button class="tab-btn" data-tab="fruit">
-                <span class="tab-icon">🍎</span> فواكه
-            </button>
-            <button class="tab-btn" data-tab="grocery">
-                <span class="tab-icon">🛒</span> بقالة
-            </button>
-            <button class="tab-btn" data-tab="all">
-                <span class="tab-icon">🌟</span> الكل
-            </button>
+        <!-- ─── TAB BAR (redesigned) ─── -->
+        <div class="tab-bar-wrap">
+            <div class="tab-bar-title">
+                <span class="ico">🛍️</span>
+                <span>تسوقوا حسب الفئة</span>
+            </div>
+            <div class="tab-bar" id="tabBar">
+                <button class="tab-btn active" data-tab="veg">
+                    <span class="tab-icon">🥬</span> خضروات
+                </button>
+                <button class="tab-btn" data-tab="fruit">
+                    <span class="tab-icon">🍎</span> فواكه
+                </button>
+                <button class="tab-btn" data-tab="grocery">
+                    <span class="tab-icon">🛒</span> بقالة
+                </button>
+                <button class="tab-btn" data-tab="all">
+                    <span class="tab-icon">🌟</span> الكل
+                </button>
+            </div>
         </div>
 
         <main>
             <section class="category" id="veg">
-                <div class="cat-header"><h2>🥬 خضروات طازجة</h2><p>مقطوفة اليوم من الحقل</p></div>
+                <div class="cat-header"><h2>🥬 خضروات طازجة</h2><p>مقطوفة صباح اليوم من الحقل مباشرة</p></div>
                 <div class="grid" id="grid-veg">
                     <div class="loading-spinner"><div class="spinner"></div>جاري تحميل المنتجات...</div>
                 </div>
             </section>
 
             <section class="category hidden" id="fruit">
-                <div class="cat-header"><h2>🍎 فواكه موسمية</h2><p>حلاوة طبيعية بلا انتظار</p></div>
+                <div class="cat-header"><h2>🍎 فاكهة موسمية</h2><p>أحلى وأطيب فاكهة الموسم بجودة عالية</p></div>
                 <div class="grid" id="grid-fruit">
                     <div class="loading-spinner"><div class="spinner"></div>جاري تحميل المنتجات...</div>
                 </div>
             </section>
 
             <section class="category hidden" id="grocery">
-                <div class="cat-header"><h2>🛒 بقالة ومنتجات المنزل</h2><p>أساسيات مطبخك اليومية</p></div>
+                <div class="cat-header"><h2>🛒 منتجات غذائية</h2><p>أساسيات مطبخك اليومية بأثمنة معقولة</p></div>
                 <div class="grid" id="grid-grocery">
                     <div class="loading-spinner"><div class="spinner"></div>جاري تحميل المنتجات...</div>
                 </div>
             </section>
 
             <section class="trust-section">
-                <h2>علاش تختار خُضرة؟</h2>
-                <p class="sub">آلاف الزبناء كيثقو فينا كل نهار</p>
+                <h2>علاش خضرة هي الخيار الأول؟ ✨</h2>
+                <p class="sub">الزبناء كيثقو فينا كل نهار</p>
                 <div class="trust-grid">
                     <div class="trust-card">
                         <div class="ico">🌱</div>
-                        <h4>طازج من الفلاح</h4>
-                        <p>كنجيبو المنتجات مباشرة من الحقل، بلا وسطاء، لضمان الطراوة.</p>
+                        <h4>جودة المنتجات</h4>
+                        <p>كنجيبو المنتجات، بلا وسطاء، لضمان الطراوة والجودة اللي تستحق.</p>
                     </div>
                     <div class="trust-card">
                         <div class="ico">🚚</div>
-                        <h4>توصيل بسرعة</h4>
-                        <p>طلبك كيوصلك نفس النهار، فالوقت المناسب ليك.</p>
+                        <h4>توصيل بسرعة وفي الوقت لي تختار</h4>
+                        <p>طلبك كيوصلك نفس النهار، فالساعة المناسبة ليك.</p>
                     </div>
                     <div class="trust-card">
                         <div class="ico">💵</div>
-                        <h4>خلص عند الاستلام</h4>
-                        <p>ما كتخلصش حتى توصلك السلعة وتتأكد من جودتها.</p>
+                        <h4>دفع من غير قلق</h4>
+                        <p>ما تخلص حتى توصل السلعة وتأكد من الجودة — إلى كنتي راضي عاد خلص.</p>
                     </div>
                     <div class="trust-card">
                         <div class="ico">🤝</div>
-                        <h4>ثقة وضمان</h4>
-                        <p>ماشي عاجبتك السلعة؟ نتواصلو معاك ونحلو المشكل بسرعة.</p>
+                        <h4>ثقة وضمان 100%</h4>
+                        <p>شي حاجة ما عجبتك؟ نتواصلو معاك ونحلو المشكل — خدمة الزبون أولوية خاصة بالنسبة لمتجر خضرة.</p>
                     </div>
                 </div>
             </section>
@@ -1306,6 +1655,27 @@
         <p><em>ملاحظة: الدفع عند الاستلام كيعطيك الحق باش تتفقد السلعة قبل ما تخلص، هادشي كيحمي حقك 100%.</em></p>
     </div>
 
+    <div class="info-page" id="page-privacy">
+        <a href="#" class="back-shop" data-back>← العودة للمتجر</a>
+        <h2>سياسة الخصوصية</h2>
+        <p>في <strong>خُضرة</strong>، خصوصيتك عندنا من أهم الأولويات. هذه السياسة كتوضح كيفاش كنجمعو ونستعملو ونحميو بياناتك الشخصية عند استعمالك للمتجر.</p>
+        <p><strong>ما هي المعلومات التي نجمعها؟</strong></p>
+        <ul>
+            <li>الاسم الكامل، رقم الهاتف، وعنوان التوصيل — لإتمام الطلب فقط.</li>
+            <li>معلومات الطلب (المنتجات، الكمية، المبلغ) — لتنظيم عمليات التوصيل.</li>
+            <li>وصل التحويل البنكي (إذا اختار العميل الدفع بالتحويل) — لتأكيد الدفع فقط.</li>
+        </ul>
+        <p><strong>كيفاش كنستعملو هاد المعلومات؟</strong></p>
+        <ul>
+            <li>🚚 تجهيز وتوصيل الطلب في الوقت المحدد.</li>
+            <li>📞 التواصل معك لتأكيد الطلب أو حل أي إشكال.</li>
+            <li>💵 التحقق من عمليات الدفع (خصوصاً التحويل البنكي).</li>
+        </ul>
+        <p><strong>حماية بياناتك:</strong> بياناتك محفوظة عندنا بشكل آمن، وما كنشاركوها مع أي طرف ثالث خارجي إلا في الحالات القانونية الضرورية. ما كنستعملوش معلوماتك لأي غرض تسويقي بدون إذنك.</p>
+        <p><strong>حقوقك:</strong> عندك الحق تطلب الاطلاع على بياناتك، تعديلها، أو حذفها في أي وقت — كافي تتواصل معنا عبر واتساب.</p>
+        <p><em>باستعمالك لمتجر خُضرة، أنت كتوافق على هاد السياسة.</em></p>
+    </div>
+
     <!-- ─── FOOTER ─── -->
     <footer>
         <h3>🌿 خُضرة</h3>
@@ -1318,6 +1688,7 @@
         <div class="footer-links">
             <a href="#" data-page="about">من نحن</a>
             <a href="#" data-page="policy">سياسة الإرجاع</a>
+            <a href="#" data-page="privacy">سياسة الخصوصية</a>
         </div>
         <a class="footer-whatsapp" href="https://wa.me/212704274830" target="_blank" rel="noopener">📲 تواصل معنا عبر واتساب</a>
         <p class="footer-note">خدمة الزبناء متوفرة يومياً من 8 صباحاً إلى 9 ليلاً</p>
@@ -1354,9 +1725,13 @@
     <div class="modal" id="checkoutModal" role="dialog" aria-modal="true">
         <button class="modal-close" id="closeCheckout" aria-label="إغلاق">✕</button>
         <h2>تأكيد الطلب</h2>
-        <p class="sub">أدخل بياناتك لإتمام الطلب — الدفع عند الاستلام</p>
+        <p class="sub">أدخل بياناتك واختر طريقة الدفع</p>
+
+        <div class="section-label">🧺 منتجات السلة والإجمالي</div>
         <div class="modal-summary" id="checkoutSummary"></div>
+
         <form id="checkoutForm" novalidate>
+            <div class="section-label">👤 بياناتك</div>
             <div class="field" id="f-name">
                 <label for="c-name">الاسم الكامل</label>
                 <input type="text" id="c-name" placeholder="مثال: أمين العلوي" autocomplete="name">
@@ -1372,7 +1747,54 @@
                 <textarea id="c-address" rows="2" placeholder="المدينة، الحي، الشارع، رقم المنزل" autocomplete="street-address"></textarea>
                 <div class="err-msg">يرجى إدخال العنوان بالتفصيل</div>
             </div>
-            <button type="submit" class="submit-btn">تأكيد الطلب — الدفع عند الاستلام</button>
+
+            <div class="section-label">🕒 وقت التسليم</div>
+            <div class="field" id="f-delivery">
+                <div class="delivery-options" id="deliveryOptions"></div>
+                <div class="delivery-hint">💡 نحرص على التوصيل في الفترة المحددة</div>
+                <div class="err-msg">يرجى اختيار وقت التسليم</div>
+            </div>
+
+            <div class="section-label">💳 طريقة الدفع</div>
+            <div class="field" id="f-payment">
+                <div class="pay-methods">
+                    <label class="pay-opt selected" data-pay="cod">
+                        <input type="radio" name="payment" value="cod" checked>
+                        <span class="pay-ico">💵</span>
+                        <span>الدفع عند الاستلام</span>
+                    </label>
+                    <label class="pay-opt" data-pay="bank">
+                        <input type="radio" name="payment" value="bank">
+                        <span class="pay-ico">🏦</span>
+                        <span>الدفع عبر تحويل بنكي</span>
+                    </label>
+                </div>
+
+                <div class="bank-panel" id="bankPanel" style="display:none;">
+                    <div class="bank-tabs" id="bankTabs">
+                        <button type="button" class="bank-tab active" data-bank="barid">🏦 BARID</button>
+                        <button type="button" class="bank-tab" data-bank="chaabi">🏦 CHAABI</button>
+                        <button type="button" class="bank-tab" data-bank="cih">🏦 CIH</button>
+                        <button type="button" class="bank-tab" data-bank="tijjari">🏦 TIJJARI</button>
+                    </div>
+                    <div class="bank-info" id="bankInfo"></div>
+                </div>
+
+                <!-- ─── RECEIPT UPLOAD - redesigned as a normal field ─── -->
+                <div class="receipt-upload-field" id="receiptField" style="display:none;">
+                    <label for="receiptFile">📎 إثبات التحويل (رفع الوصل)</label>
+                    <div class="upload-area-simple" id="uploadArea">
+                        <input type="file" id="receiptFile" accept="image/*,application/pdf">
+                        <span class="up-ico">📤</span>
+                        <span class="up-txt">اختر ملف الوصل أو اسحبه هنا</span>
+                        <span class="up-hint">صورة أو ملف PDF (حتى 5 ميغا)</span>
+                    </div>
+                    <div id="filePreviewSimple"></div>
+                    <div class="receipt-err-msg" id="receiptErr">⚠️ يرجى رفع وصل التحويل قبل المتابعة</div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitOrderBtn">تأكيد الطلب — الدفع عند الاستلام</button>
         </form>
     </div>
 
@@ -1491,7 +1913,7 @@
                 renderCart();
                 updateAllAddButtons();
 
-                // Show default tab (veg)
+                // Default tab: veg
                 switchTab('veg');
 
             } catch (err) {
@@ -1659,28 +2081,21 @@
 
         // ── Tab Switching ──
         function switchTab(tab) {
-            // Update active tab button
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.dataset.tab === tab) {
-                    btn.classList.add('active');
-                }
+                if (btn.dataset.tab === tab) btn.classList.add('active');
             });
 
-            // Show/hide categories
             const categories = ['veg', 'fruit', 'grocery'];
             categories.forEach(cat => {
                 const section = document.getElementById(cat);
-                if (tab === 'all') {
-                    section.classList.remove('hidden');
-                } else if (tab === cat) {
+                if (tab === 'all' || tab === cat) {
                     section.classList.remove('hidden');
                 } else {
                     section.classList.add('hidden');
                 }
             });
 
-            // Smooth scroll to main content
             const main = document.querySelector('main');
             if (main) {
                 setTimeout(() => {
@@ -1854,6 +2269,7 @@
                     `<div class="foot-row"><span>${i.name} (${i.variantLabel}${i.qty>1?' ×'+i.qty:''})</span><span>${fmt(i.lineTotal)} ${CURRENCY}</span></div>`
                 ).join('') +
                 `<div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;"><span>الإجمالي</span><span class="total-amount">${fmt(cartTotal())} ${CURRENCY}</span></div>`;
+            renderDeliveryOptions();
             closeDrawer();
             openModal(checkoutModal);
         }
@@ -1877,6 +2293,191 @@
             return true;
         }
 
+        // ── Delivery time options ──
+        const DELIVERY_SLOTS = [
+            { id: 'today_10_13', label: 'اليوم بين 10:00 و 13:00', cutoffHour: 10 },
+            { id: 'today_15_18', label: 'اليوم بين 15:00 و 18:00', cutoffHour: 15 },
+            { id: 'today_18_21', label: 'اليوم بين 18:00 و 21:00', cutoffHour: 19 },
+            { id: 'tomorrow_10_13', label: 'غداً بين 10:00 و 13:00', cutoffHour: null }
+        ];
+
+        function renderDeliveryOptions() {
+            const box = document.getElementById('deliveryOptions');
+            if (!box) return;
+            const nowHour = new Date().getHours();
+            let firstEnabled = null;
+            box.innerHTML = DELIVERY_SLOTS.map(slot => {
+                let disabled = false;
+                if (slot.cutoffHour !== null && nowHour >= slot.cutoffHour) disabled = true;
+                if (!disabled && firstEnabled === null) firstEnabled = slot.id;
+                return `
+                    <label class="delivery-opt${disabled ? ' disabled' : ''}" data-slot="${slot.id}">
+                        <input type="radio" name="delivery" value="${slot.id}" ${disabled ? 'disabled' : ''}>
+                        <span>${slot.label}</span>
+                    </label>`;
+            }).join('');
+            if (firstEnabled) {
+                const first = box.querySelector(`.delivery-opt[data-slot="${firstEnabled}"]`);
+                if (first) {
+                    first.classList.add('selected');
+                    first.querySelector('input').checked = true;
+                }
+            }
+            box.querySelectorAll('.delivery-opt').forEach(opt => {
+                if (opt.classList.contains('disabled')) return;
+                opt.addEventListener('click', () => {
+                    box.querySelectorAll('.delivery-opt').forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    const input = opt.querySelector('input');
+                    if (input) input.checked = true;
+                    document.getElementById('f-delivery').classList.remove('error');
+                });
+            });
+        }
+
+        function getSelectedDeliveryLabel() {
+            const checked = document.querySelector('input[name="delivery"]:checked');
+            if (!checked) return null;
+            const slot = DELIVERY_SLOTS.find(s => s.id === checked.value);
+            return slot ? slot.label : null;
+        }
+
+        // ── Bank data ──
+        const BANKS = {
+            barid: { name: 'BARID BANK', holder: 'متجر خضرة', rib: '350 810 0000000000000012 45' },
+            chaabi: { name: 'CHAABI BANK', holder: 'متجر خضرة', rib: '210 780 0000000000000034 67' },
+            cih: { name: 'CIH BANK', holder: 'متجر خضرة', rib: '230 640 0000000000000056 89' },
+            tijjari: { name: 'TIJJARI BANK', holder: 'متجر خضرة', rib: '007 810 0000000000000078 21' }
+        };
+
+        function renderBankInfo(bankKey) {
+            const b = BANKS[bankKey];
+            if (!b) return;
+            const el = document.getElementById('bankInfo');
+            el.innerHTML = `
+                <div class="bank-row">
+                    <div>
+                        <div class="lbl">البنك</div>
+                        <div class="val">🏦 ${b.name}</div>
+                    </div>
+                </div>
+                <div class="bank-row">
+                    <div>
+                        <div class="lbl">الاسم</div>
+                        <div class="val">${b.holder}</div>
+                    </div>
+                </div>
+                <div class="bank-row">
+                    <div style="flex:1;">
+                        <div class="lbl">رقم الحساب (RIB)</div>
+                        <div class="val account">${b.rib}</div>
+                    </div>
+                    <button type="button" class="copy-btn" data-copy="${b.rib.replace(/\s/g,'')}">📋 نسخ</button>
+                </div>
+            `;
+            el.querySelector('.copy-btn').addEventListener('click', function() {
+                const val = this.dataset.copy;
+                const btn = this;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(val).then(() => {
+                        btn.classList.add('copied');
+                        btn.innerHTML = '✓ تم النسخ';
+                        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 نسخ'; }, 1600);
+                    });
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = val; document.body.appendChild(ta); ta.select();
+                    try { document.execCommand('copy'); btn.classList.add('copied'); btn.innerHTML = '✓ تم النسخ'; setTimeout(()=>{btn.classList.remove('copied'); btn.innerHTML='📋 نسخ';},1600);} catch(e){}
+                    document.body.removeChild(ta);
+                }
+            });
+        }
+
+        // ── Payment methods ──
+        let currentBank = 'barid';
+        let uploadedReceipt = null;
+
+        function initPaymentMethods() {
+            const opts = document.querySelectorAll('.pay-opt');
+            const bankPanel = document.getElementById('bankPanel');
+            const receiptField = document.getElementById('receiptField');
+            const submitBtn = document.getElementById('submitOrderBtn');
+
+            opts.forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    setTimeout(() => {
+                        opts.forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        const val = opt.dataset.pay;
+                        if (val === 'bank') {
+                            bankPanel.style.display = 'block';
+                            receiptField.style.display = 'block';
+                            submitBtn.textContent = 'المتابعة وتأكيد الدفع';
+                            renderBankInfo(currentBank);
+                        } else {
+                            bankPanel.style.display = 'none';
+                            receiptField.style.display = 'none';
+                            submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
+                            // Clear receipt if switching to COD
+                            uploadedReceipt = null;
+                            document.getElementById('receiptFile').value = '';
+                            document.getElementById('filePreviewSimple').innerHTML = '';
+                            document.getElementById('uploadArea').classList.remove('has-file');
+                            document.getElementById('receiptErr').style.display = 'none';
+                        }
+                    }, 0);
+                });
+            });
+
+            document.querySelectorAll('.bank-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentBank = tab.dataset.bank;
+                    renderBankInfo(currentBank);
+                });
+            });
+
+            // File upload - simple version
+            const fileInput = document.getElementById('receiptFile');
+            const uploadArea = document.getElementById('uploadArea');
+            const preview = document.getElementById('filePreviewSimple');
+
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file) return;
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('❌ الملف كبير جداً (الحد الأقصى 5 ميغا)');
+                    this.value = '';
+                    return;
+                }
+                uploadedReceipt = file;
+                uploadArea.classList.add('has-file');
+                preview.innerHTML = `
+                    <div class="file-preview-simple">
+                        <span>📎</span>
+                        <span class="fp-name">${file.name}</span>
+                        <span style="font-size:.72rem; opacity:.7;">(${(file.size/1024).toFixed(1)} KB)</span>
+                        <button type="button" class="fp-remove" id="fpRemoveSimple" aria-label="إزالة">✕</button>
+                    </div>`;
+                document.getElementById('receiptErr').style.display = 'none';
+                document.getElementById('fpRemoveSimple').addEventListener('click', () => {
+                    uploadedReceipt = null;
+                    fileInput.value = '';
+                    preview.innerHTML = '';
+                    uploadArea.classList.remove('has-file');
+                });
+            });
+
+            // Click on upload area triggers file input
+            uploadArea.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'BUTTON' && !e.target.closest('.fp-remove')) {
+                    fileInput.click();
+                }
+            });
+        }
+
+        // ── Form submission ──
         document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -1888,7 +2489,22 @@
             const okPhone = validateField('phone', /^[0-9+\s]{8,15}$/.test(phone));
             const okAddress = validateField('address', address.length >= 8);
 
-            if (!(okName && okPhone && okAddress)) return;
+            const deliveryLabel = getSelectedDeliveryLabel();
+            const okDelivery = !!deliveryLabel;
+            document.getElementById('f-delivery').classList.toggle('error', !okDelivery);
+
+            const paymentInput = document.querySelector('input[name="payment"]:checked');
+            const paymentMethod = paymentInput ? paymentInput.value : 'cod';
+            const paymentLabel = paymentMethod === 'bank' ? ('تحويل بنكي — ' + BANKS[currentBank].name) : 'الدفع عند الاستلام';
+
+            let okReceipt = true;
+            if (paymentMethod === 'bank') {
+                okReceipt = !!uploadedReceipt;
+                document.getElementById('receiptErr').style.display = okReceipt ? 'none' : 'block';
+                document.getElementById('receiptField').classList.toggle('error', !okReceipt);
+            }
+
+            if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) return;
 
             const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
             const items = cart.map(i => ({
@@ -1901,13 +2517,26 @@
             }));
             const total = cartTotal();
 
+            // Build receipt info - only the filename/link, not the image data
+            let receiptInfo = '';
+            if (paymentMethod === 'bank' && uploadedReceipt) {
+                // We only store the filename and size, not the actual image data in the order
+                receiptInfo = 'وصل التحويل: ' + uploadedReceipt.name + ' (' + Math.round(uploadedReceipt.size/1024) + 'KB)';
+            }
+
+            const noteParts = [
+                'وقت التسليم: ' + deliveryLabel,
+                'طريقة الدفع: ' + paymentLabel
+            ];
+            if (receiptInfo) noteParts.push(receiptInfo);
+
             const orderData = {
                 order_code: orderCode,
                 customer_name: name,
                 phone: phone,
                 city: address.split(/[،,]/)[0].trim() || '—',
                 address: address,
-                note: null,
+                note: noteParts.join(' | '),
                 items: items,
                 total: total,
                 status: 'جديد'
@@ -1917,15 +2546,27 @@
                 await saveOrder(orderData);
 
                 document.getElementById('orderId').textContent = orderCode;
+                const totalLbl = paymentMethod === 'bank' ? 'الإجمالي (تحويل بنكي)' : 'الإجمالي (عند الاستلام)';
                 document.getElementById('confirmSummary').innerHTML = `
               <div class="foot-row"><span>الاسم</span><span>${name}</span></div>
               <div class="foot-row"><span>الهاتف</span><span>${phone}</span></div>
               <div class="foot-row"><span>العنوان</span><span>${address}</span></div>
+              <div class="foot-row"><span>وقت التسليم</span><span>${deliveryLabel}</span></div>
+              <div class="foot-row"><span>الدفع</span><span>${paymentLabel}</span></div>
+              ${receiptInfo ? `<div class="foot-row"><span>📎 وصل التحويل</span><span style="font-size:.78rem; color:var(--ink-soft);">${uploadedReceipt.name}</span></div>` : ''}
               <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
-                <span>الإجمالي (عند الاستلام)</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
+                <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
               </div>`;
 
-                const orderText = buildOrderMessage(orderCode, { name, phone, address });
+                // Build WhatsApp message - only include receipt filename, not the image
+                const orderText = buildOrderMessage(orderCode, {
+                    name,
+                    phone,
+                    address,
+                    deliveryLabel,
+                    paymentLabel,
+                    receiptName: uploadedReceipt ? uploadedReceipt.name : null
+                });
                 const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
                 document.getElementById('whatsappBtn').href = waLink;
 
@@ -1938,7 +2579,23 @@
                 renderCart();
                 updateAllAddButtons();
                 this.reset();
-                ['name', 'phone', 'address'].forEach(f => document.getElementById('f-' + f).classList.remove('error'));
+                ['name', 'phone', 'address', 'delivery'].forEach(f => {
+                    const el = document.getElementById('f-' + f);
+                    if (el) el.classList.remove('error');
+                });
+
+                // Reset payment UI to COD default
+                document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
+                const codOpt = document.querySelector('.pay-opt[data-pay="cod"]');
+                if (codOpt) { codOpt.classList.add('selected'); codOpt.querySelector('input').checked = true; }
+                document.getElementById('bankPanel').style.display = 'none';
+                document.getElementById('receiptField').style.display = 'none';
+                document.getElementById('submitOrderBtn').textContent = 'تأكيد الطلب — الدفع عند الاستلام';
+                uploadedReceipt = null;
+                document.getElementById('filePreviewSimple').innerHTML = '';
+                document.getElementById('uploadArea').classList.remove('has-file');
+                document.getElementById('receiptFile').value = '';
+                document.getElementById('receiptErr').style.display = 'none';
 
             } catch (err) {
                 alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
@@ -1952,13 +2609,17 @@
                 `👤 الاسم: ${customer.name}`,
                 `📞 الهاتف: ${customer.phone}`,
                 `📍 العنوان: ${customer.address}`,
+                `🕒 وقت التسليم: ${customer.deliveryLabel || '—'}`,
+                `💳 طريقة الدفع: ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
                 ``,
                 `*المنتجات:*`,
                 ...cart.map(i => `• ${i.name} (${i.variantLabel}${i.qty>1 ? ' ×'+i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
                 ``,
-                `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`,
-                `💵 طريقة الدفع: عند الاستلام`
+                `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`
             ];
+            if (customer.receiptName) {
+                lines.push('', `📎 وصل التحويل: ${customer.receiptName}`);
+            }
             return lines.join('\n');
         }
 
@@ -1995,8 +2656,9 @@
         // ── Info pages ──
         function showPage(pageId) {
             document.getElementById('shopView').style.display = pageId ? 'none' : '';
-            ['about', 'policy'].forEach(p => {
-                document.getElementById('page-' + p).classList.toggle('show', p === pageId);
+            ['about', 'policy', 'privacy'].forEach(p => {
+                const el = document.getElementById('page-' + p);
+                if (el) el.classList.toggle('show', p === pageId);
             });
             closeMenu();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2028,25 +2690,24 @@
             });
         });
 
-        // ── Navigation links as tabs ──
-        document.querySelectorAll('.cat-nav a').forEach(link => {
+        document.querySelectorAll('.dropdown a[data-tab]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const tab = this.dataset.tab;
                 if (tab) {
+                    showPage(null);
                     switchTab(tab);
+                    closeMenu();
                 }
             });
         });
 
-        // ── Shop Now button scrolls to tab ──
         document.getElementById('shopNowBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            // Switch to veg tab and scroll
             switchTab('veg');
         });
 
-        // ── Vibrant JS effects ──
+        // ── Effects ──
         document.addEventListener('mouseover', (e) => {
             const card = e.target.closest('.product-card');
             if (card && !card.dataset.vibrant) {
@@ -2098,7 +2759,8 @@
             }, 400);
         });
 
-        // ── Boot ──
+        // ── Init ──
+        initPaymentMethods();
         loadCart();
         loadProducts();
 
