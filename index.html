@@ -282,7 +282,7 @@
         transform: translateY(-2px);
     }
 
-    /* ── TAB BAR ── */
+    /* ── TAB BAR (redesigned) ── */
     .tab-bar-wrap {
         max-width: 1180px;
         margin: 0 auto 24px;
@@ -381,7 +381,9 @@
         scroll-margin-top: 90px;
         display: block;
     }
-    .category.hidden { display: none; }
+    .category.hidden {
+        display: none;
+    }
     .cat-header {
         display: flex;
         align-items: baseline;
@@ -402,6 +404,7 @@
         font-size: .9rem;
         font-weight: 500;
     }
+
     .grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -468,6 +471,8 @@
         font-family: 'Tajawal';
         font-weight: 800;
     }
+
+    /* ── STOCK TAG ── */
     .tag {
         position: absolute;
         top: -10px;
@@ -1099,10 +1104,6 @@
         background: var(--green-dark);
         box-shadow: var(--glow-green);
     }
-    .submit-btn:disabled {
-        opacity: .6;
-        cursor: not-allowed;
-    }
     .modal-close {
         position: absolute;
         top: 14px;
@@ -1212,6 +1213,7 @@
         .tab-bar-title::before, .tab-bar-title::after { max-width: 40px; }
     }
 
+    /* ── HIDE CENTER CAT-NAV (moved to menu) ── */
     .cat-nav { display: none !important; }
 
     /* ── MENU BUTTON AS ICON ── */
@@ -1339,7 +1341,7 @@
     .pay-opt.selected { border-color: var(--orange); background: #fff5e6; box-shadow: 0 0 0 3px rgba(217,118,43,.10); }
     .pay-opt .pay-ico { font-size: 1.3rem; }
 
-    /* ── BANK PANEL ── */
+    /* ── BANK PANEL (redesigned - clean & simple) ── */
     .bank-panel {
         margin-top: 12px;
         background: #f8f4e9;
@@ -1424,7 +1426,7 @@
     .copy-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
     .copy-btn.copied { background: var(--green-bright); color: #fff; border-color: var(--green-bright); }
 
-    /* ── RECEIPT UPLOAD - redesigned ── */
+    /* ── RECEIPT UPLOAD - redesigned to match other fields ── */
     .receipt-upload-field {
         margin-top: 12px;
         padding: 0;
@@ -1501,34 +1503,6 @@
         background: linear-gradient(180deg, var(--orange), var(--orange-bright));
         border-radius: 2px;
     }
-
-    /* ── UPLOAD PROGRESS ── */
-    .upload-progress {
-        display: none;
-        margin-top: 8px;
-        padding: 8px 12px;
-        background: #f0f7f0;
-        border-radius: 8px;
-        font-size: .82rem;
-        color: var(--green-dark);
-        font-weight: 600;
-    }
-    .upload-progress .progress-bar {
-        width: 100%;
-        height: 4px;
-        background: var(--bg-soft);
-        border-radius: 2px;
-        margin-top: 6px;
-        overflow: hidden;
-    }
-    .upload-progress .progress-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, var(--green-bright), var(--orange-bright));
-        border-radius: 2px;
-        transition: width .3s ease;
-    }
-    .upload-progress.show { display: block; }
 </style>
 </head>
 <body>
@@ -1578,17 +1552,25 @@
             </div>
         </section>
 
-        <!-- ─── TAB BAR ─── -->
+        <!-- ─── TAB BAR (redesigned) ─── -->
         <div class="tab-bar-wrap">
             <div class="tab-bar-title">
                 <span class="ico">🛍️</span>
                 <span>تسوقوا حسب الفئة</span>
             </div>
             <div class="tab-bar" id="tabBar">
-                <button class="tab-btn active" data-tab="veg"><span class="tab-icon">🥬</span> خضروات</button>
-                <button class="tab-btn" data-tab="fruit"><span class="tab-icon">🍎</span> فواكه</button>
-                <button class="tab-btn" data-tab="grocery"><span class="tab-icon">🛒</span> بقالة</button>
-                <button class="tab-btn" data-tab="all"><span class="tab-icon">🌟</span> الكل</button>
+                <button class="tab-btn active" data-tab="veg">
+                    <span class="tab-icon">🥬</span> خضروات
+                </button>
+                <button class="tab-btn" data-tab="fruit">
+                    <span class="tab-icon">🍎</span> فواكه
+                </button>
+                <button class="tab-btn" data-tab="grocery">
+                    <span class="tab-icon">🛒</span> بقالة
+                </button>
+                <button class="tab-btn" data-tab="all">
+                    <span class="tab-icon">🌟</span> الكل
+                </button>
             </div>
         </div>
 
@@ -1798,7 +1780,7 @@
                     <div class="bank-info" id="bankInfo"></div>
                 </div>
 
-                <!-- ─── RECEIPT UPLOAD ─── -->
+                <!-- ─── RECEIPT UPLOAD - redesigned as a normal field ─── -->
                 <div class="receipt-upload-field" id="receiptField" style="display:none;">
                     <label for="receiptFile">📎 إثبات التحويل (رفع الوصل)</label>
                     <div class="upload-area-simple" id="uploadArea">
@@ -1808,10 +1790,6 @@
                         <span class="up-hint">صورة أو ملف PDF (حتى 5 ميغا)</span>
                     </div>
                     <div id="filePreviewSimple"></div>
-                    <div class="upload-progress" id="uploadProgress">
-                        <span>⏳ جاري رفع الملف...</span>
-                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    </div>
                     <div class="receipt-err-msg" id="receiptErr">⚠️ يرجى رفع وصل التحويل قبل المتابعة</div>
                 </div>
             </div>
@@ -1865,9 +1843,6 @@
         let allProducts = [];
         const selection = {};
         let cart = [];
-        let uploadedReceipt = null;
-        let currentBank = 'barid';
-        let isUploading = false;
 
         // ── localStorage ──
         function saveCart() {
@@ -1901,52 +1876,6 @@
 
         function isInCart(productId) {
             return cart.some(c => c.id === productId);
-        }
-
-        // ── Upload to Supabase Storage ──
-        async function uploadReceiptToSupabase(file) {
-            const fileName = `receipts/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
-            
-            // Show progress
-            const progressEl = document.getElementById('uploadProgress');
-            const fillEl = document.getElementById('progressFill');
-            progressEl.classList.add('show');
-            fillEl.style.width = '0%';
-            isUploading = true;
-            document.getElementById('submitOrderBtn').disabled = true;
-
-            try {
-                // Upload file
-                const { data, error } = await supabase.storage
-                    .from('receipts')
-                    .upload(fileName, file, {
-                        cacheControl: '3600',
-                        upsert: false
-                    });
-
-                if (error) throw error;
-
-                // Get public URL
-                const { data: urlData } = supabase.storage
-                    .from('receipts')
-                    .getPublicUrl(fileName);
-
-                // Simulate progress completion
-                fillEl.style.width = '100%';
-                await new Promise(r => setTimeout(r, 300));
-
-                return urlData.publicUrl;
-            } catch (err) {
-                console.error('Upload error:', err);
-                throw new Error('فشل رفع الملف: ' + err.message);
-            } finally {
-                isUploading = false;
-                document.getElementById('submitOrderBtn').disabled = false;
-                setTimeout(() => {
-                    progressEl.classList.remove('show');
-                    fillEl.style.width = '0%';
-                }, 1000);
-            }
         }
 
         // ── Load products ──
@@ -1984,6 +1913,7 @@
                 renderCart();
                 updateAllAddButtons();
 
+                // Default tab: veg
                 switchTab('veg');
 
             } catch (err) {
@@ -2456,22 +2386,17 @@
                     });
                 } else {
                     const ta = document.createElement('textarea');
-                    ta.value = val;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    try {
-                        document.execCommand('copy');
-                        btn.classList.add('copied');
-                        btn.innerHTML = '✓ تم النسخ';
-                        setTimeout(() => { btn.classList.remove('copied');
-                            btn.innerHTML = '📋 نسخ'; }, 1600);
-                    } catch (e) {}
+                    ta.value = val; document.body.appendChild(ta); ta.select();
+                    try { document.execCommand('copy'); btn.classList.add('copied'); btn.innerHTML = '✓ تم النسخ'; setTimeout(()=>{btn.classList.remove('copied'); btn.innerHTML='📋 نسخ';},1600);} catch(e){}
                     document.body.removeChild(ta);
                 }
             });
         }
 
         // ── Payment methods ──
+        let currentBank = 'barid';
+        let uploadedReceipt = null;
+
         function initPaymentMethods() {
             const opts = document.querySelectorAll('.pay-opt');
             const bankPanel = document.getElementById('bankPanel');
@@ -2493,12 +2418,12 @@
                             bankPanel.style.display = 'none';
                             receiptField.style.display = 'none';
                             submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
+                            // Clear receipt if switching to COD
                             uploadedReceipt = null;
                             document.getElementById('receiptFile').value = '';
                             document.getElementById('filePreviewSimple').innerHTML = '';
                             document.getElementById('uploadArea').classList.remove('has-file');
                             document.getElementById('receiptErr').style.display = 'none';
-                            document.getElementById('uploadProgress').classList.remove('show');
                         }
                     }, 0);
                 });
@@ -2513,12 +2438,12 @@
                 });
             });
 
-            // File upload with progress
+            // File upload - simple version
             const fileInput = document.getElementById('receiptFile');
             const uploadArea = document.getElementById('uploadArea');
             const preview = document.getElementById('filePreviewSimple');
 
-            fileInput.addEventListener('change', async function() {
+            fileInput.addEventListener('change', function() {
                 const file = this.files[0];
                 if (!file) return;
                 if (file.size > 5 * 1024 * 1024) {
@@ -2526,8 +2451,6 @@
                     this.value = '';
                     return;
                 }
-
-                // Show preview immediately
                 uploadedReceipt = file;
                 uploadArea.classList.add('has-file');
                 preview.innerHTML = `
@@ -2538,33 +2461,15 @@
                         <button type="button" class="fp-remove" id="fpRemoveSimple" aria-label="إزالة">✕</button>
                     </div>`;
                 document.getElementById('receiptErr').style.display = 'none';
-
                 document.getElementById('fpRemoveSimple').addEventListener('click', () => {
                     uploadedReceipt = null;
                     fileInput.value = '';
                     preview.innerHTML = '';
                     uploadArea.classList.remove('has-file');
-                    document.getElementById('uploadProgress').classList.remove('show');
                 });
-
-                // Auto-upload to Supabase
-                try {
-                    const publicUrl = await uploadReceiptToSupabase(file);
-                    uploadedReceipt = {
-                        file: file,
-                        url: publicUrl,
-                        name: file.name
-                    };
-                    console.log('✅ Uploaded receipt:', publicUrl);
-                } catch (err) {
-                    alert('❌ فشل رفع الملف: ' + err.message);
-                    uploadedReceipt = null;
-                    fileInput.value = '';
-                    preview.innerHTML = '';
-                    uploadArea.classList.remove('has-file');
-                }
             });
 
+            // Click on upload area triggers file input
             uploadArea.addEventListener('click', function(e) {
                 if (e.target.tagName !== 'BUTTON' && !e.target.closest('.fp-remove')) {
                     fileInput.click();
@@ -2575,11 +2480,6 @@
         // ── Form submission ──
         document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-
-            if (isUploading) {
-                alert('⏳ يرجى الانتظار حتى يتم رفع الملف');
-                return;
-            }
 
             const name = document.getElementById('c-name').value.trim();
             const phone = document.getElementById('c-phone').value.trim();
@@ -2598,59 +2498,51 @@
             const paymentLabel = paymentMethod === 'bank' ? ('تحويل بنكي — ' + BANKS[currentBank].name) : 'الدفع عند الاستلام';
 
             let okReceipt = true;
-            let receiptUrl = null;
             if (paymentMethod === 'bank') {
-                okReceipt = !!uploadedReceipt && !!uploadedReceipt.url;
+                okReceipt = !!uploadedReceipt;
                 document.getElementById('receiptErr').style.display = okReceipt ? 'none' : 'block';
                 document.getElementById('receiptField').classList.toggle('error', !okReceipt);
-                if (okReceipt) {
-                    receiptUrl = uploadedReceipt.url;
-                }
             }
 
             if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) return;
 
-            // Disable submit button to prevent double submission
-            const submitBtn = document.getElementById('submitOrderBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ جاري حفظ الطلب...';
+            const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
+            const items = cart.map(i => ({
+                id: i.id,
+                name: i.name,
+                variant: i.variantLabel,
+                qty: i.qty,
+                unitTotal: i.unitTotal,
+                lineTotal: i.lineTotal
+            }));
+            const total = cartTotal();
+
+            // Build receipt info - only the filename/link, not the image data
+            let receiptInfo = '';
+            if (paymentMethod === 'bank' && uploadedReceipt) {
+                // We only store the filename and size, not the actual image data in the order
+                receiptInfo = 'وصل التحويل: ' + uploadedReceipt.name + ' (' + Math.round(uploadedReceipt.size/1024) + 'KB)';
+            }
+
+            const noteParts = [
+                'وقت التسليم: ' + deliveryLabel,
+                'طريقة الدفع: ' + paymentLabel
+            ];
+            if (receiptInfo) noteParts.push(receiptInfo);
+
+            const orderData = {
+                order_code: orderCode,
+                customer_name: name,
+                phone: phone,
+                city: address.split(/[،,]/)[0].trim() || '—',
+                address: address,
+                note: noteParts.join(' | '),
+                items: items,
+                total: total,
+                status: 'جديد'
+            };
 
             try {
-                const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
-                const items = cart.map(i => ({
-                    id: i.id,
-                    name: i.name,
-                    variant: i.variantLabel,
-                    qty: i.qty,
-                    unitTotal: i.unitTotal,
-                    lineTotal: i.lineTotal
-                }));
-                const total = cartTotal();
-
-                let receiptInfo = '';
-                if (paymentMethod === 'bank' && receiptUrl) {
-                    receiptInfo = 'وصل التحويل: ' + uploadedReceipt.name + ' - رابط: ' + receiptUrl;
-                }
-
-                const noteParts = [
-                    'وقت التسليم: ' + deliveryLabel,
-                    'طريقة الدفع: ' + paymentLabel
-                ];
-                if (receiptInfo) noteParts.push(receiptInfo);
-
-                const orderData = {
-                    order_code: orderCode,
-                    customer_name: name,
-                    phone: phone,
-                    city: address.split(/[،,]/)[0].trim() || '—',
-                    address: address,
-                    note: noteParts.join(' | '),
-                    items: items,
-                    total: total,
-                    status: 'جديد',
-                    receipt_url: receiptUrl // Store receipt URL for reference
-                };
-
                 await saveOrder(orderData);
 
                 document.getElementById('orderId').textContent = orderCode;
@@ -2661,19 +2553,18 @@
               <div class="foot-row"><span>العنوان</span><span>${address}</span></div>
               <div class="foot-row"><span>وقت التسليم</span><span>${deliveryLabel}</span></div>
               <div class="foot-row"><span>الدفع</span><span>${paymentLabel}</span></div>
-              ${receiptUrl ? `<div class="foot-row"><span>📎 وصل التحويل</span><span style="font-size:.78rem; color:var(--green-dark);"><a href="${receiptUrl}" target="_blank" style="color:var(--orange); text-decoration:underline;">رابط الصورة</a></span></div>` : ''}
+              ${receiptInfo ? `<div class="foot-row"><span>📎 وصل التحويل</span><span style="font-size:.78rem; color:var(--ink-soft);">${uploadedReceipt.name}</span></div>` : ''}
               <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
                 <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
               </div>`;
 
-                // Build WhatsApp message with receipt link
+                // Build WhatsApp message - only include receipt filename, not the image
                 const orderText = buildOrderMessage(orderCode, {
                     name,
                     phone,
                     address,
                     deliveryLabel,
                     paymentLabel,
-                    receiptUrl: receiptUrl,
                     receiptName: uploadedReceipt ? uploadedReceipt.name : null
                 });
                 const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
@@ -2693,11 +2584,10 @@
                     if (el) el.classList.remove('error');
                 });
 
-                // Reset UI
+                // Reset payment UI to COD default
                 document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
                 const codOpt = document.querySelector('.pay-opt[data-pay="cod"]');
-                if (codOpt) { codOpt.classList.add('selected');
-                    codOpt.querySelector('input').checked = true; }
+                if (codOpt) { codOpt.classList.add('selected'); codOpt.querySelector('input').checked = true; }
                 document.getElementById('bankPanel').style.display = 'none';
                 document.getElementById('receiptField').style.display = 'none';
                 document.getElementById('submitOrderBtn').textContent = 'تأكيد الطلب — الدفع عند الاستلام';
@@ -2706,14 +2596,10 @@
                 document.getElementById('uploadArea').classList.remove('has-file');
                 document.getElementById('receiptFile').value = '';
                 document.getElementById('receiptErr').style.display = 'none';
-                document.getElementById('uploadProgress').classList.remove('show');
 
             } catch (err) {
-                alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.\n' + err.message);
+                alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
                 console.error(err);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = paymentMethod === 'bank' ? 'المتابعة وتأكيد الدفع' : 'تأكيد الطلب — الدفع عند الاستلام';
             }
         });
 
@@ -2731,12 +2617,8 @@
                 ``,
                 `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`
             ];
-            if (customer.receiptUrl) {
-                lines.push(``);
-                lines.push(`📎 *وصل التحويل:*`);
-                lines.push(customer.receiptUrl);
-                lines.push(``);
-                lines.push(`🖼️ *لتحميل الصورة:* اضغط على الرابط أعلاه`);
+            if (customer.receiptName) {
+                lines.push('', `📎 وصل التحويل: ${customer.receiptName}`);
             }
             return lines.join('\n');
         }
