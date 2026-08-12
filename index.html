@@ -2159,7 +2159,7 @@
     (function() {
         "use strict";
 
-        const SUPABASE_URL = "https://mbwbmgrdxpojcrsmsjdb.supabase.co";
+        const SUPABASE_URL = "https://mbwbmgrdxpojcrsmsjdb.supab 09 هههase.co";
         const SUPABASE_ANON_KEY =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1id2JtZ3JkeHBvamNyc21zamRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMTk4MzgsImV4cCI6MjEwMTU5NTgzOH0.NL_xnPjxikV3SFWKhrtq3bVojWvIws8QRdV_RQ5_0nc";
         const STORE_WHATSAPP_LINK = "https://wa.me/212704274830";
@@ -2831,34 +2831,48 @@
         let currentBank = 'barid';
         let uploadedReceipt = null;
 
-        function initPaymentMethods() {
-            const opts = document.querySelectorAll('.pay-opt');
-            const bankPanel = document.getElementById('bankPanel');
-            const submitBtn = document.getElementById('submitOrderBtn');
-            const uploadArea = document.getElementById('uploadArea');
-            const fileInput = document.getElementById('receiptFile');
-            const preview = document.getElementById('filePreview');
-            const receiptErr = document.getElementById('receiptErr');
+function initPaymentMethods() {
+    const opts = document.querySelectorAll('.pay-opt');
+    const bankPanel = document.getElementById('bankPanel');
+    const submitBtn = document.getElementById('submitOrderBtn');
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('receiptFile');
+    const preview = document.getElementById('filePreview');
+    const receiptErr = document.getElementById('receiptErr');
 
-            opts.forEach(opt => {
-                opt.addEventListener('click', (e) => {
-                    setTimeout(() => {
-                        opts.forEach(o => o.classList.remove('selected'));
-                        opt.classList.add('selected');
-                        const val = opt.dataset.pay;
-                        if (val === 'bank') {
-                            bankPanel.style.display = 'block';
-                            submitBtn.textContent = 'تأكيد الطلب — تحويل بنكي';
-                            renderBankInfo(currentBank);
-                        } else {
-                            bankPanel.style.display = 'none';
-                            submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
-                            receiptErr.style.display = 'none';
-                        }
-                    }, 0);
-                });
-            });
+    // ⚠️ إخفاء قسم رفع الوصل افتراضيًا (لأن الدفع عند الاستلام هو الافتراضي)
+    uploadArea.style.display = 'none';
+    preview.style.display = 'none';
+    receiptErr.style.display = 'none';
 
+    opts.forEach(opt => {
+        opt.addEventListener('click', (e) => {
+            setTimeout(() => {
+                opts.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                const val = opt.dataset.pay;
+                if (val === 'bank') {
+                    bankPanel.style.display = 'block';
+                    submitBtn.textContent = 'تأكيد الطلب — تحويل بنكي';
+                    renderBankInfo(currentBank);
+                    // ✅ إظهار قسم رفع الوصل
+                    uploadArea.style.display = 'block';
+                    preview.style.display = 'block';
+                    receiptErr.style.display = 'none';
+                } else {
+                    bankPanel.style.display = 'none';
+                    submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
+                    receiptErr.style.display = 'none';
+                    // ❌ إخفاء قسم رفع الوصل
+                    uploadArea.style.display = 'none';
+                    preview.style.display = 'none';
+                }
+            }, 0);
+        });
+    });
+
+    // ... باقي الكود (أحداث البنوك، رفع الملف، إلخ)
+}
             document.querySelectorAll('.bank-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
