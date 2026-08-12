@@ -139,22 +139,21 @@
             outline-offset: 2px;
         }
 
-          /* ── HEADER ── */
-          .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      display: flex;
-      align-items: center;
-      justify-content: space-between; /* يحافظ على العناصر عند الحواف */
+/* ── HEADER ── */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* يجعل اللوغو في المنتصف */
+    gap: 20px;
     padding: 12px 20px;
     background: rgba(243, 236, 221, .72);
     backdrop-filter: blur(14px) saturate(1.4);
     -webkit-backdrop-filter: blur(14px) saturate(1.4);
     border-bottom: 1px solid rgba(223, 209, 172, .55);
     box-shadow: 0 4px 24px rgba(42, 39, 33, .06);
-    /* نضيف `position: relative` لكي يعمل الموضع المطلق للشعار بداخله */
-    position: relative;
 }
 
 .logo {
@@ -163,26 +162,25 @@
     gap: 9px;
     font-size: 1.5rem;
     color: var(--green-dark);
-    /* نقل الشعار إلى المنتصف تماماً */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    /* إضافة خلفية خفيفة لتجنب تداخل النص مع الخلفية */
-    background: rgba(243, 236, 221, .80);
-    padding: 0 10px;
-    border-radius: 8px;
+    /* إزالة التموضع المطلق للشعار */
+    position: static;
+    transform: none;
+    padding: 0;
+    background: none;
 }
 
 .header-right {
     display: flex;
     align-items: center;
     gap: 14px;
-    /* في التصميم RTL، `margin-left: auto` يدفع العنصر إلى أقصى اليسار
-       (وهو الجانب الأيمن بصرياً - حيث توجد القائمة) */
-    margin-left: auto;
+    /* يستخدم flexbox لضمان بقاء القائمة والسلة على الجانب الأيمن */
+    margin-right: auto; 
 }
 
+/* تحديث القائمة لتكون على اليسار (الخلف في RTL) */
+.menu-wrap {
+    position: relative;
+}
 
         /* ── DROPDOWN MENU ── */
         .menu-wrap {
@@ -1851,12 +1849,20 @@
 
     <!-- ─── HEADER ─── -->
     <header class="site-header">
-        <a href="#" class="logo" id="logoHome">
-            <span class="logo-badge">🌿</span>
-            <span class="logo-text">خُضرة</span>
-        </a>
-        <div class="header-right">
-            <div class="menu-wrap" id="menuWrap">
+    <div class="header-right">
+        <div class="menu-wrap" id="menuWrap">
+            <!-- ... محتوى القائمة ... -->
+        </div>
+        <button class="cart-btn" id="cartBtn" aria-label="فتح سلة المشتريات">
+            🧺
+            <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+    </div>
+    <a href="#" class="logo" id="logoHome">
+        <span class="logo-badge">🌿</span>
+        <span class="logo-text">خُضرة</span>
+    </a>
+</header>
                 <button class="menu-btn menu-btn-icon" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-label="القائمة">
                     <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
                     <span class="chev">▾</span>
