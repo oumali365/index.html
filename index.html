@@ -2159,7 +2159,7 @@
     (function() {
         "use strict";
 
-        const SUPABASE_URL = "https://mbwbmgrdxpojcrsmsjdb.supab 09 هههase.co";
+        const SUPABASE_URL = "https://mbwbmgrdxpojcrsmsjdb.supabase.co";
         const SUPABASE_ANON_KEY =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1id2JtZ3JkeHBvamNyc21zamRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMTk4MzgsImV4cCI6MjEwMTU5NTgzOH0.NL_xnPjxikV3SFWKhrtq3bVojWvIws8QRdV_RQ5_0nc";
         const STORE_WHATSAPP_LINK = "https://wa.me/212704274830";
@@ -2870,9 +2870,6 @@ function initPaymentMethods() {
             }, 0);
         });
     });
-
-    // ... باقي الكود (أحداث البنوك، رفع الملف، إلخ)
-}
             document.querySelectorAll('.bank-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
@@ -2980,7 +2977,7 @@ function initPaymentMethods() {
               <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
               <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
               <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
-              <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
+              <div class="foot-row"><span>إختر وقت التسليم المناسب لك</span><span>${escapeHtml(deliveryLabel)}</span></div>
               <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
               <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
                 <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
