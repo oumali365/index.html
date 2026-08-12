@@ -139,49 +139,49 @@
             outline-offset: 2px;
         }
 
-        /* ── HEADER ── */
-        .site-header {
-            position: sticky;
-            top: 0;
-            z-index: 40;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 20px;
-            background: rgba(243, 236, 221, .72);
-            backdrop-filter: blur(14px) saturate(1.4);
-            -webkit-backdrop-filter: blur(14px) saturate(1.4);
-            border-bottom: 1px solid rgba(223, 209, 172, .55);
-            box-shadow: 0 4px 24px rgba(42, 39, 33, .06);
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            font-size: 1.5rem;
-            color: var(--green-dark);
-        }
-        .logo .logo-badge {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--green-bright), var(--green-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: var(--shadow);
-            transition: transform .25s ease;
-        }
-        .logo:hover .logo-badge {
-            transform: rotate(-8deg) scale(1.05);
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
+/* ── HEADER ── */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* يحافظ على العناصر عند الحواف */
+    padding: 12px 20px;
+    background: rgba(243, 236, 221, .72);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom: 1px solid rgba(223, 209, 172, .55);
+    box-shadow: 0 4px 24px rgba(42, 39, 33, .06);
+    /* نضيف `position: relative` لكي يعمل الموضع المطلق للشعار بداخله */
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 1.5rem;
+    color: var(--green-dark);
+    /* نقل الشعار إلى المنتصف تماماً */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    /* إضافة خلفية خفيفة لتجنب تداخل النص مع الخلفية */
+    background: rgba(243, 236, 221, .80);
+    padding: 0 10px;
+    border-radius: 8px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    /* في التصميم RTL، `margin-left: auto` يدفع العنصر إلى أقصى اليسار
+       (وهو الجانب الأيمن بصرياً - حيث توجد القائمة) */
+    margin-left: auto;
+}
 
         /* ── DROPDOWN MENU ── */
         .menu-wrap {
