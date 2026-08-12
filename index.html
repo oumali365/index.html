@@ -2832,45 +2832,33 @@
         let uploadedReceipt = null;
 
         function initPaymentMethods() {
-    const opts = document.querySelectorAll('.pay-opt');
-    const bankPanel = document.getElementById('bankPanel');
-    const submitBtn = document.getElementById('submitOrderBtn');
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('receiptFile');
-    const preview = document.getElementById('filePreview');
-    const receiptErr = document.getElementById('receiptErr');
+            const opts = document.querySelectorAll('.pay-opt');
+            const bankPanel = document.getElementById('bankPanel');
+            const submitBtn = document.getElementById('submitOrderBtn');
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('receiptFile');
+            const preview = document.getElementById('filePreview');
+            const receiptErr = document.getElementById('receiptErr');
 
-    // ⚠️ إخفاء قسم رفع الوصل افتراضيًا (لأن الدفع عند الاستلام هو الافتراضي)
-    uploadArea.style.display = 'none';
-    preview.style.display = 'none';
-    receiptErr.style.display = 'none';
+            opts.forEach(opt => {
+                opt.addEventListener('click', (e) => {
+                    setTimeout(() => {
+                        opts.forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        const val = opt.dataset.pay;
+                        if (val === 'bank') {
+                            bankPanel.style.display = 'block';
+                            submitBtn.textContent = 'تأكيد الطلب — تحويل بنكي';
+                            renderBankInfo(currentBank);
+                        } else {
+                            bankPanel.style.display = 'none';
+                            submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
+                            receiptErr.style.display = 'none';
+                        }
+                    }, 0);
+                });
+            });
 
-    opts.forEach(opt => {
-        opt.addEventListener('click', (e) => {
-            setTimeout(() => {
-                opts.forEach(o => o.classList.remove('selected'));
-                opt.classList.add('selected');
-                const val = opt.dataset.pay;
-                if (val === 'bank') {
-                    bankPanel.style.display = 'block';
-                    submitBtn.textContent = 'تأكيد الطلب — تحويل بنكي';
-                    renderBankInfo(currentBank);
-                    // ✅ إظهار قسم رفع الوصل
-                    uploadArea.style.display = 'block';
-                    preview.style.display = 'block';
-                    receiptErr.style.display = 'none';
-                } else {
-                    bankPanel.style.display = 'none';
-                    submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
-                    receiptErr.style.display = 'none';
-                    // ❌ إخفاء قسم رفع الوصل
-                    uploadArea.style.display = 'none';
-                    preview.style.display = 'none';
-                }
-            }, 0);
-        });
-    });
-}
             document.querySelectorAll('.bank-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
