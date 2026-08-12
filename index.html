@@ -139,48 +139,49 @@
             outline-offset: 2px;
         }
 
-/* ── HEADER ── */
-.site-header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* يجعل اللوغو في المنتصف */
-    gap: 20px;
-    padding: 12px 20px;
-    background: rgba(243, 236, 221, .72);
-    backdrop-filter: blur(14px) saturate(1.4);
-    -webkit-backdrop-filter: blur(14px) saturate(1.4);
-    border-bottom: 1px solid rgba(223, 209, 172, .55);
-    box-shadow: 0 4px 24px rgba(42, 39, 33, .06);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    font-size: 1.5rem;
-    color: var(--green-dark);
-    /* إزالة التموضع المطلق للشعار */
-    position: static;
-    transform: none;
-    padding: 0;
-    background: none;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    /* يستخدم flexbox لضمان بقاء القائمة والسلة على الجانب الأيمن */
-    margin-right: auto; 
-}
-
-/* تحديث القائمة لتكون على اليسار (الخلف في RTL) */
-.menu-wrap {
-    position: relative;
-}
+        /* ── HEADER ── */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 20px;
+            background: rgba(243, 236, 221, .72);
+            backdrop-filter: blur(14px) saturate(1.4);
+            -webkit-backdrop-filter: blur(14px) saturate(1.4);
+            border-bottom: 1px solid rgba(223, 209, 172, .55);
+            box-shadow: 0 4px 24px rgba(42, 39, 33, .06);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 1.5rem;
+            color: var(--green-dark);
+        }
+        .logo .logo-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green-bright), var(--green-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: var(--shadow);
+            transition: transform .25s ease;
+        }
+        .logo:hover .logo-badge {
+            transform: rotate(-8deg) scale(1.05);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
 
         /* ── DROPDOWN MENU ── */
         .menu-wrap {
@@ -1849,18 +1850,12 @@
 
     <!-- ─── HEADER ─── -->
     <header class="site-header">
-    <div class="header-right">
-        <div class="menu-wrap" id="menuWrap"
-        </div>
-        <button class="cart-btn" id="cartBtn" aria-label="فتح سلة المشتريات">
-            🧺
-            <span class="cart-badge" id="cartBadge">0</span>
-        </button>
-    </div>
-    <a href="#" class="logo" id="logoHome">
-        <span class="logo-badge">🌿</span>
-        <span class="logo-text">خُضرة</span>
-    </a>
+        <a href="#" class="logo" id="logoHome">
+            <span class="logo-badge">🌿</span>
+            <span class="logo-text">خُضرة</span>
+        </a>
+        <div class="header-right">
+            <div class="menu-wrap" id="menuWrap">
                 <button class="menu-btn menu-btn-icon" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-label="القائمة">
                     <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
                     <span class="chev">▾</span>
@@ -2778,7 +2773,7 @@
             barid: { name: 'BARID BANK', rib: '350 810 0000000000000012 45' },
             chaabi: { name: 'CHAABI BANK', rib: '210 780 0000000000000034 67' },
             cih: { name: 'CIH BANK', rib: '230 640 0000000000000056 89' },
-            tijjari: { name: 'TIJJARI BANK', rib: '007 810 0000000000000078 21' },
+            tijjari: { name: 'TIJJARI BANK', '0772865632' },
             boafrica: { name: 'BANK OF AFRICA', rib: '000 240 0000000000000090 12' },
             cashplus: { name: 'CASH PLUS', rib: '222 180 0000000000000100 34' }
         };
@@ -2836,7 +2831,7 @@
         let currentBank = 'barid';
         let uploadedReceipt = null;
 
-function initPaymentMethods() {
+        function initPaymentMethods() {
     const opts = document.querySelectorAll('.pay-opt');
     const bankPanel = document.getElementById('bankPanel');
     const submitBtn = document.getElementById('submitOrderBtn');
@@ -2875,6 +2870,7 @@ function initPaymentMethods() {
             }, 0);
         });
     });
+
             document.querySelectorAll('.bank-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
@@ -2982,7 +2978,7 @@ function initPaymentMethods() {
               <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
               <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
               <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
-              <div class="foot-row"><span>إختر وقت التسليم المناسب لك</span><span>${escapeHtml(deliveryLabel)}</span></div>
+              <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
               <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
               <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
                 <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
@@ -3030,7 +3026,7 @@ function initPaymentMethods() {
                 `👤 الاسم: ${customer.name}`,
                 `📞 الهاتف: ${customer.phone}`,
                 `📍 العنوان: ${customer.address}`,
-                `🕒 وقت التسليم: ${customer.deliveryLabel || '—'}`,
+                `🕒 إختر وقت التسليم المناسب لك: ${customer.deliveryLabel || '—'}`,
                 `💳 طريقة الدفع: ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
                 ``,
                 `*المنتجات:*`,
