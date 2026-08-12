@@ -1728,68 +1728,64 @@
             border-color: var(--green-bright);
         }
 
-        /* ── RECEIPT UPLOAD (separate section) ── */
-        .receipt-section {
-            max-width: 1180px;
-            margin: 20px auto 0;
-            padding: 0 20px;
-        }
-        .receipt-section h3 {
-            color: var(--green-dark);
-            font-size: 1.2rem;
-            margin: 0 0 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .receipt-upload-box {
-            background: var(--paper);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-        }
-        .upload-drop-zone {
-            border: 2px dashed var(--line);
+        /* ── RECEIPT UPLOAD (Inside Bank Panel) ── */
+        .upload-area {
+            margin-top: 16px;
+            border: 2px dashed rgba(255, 255, 255, .28);
             border-radius: 12px;
-            padding: 24px 16px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
-            transition: border-color .2s, background .2s;
-            background: rgba(255, 255, 255, .4);
+            transition: .2s;
+            background: rgba(255, 255, 255, .03);
         }
-        .upload-drop-zone:hover {
-            border-color: var(--orange-bright);
-            background: #fffaf1;
+        .upload-area:hover {
+            border-color: var(--yellow-bright);
+            background: rgba(245, 215, 110, .06);
         }
-        .upload-drop-zone.has-file {
+        .upload-area.has-file {
             border-color: var(--green-bright);
-            background: rgba(79, 138, 90, .08);
+            background: rgba(79, 138, 90, .12);
             border-style: solid;
         }
-        .upload-drop-zone p {
-            margin: 0;
-            font-weight: 600;
-            color: var(--ink-soft);
+        .upload-area .up-ico {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 6px;
+            color: #EFE9D8;
+        }
+        .upload-area .up-txt {
+            font-size: .84rem;
+            font-weight: 700;
+            color: #EFE9D8;
+        }
+        .upload-area .up-hint {
+            display: block;
+            font-size: .72rem;
+            color: rgba(239, 233, 216, .6);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .upload-area input[type="file"] {
+            display: none;
         }
         .file-preview {
             margin-top: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(79, 138, 90, .12);
+            gap: 8px;
+            background: rgba(79, 138, 90, .18);
             border: 1px solid var(--green-bright);
             border-radius: 10px;
-            padding: 8px 12px;
-            font-size: .85rem;
-            color: var(--green-dark);
+            padding: 8px 10px;
+            font-size: .82rem;
+            color: #EFE9D8;
         }
         .file-preview .fp-name {
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            font-weight: 700;
         }
         .file-preview .fp-remove {
             background: none;
@@ -1799,17 +1795,17 @@
             cursor: pointer;
             padding: 2px 6px;
             border-radius: 6px;
-            transition: background .12s;
         }
         .file-preview .fp-remove:hover {
             background: rgba(193, 68, 58, .2);
         }
         #receiptErr {
-            color: var(--red);
+            display: none;
+            color: #F5D76E;
             font-weight: 700;
             font-size: .82rem;
             margin-top: 10px;
-            display: none;
+            text-align: center;
         }
 
         .section-label {
@@ -1913,22 +1909,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- ─── RECEIPT UPLOAD SECTION ─── -->
-        <section class="receipt-section">
-            <h3>📎 إثبات التحويل البنكي</h3>
-            <div class="receipt-upload-box">
-                <div id="uploadArea" class="upload-drop-zone">
-                    <p>🔼 اسحب الملف هنا أو انقر للاختيار</p>
-                    <p style="font-size: .85rem; color: var(--ink-soft); margin-top: 8px;">
-                        PNG, JPG, PDF (حد أقصى 5MB)
-                    </p>
-                </div>
-                <input type="file" id="receiptFile" style="display:none;" accept=".png,.jpg,.jpeg,.pdf">
-                <div id="filePreview"></div>
-                <div id="receiptErr">⚠️ يرجى رفع وصل التحويل قبل المتابعة</div>
-            </div>
-        </section>
 
         <section class="trust-section">
             <h2>علاش خضرة هي الخيار الأول؟ ✨</h2>
@@ -2103,7 +2083,7 @@
                     </label>
                 </div>
 
-                <!-- Bank logos (text-based, no external images) -->
+                <!-- Bank logos (text-based) -->
                 <div class="bank-logos">
                     <span class="bank-logo" style="background: #00549E;">BOA</span>
                     <span class="bank-logo" style="background: #D30000;">Attijari</span>
@@ -2123,6 +2103,16 @@
                         <button type="button" class="bank-tab" data-bank="cashplus">🏦 CASH+</button>
                     </div>
                     <div class="bank-info" id="bankInfo"></div>
+
+                    <!-- Receipt Upload Inside Bank Panel -->
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="receiptFile" accept=".png,.jpg,.jpeg,.pdf">
+                        <span class="up-ico">📎</span>
+                        <span class="up-txt">إثبات التحويل — رفع الوصل</span>
+                        <span class="up-hint">صورة أو ملف PDF (حتى 5 ميغا)</span>
+                    </div>
+                    <div id="filePreview"></div>
+                    <div id="receiptErr">⚠️ يرجى رفع وصل التحويل قبل المتابعة</div>
                 </div>
             </div>
 
@@ -2773,7 +2763,7 @@
             }
         }
 
-        // ── Payment method switching ──
+        // ── Payment method switching & File Upload ──
         function initPaymentMethods() {
             const opts = document.querySelectorAll('.pay-opt');
             const bankPanel = document.getElementById('bankPanel');
@@ -2806,7 +2796,7 @@
                 });
             });
 
-            // File upload (using the receipt section)
+            // File upload (inside bank panel)
             const fileInput = document.getElementById('receiptFile');
             const uploadArea = document.getElementById('uploadArea');
             const preview = document.getElementById('filePreview');
