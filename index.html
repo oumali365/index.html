@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
     <title>خُضرة | خضر وفواكه طازجة توصل لبابك</title>
 
-    <!-- Google Analytics & Tag Manager -->
+    <!-- Google Analytics (مرة واحدة فقط) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNL0B7G424"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -72,19 +73,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://mbwbmgrdxpojcrsmsjdb.supabase.co">
 
-<!-- Google Fonts غير محظور -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="..." rel="stylesheet"></noscript>
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    </noscript>
 
-    <!-- Scripts خارجية -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNL0B7G424"></script>
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
     <style>
         /* ── RESET & ROOT ── */
-        * {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
             margin: 0;
+            padding: 0;
         }
         :root {
             --bg: #F3ECDD;
@@ -107,9 +112,13 @@
             --green-faint: rgba(58, 90, 64, .18);
             --glow-orange: 0 0 20px rgba(217, 118, 43, .35);
             --glow-green: 0 0 20px rgba(58, 90, 64, .30);
+            --transition-fast: .15s ease;
+            --transition-med: .25s ease;
+            --transition-slow: .35s ease;
         }
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
         body {
             margin: 0;
@@ -117,8 +126,11 @@
             color: var(--ink);
             font-family: 'Cairo', sans-serif;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             background-image: radial-gradient(circle at 100% 0%, rgba(217, 118, 43, .10), transparent 40%),
                 radial-gradient(circle at 0% 20%, rgba(58, 90, 64, .08), transparent 35%);
+            min-height: 100vh;
+            line-height: 1.6;
         }
         h1,
         h2,
@@ -127,12 +139,14 @@
         .cta,
         .stamp-font {
             font-family: 'Lalezar', sans-serif;
+            font-weight: 400;
         }
         .price,
         .tag-price,
         .line-total span,
         .cart-line-price,
-        .total-amount {
+        .total-amount,
+        .order-id {
             font-family: 'Tajawal', sans-serif;
             font-weight: 800;
         }
@@ -143,10 +157,32 @@
         button {
             font-family: inherit;
             cursor: pointer;
+            border: none;
+            background: none;
+            font-size: inherit;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        /* إزالة الـ outline الافتراضي مع الحفاظ على إمكانية الوصول */
+        :focus {
+            outline: none;
         }
         :focus-visible {
             outline: 3px solid var(--orange);
             outline-offset: 2px;
+            border-radius: 4px;
+        }
+        /* منع التحديد الزائد على الجوال */
+        button,
+        [role="button"],
+        [tabindex] {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         /* ── HEADER ── */
@@ -171,6 +207,10 @@
             gap: 9px;
             font-size: 1.5rem;
             color: var(--green-dark);
+            transition: transform var(--transition-fast);
+        }
+        .logo:hover {
+            transform: translateY(-1px);
         }
         .logo .logo-badge {
             width: 38px;
@@ -182,7 +222,7 @@
             justify-content: center;
             font-size: 1.25rem;
             box-shadow: var(--shadow);
-            transition: transform .25s ease;
+            transition: transform var(--transition-med);
         }
         .logo:hover .logo-badge {
             transform: rotate(-8deg) scale(1.05);
@@ -208,7 +248,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: background .2s, border-color .2s, box-shadow .2s;
+            transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
         }
         .menu-btn:hover {
             background: #fff;
@@ -216,7 +256,7 @@
             box-shadow: 0 0 0 3px rgba(217, 118, 43, .15);
         }
         .menu-btn .chev {
-            transition: transform .2s;
+            transition: transform var(--transition-fast);
             font-size: .75rem;
         }
         .menu-wrap.open .menu-btn .chev {
@@ -230,7 +270,6 @@
             min-width: 240px;
             width: max(240px, 28vw);
             background: #ffffff;
-            backdrop-filter: blur(0);
             border: 1px solid var(--line);
             border-radius: 18px;
             box-shadow: 0 16px 48px rgba(42, 39, 33, .18), 0 4px 12px rgba(0, 0, 0, .06);
@@ -238,7 +277,7 @@
             opacity: 0;
             pointer-events: none;
             transform: translateY(-8px) scale(.97);
-            transition: opacity .25s ease, transform .25s ease;
+            transition: opacity var(--transition-med), transform var(--transition-med);
             z-index: 50;
         }
         .menu-wrap.open .dropdown {
@@ -250,11 +289,10 @@
             display: block;
             padding: 12px 16px;
             border-radius: 12px;
-            text-decoration: none;
             font-weight: 600;
             font-size: .92rem;
             color: var(--ink);
-            transition: background .15s, color .15s, transform .12s;
+            transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
             border-right: 3px solid transparent;
         }
         .dropdown a:hover {
@@ -269,7 +307,6 @@
             position: relative;
             background: var(--green);
             color: #fff;
-            border: none;
             border-radius: 999px;
             width: 46px;
             height: 46px;
@@ -277,7 +314,8 @@
             align-items: center;
             justify-content: center;
             box-shadow: var(--shadow);
-            transition: transform .15s, box-shadow .2s;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            font-size: 1.2rem;
         }
         .cart-btn:hover {
             transform: translateY(-2px);
@@ -299,7 +337,7 @@
             align-items: center;
             justify-content: center;
             border: 2px solid var(--bg);
-            transition: transform .25s ease;
+            transition: transform var(--transition-med);
         }
         .cart-badge.pop {
             animation: badgePop .35s ease;
@@ -360,7 +398,7 @@
             border-radius: 999px;
             font-size: 1.1rem;
             box-shadow: var(--shadow);
-            transition: .2s;
+            transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
             position: relative;
             overflow: hidden;
         }
@@ -370,7 +408,7 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(255, 255, 255, .15), transparent);
             opacity: 0;
-            transition: opacity .3s;
+            transition: opacity var(--transition-med);
         }
         .cta:hover {
             background: var(--orange-dark);
@@ -395,7 +433,7 @@
             font-size: .82rem;
             font-weight: 700;
             color: var(--green-dark);
-            transition: .2s;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
         }
         .hero-badges span:hover {
             border-color: var(--orange-bright);
@@ -421,7 +459,7 @@
             color: var(--ink-soft);
             font-weight: 700;
             font-size: .92rem;
-            transition: all .25s ease;
+            transition: all var(--transition-med);
             box-shadow: 0 2px 6px rgba(42, 39, 33, .05);
             flex: 1 1 auto;
             min-width: 90px;
@@ -430,7 +468,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            cursor: pointer;
         }
         .tabs-container .tab-btn:hover {
             border-color: var(--orange-bright);
@@ -443,11 +480,9 @@
             color: #fff;
             border-color: var(--green-dark);
             box-shadow: var(--glow-green);
-            transform: translateY(-1px);
         }
         .tabs-container .tab-btn.active:hover {
             background: linear-gradient(135deg, var(--green-dark), #172a1c);
-            box-shadow: var(--glow-green);
         }
 
         /* ── TAB CONTENT WRAPPER ── */
@@ -458,8 +493,7 @@
         }
         .tab-content {
             display: none;
-            will-change: transform, opacity;
-            animation: tabFade .3s ease;
+            animation: tabFade var(--transition-med);
         }
         .tab-content.active {
             display: block;
@@ -481,18 +515,18 @@
             margin-bottom: 16px;
             border-bottom: 2px dashed var(--line);
             padding-bottom: 10px;
+            flex-wrap: wrap;
         }
         .tab-content .cat-header h2 {
             font-size: 1.7rem;
             color: var(--green-dark);
-            margin: 0;
             letter-spacing: .3px;
         }
         .tab-content .cat-header p {
             color: var(--ink-soft);
-            margin: 0;
             font-size: .9rem;
             font-weight: 500;
+            margin: 0;
         }
 
         /* ── PRODUCT GRID ── */
@@ -515,23 +549,6 @@
         }
 
         /* ── SKELETON LOADER ── */
-        .skeleton-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 17px;
-        }
-        @media (max-width: 900px) {
-            .skeleton-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
-            }
-        }
-        @media (max-width: 640px) {
-            .skeleton-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-        }
         .skeleton-card {
             background: var(--paper);
             border: 1px solid var(--line);
@@ -545,6 +562,7 @@
             animation: shimmer 1.2s ease-in-out infinite;
             background: linear-gradient(110deg, var(--paper) 30%, var(--bg-soft) 50%, var(--paper) 70%);
             background-size: 200% 100%;
+            min-height: 220px;
         }
         @keyframes shimmer {
             0% {
@@ -583,35 +601,28 @@
 
         /* ── PRODUCT CARD ── */
         .product-card {
-    position: relative;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 15px 13px 13px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-shadow: var(--shadow);
-    transition: transform .12s ease, box-shadow .12s ease, border-color .25s ease;
-    will-change: transform;
-}
-
+            position: relative;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 15px 13px 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-med);
+        }
         .product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(42, 39, 33, .14);
-    border-color: var(--orange-bright);
-}
-
-.product-card.out-of-stock {
-    opacity: .72;
-}
-
-/* للعناصر الأخرى */
-.cart-badge, .cta, .menu-btn, .stepper button {
-    will-change: transform;
-}
-        .product-card .p-icon {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(42, 39, 33, .14);
+            border-color: var(--orange-bright);
+        }
+        .product-card.out-of-stock {
+            opacity: .72;
+        }
+        .product-card .p-icon,
+        .product-card .p-img {
             font-size: 2.6rem;
             line-height: 1;
             width: 74px;
@@ -622,16 +633,24 @@
             background: var(--bg-soft);
             border-radius: 50%;
             margin: 6px 0 10px;
-            transition: transform .3s ease, background .3s ease;
+            transition: transform var(--transition-med), background var(--transition-med);
+            overflow: hidden;
         }
-        .product-card:hover .p-icon {
+        .product-card .p-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .product-card:hover .p-icon,
+        .product-card:hover .p-img {
             transform: scale(1.06) rotate(-4deg);
             background: linear-gradient(135deg, var(--bg-soft), #f5eddb);
         }
         .product-card h3 {
             font-size: 1.02rem;
             margin: 0 0 4px;
-            font-family: 'Cairo';
+            font-family: 'Cairo', sans-serif;
             font-weight: 700;
             color: var(--green-dark);
         }
@@ -642,7 +661,7 @@
         }
         .unit-label b {
             color: var(--green-dark);
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
         }
 
@@ -658,6 +677,7 @@
             box-shadow: 0 3px 6px rgba(0, 0, 0, .12);
             color: #fff;
             letter-spacing: .3px;
+            z-index: 1;
         }
         .tag:after {
             content: "";
@@ -729,7 +749,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform .12s ease, background .12s ease, box-shadow .2s;
+            transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
         }
         .stepper button:hover {
             background: var(--bg-soft);
@@ -742,7 +762,7 @@
         .stepper .qty-val {
             min-width: 38px;
             text-align: center;
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
             color: var(--green-dark);
         }
@@ -752,12 +772,11 @@
             width: 100%;
             background: var(--orange);
             color: #fff;
-            border: none;
             border-radius: 10px;
             padding: 10px;
             font-weight: 700;
             font-size: .92rem;
-            transition: background .2s, transform .15s, box-shadow .2s;
+            transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
             letter-spacing: .3px;
         }
         .add-btn:hover {
@@ -825,7 +844,7 @@
             padding: 22px 16px;
             text-align: center;
             box-shadow: var(--shadow);
-            transition: transform .18s, box-shadow .25s, border-color .25s;
+            transition: transform var(--transition-fast), box-shadow var(--transition-med), border-color var(--transition-med);
         }
         .trust-card:hover {
             transform: translateY(-3px);
@@ -842,7 +861,7 @@
             justify-content: center;
             font-size: 1.7rem;
             margin: 0 auto 12px;
-            transition: transform .3s ease, background .3s ease;
+            transition: transform var(--transition-med), background var(--transition-med);
         }
         .trust-card:hover .ico {
             transform: scale(1.08) rotate(-4deg);
@@ -869,10 +888,11 @@
             margin-top: 48px;
         }
         footer h3 {
-            font-family: 'Lalezar';
+            font-family: 'Lalezar', sans-serif;
             font-size: 1.5rem;
             margin: 0 0 10px;
             color: var(--yellow-bright);
+            font-weight: 400;
         }
         footer p {
             margin: 4px 0;
@@ -906,7 +926,7 @@
             font-weight: 700;
             font-size: .9rem;
             margin-top: 14px;
-            transition: transform .15s, box-shadow .2s;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
         }
         .footer-whatsapp:hover {
             transform: translateY(-2px);
@@ -928,7 +948,7 @@
             color: #EFE9D8;
             opacity: .8;
             font-size: .85rem;
-            transition: opacity .2s;
+            transition: opacity var(--transition-fast);
         }
         .footer-links a:hover {
             opacity: 1;
@@ -949,7 +969,7 @@
             padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
             box-shadow: 0 -6px 20px rgba(0, 0, 0, .12);
             transform: translateY(110%);
-            transition: transform .25s ease;
+            transition: transform var(--transition-med);
         }
         .sticky-cart-bar.show {
             transform: translateY(0);
@@ -960,9 +980,10 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
+            text-align: right;
             background: none;
             border: none;
-            text-align: right;
+            padding: 0;
         }
         .sticky-cart-info .lbl {
             font-size: .72rem;
@@ -970,7 +991,7 @@
             font-weight: 700;
         }
         .sticky-cart-info .val {
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
             color: var(--orange-dark);
             font-size: 1.05rem;
@@ -978,12 +999,11 @@
         .sticky-checkout-btn {
             background: var(--orange);
             color: #fff;
-            border: none;
             border-radius: 12px;
             padding: 0 24px;
             font-weight: 700;
             font-size: .95rem;
-            transition: background .15s, box-shadow .2s;
+            transition: background var(--transition-fast), box-shadow var(--transition-fast);
         }
         .sticky-checkout-btn:hover {
             background: var(--orange-dark);
@@ -996,7 +1016,7 @@
             background: rgba(20, 18, 12, .5);
             opacity: 0;
             pointer-events: none;
-            transition: opacity .25s;
+            transition: opacity var(--transition-med);
             z-index: 50;
         }
         .overlay.show {
@@ -1014,7 +1034,7 @@
             background: var(--bg);
             z-index: 60;
             transform: translateX(-105%);
-            transition: transform .3s ease;
+            transition: transform var(--transition-med);
             display: flex;
             flex-direction: column;
             box-shadow: 8px 0 30px rgba(0, 0, 0, .2);
@@ -1042,7 +1062,10 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            transition: background .15s;
+            transition: background var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .close-btn:hover {
             background: var(--bg-soft);
@@ -1051,6 +1074,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 12px 20px;
+            -webkit-overflow-scrolling: touch;
         }
         .cart-empty {
             text-align: center;
@@ -1082,7 +1106,7 @@
         }
         .freshness-label .val {
             color: var(--green-dark);
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
         }
         .freshness-bar {
@@ -1095,7 +1119,7 @@
             height: 100%;
             width: 0%;
             border-radius: 999px;
-            transition: width .35s ease;
+            transition: width var(--transition-med);
             background: linear-gradient(90deg, var(--green-bright), var(--yellow-bright), var(--orange-bright));
         }
 
@@ -1108,8 +1132,8 @@
             border-radius: 12px;
             padding: 10px 12px;
             margin-bottom: 10px;
-            animation: fadeSlide .25s ease;
-            transition: border-color .2s;
+            animation: fadeSlide var(--transition-med);
+            transition: border-color var(--transition-fast);
         }
         .cart-line:hover {
             border-color: var(--orange-bright);
@@ -1126,14 +1150,18 @@
         }
         .cart-line .ico {
             font-size: 1.6rem;
+            flex-shrink: 0;
         }
         .cart-line .info {
             flex: 1;
+            min-width: 0;
         }
         .cart-line .info h4 {
             margin: 0 0 2px;
             font-size: .92rem;
             color: var(--green-dark);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
         }
         .cart-line .info p {
             margin: 0 0 6px;
@@ -1157,7 +1185,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background .12s;
+            transition: background var(--transition-fast);
         }
         .cart-line .mini-stepper button:hover {
             background: var(--bg-soft);
@@ -1165,7 +1193,7 @@
         .cart-line .mini-stepper .mini-val {
             min-width: 20px;
             text-align: center;
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
             font-size: .82rem;
         }
@@ -1173,8 +1201,9 @@
             color: var(--orange-dark);
             font-size: .95rem;
             white-space: nowrap;
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
+            flex-shrink: 0;
         }
         .remove-btn {
             background: none;
@@ -1184,7 +1213,11 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            transition: background .12s;
+            transition: background var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
         .remove-btn:hover {
             background: #f6dcda;
@@ -1240,13 +1273,12 @@
             width: 100%;
             background: var(--orange);
             color: #fff;
-            border: none;
-            padding: 13px;
             border-radius: 12px;
+            padding: 13px;
             font-size: 1.05rem;
             font-weight: 700;
             margin-top: 6px;
-            transition: background .15s, box-shadow .2s;
+            transition: background var(--transition-fast), box-shadow var(--transition-fast);
         }
         .checkout-btn:hover {
             background: var(--orange-dark);
@@ -1274,7 +1306,8 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
             opacity: 0;
             pointer-events: none;
-            transition: opacity .25s, transform .25s;
+            transition: opacity var(--transition-med), transform var(--transition-med);
+            -webkit-overflow-scrolling: touch;
         }
         .modal.show {
             opacity: 1;
@@ -1308,11 +1341,11 @@
             border: 1.5px solid var(--line);
             border-radius: 10px;
             padding: 10px 12px;
-            font-family: 'Cairo';
+            font-family: 'Cairo', sans-serif;
             font-size: .95rem;
             background: #fff;
             color: var(--ink);
-            transition: border-color .15s;
+            transition: border-color var(--transition-fast);
         }
         .field input:focus,
         .field textarea:focus {
@@ -1346,17 +1379,24 @@
             width: 100%;
             background: var(--green);
             color: #fff;
-            border: none;
-            padding: 13px;
             border-radius: 12px;
+            padding: 13px;
             font-size: 1.05rem;
             font-weight: 700;
             margin-top: 4px;
-            transition: background .15s, box-shadow .2s;
+            transition: background var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+            text-align: center;
+            display: block;
+            box-sizing: border-box;
         }
         .submit-btn:hover {
             background: var(--green-dark);
             box-shadow: var(--glow-green);
+        }
+        .submit-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            box-shadow: none;
         }
         .modal-close {
             position: absolute;
@@ -1369,7 +1409,11 @@
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            transition: background .12s;
+            transition: background var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
         }
         .modal-close:hover {
             background: var(--bg-soft);
@@ -1397,10 +1441,11 @@
             background: var(--bg-soft);
             border-radius: 8px;
             padding: 6px 14px;
-            font-family: 'Tajawal';
+            font-family: 'Tajawal', sans-serif;
             font-weight: 800;
             color: var(--orange-dark);
             margin: 8px 0 18px;
+            font-size: 1.2rem;
         }
 
         .loading-spinner {
@@ -1453,41 +1498,18 @@
             padding-right: 20px;
             color: var(--ink-soft);
             line-height: 1.9;
+            margin-bottom: 14px;
         }
         .back-shop {
             display: inline-block;
             margin-bottom: 20px;
             color: var(--orange);
             font-weight: 700;
-            transition: .2s;
+            transition: color var(--transition-fast);
         }
         .back-shop:hover {
             text-decoration: underline;
             color: var(--orange-dark);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition: none !important;
-                animation: none !important;
-                scroll-behavior: auto !important;
-            }
-        }
-        @media (max-width: 700px) {
-            .dropdown {
-                min-width: 220px;
-                width: 82vw;
-                left: -20px;
-            }
-            .tabs-container .tab-btn {
-                padding: 8px 14px;
-                font-size: .82rem;
-                min-width: 80px;
-                max-width: 140px;
-            }
-            .cat-nav {
-                display: none !important;
-            }
         }
 
         /* ── MENU BUTTON AS ICON ── */
@@ -1514,8 +1536,9 @@
             border-radius: 50%;
             background: conic-gradient(from 0deg, transparent, rgba(217, 118, 43, .35), transparent 40%);
             opacity: 0;
-            transition: opacity .3s;
+            transition: opacity var(--transition-med);
             animation: spin 4s linear infinite;
+            pointer-events: none;
         }
         .menu-btn.menu-btn-icon:hover::before {
             opacity: 1;
@@ -1542,7 +1565,7 @@
             height: 2.5px;
             background: var(--green-dark);
             border-radius: 2px;
-            transition: transform .25s ease, width .25s ease, background .2s;
+            transition: transform var(--transition-med), width var(--transition-med), background var(--transition-fast);
         }
         .menu-btn.menu-btn-icon .menu-lines span:nth-child(1) {
             width: 100%;
@@ -1602,7 +1625,7 @@
             border-radius: 12px;
             background: #fff;
             cursor: pointer;
-            transition: border-color .18s, background .18s, box-shadow .18s;
+            transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
             font-size: .88rem;
             font-weight: 600;
             color: var(--ink);
@@ -1615,6 +1638,7 @@
             accent-color: var(--orange);
             width: 16px;
             height: 16px;
+            flex-shrink: 0;
         }
         .delivery-opt.selected {
             border-color: var(--orange);
@@ -1655,7 +1679,7 @@
             border-radius: 12px;
             background: #fff;
             cursor: pointer;
-            transition: .18s;
+            transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
             font-weight: 700;
             color: var(--ink);
             font-size: .92rem;
@@ -1668,6 +1692,7 @@
             accent-color: var(--orange);
             width: 18px;
             height: 18px;
+            flex-shrink: 0;
         }
         .pay-opt.selected {
             border-color: var(--orange);
@@ -1676,9 +1701,10 @@
         }
         .pay-opt .pay-ico {
             font-size: 1.3rem;
+            flex-shrink: 0;
         }
 
-        /* ── BANK INFO (simplified, without colorful logos) ── */
+        /* ── BANK INFO ── */
         .bank-panel {
             margin-top: 12px;
             background: linear-gradient(135deg, #1a2f1f, #0f1e13);
@@ -1686,7 +1712,12 @@
             border-radius: 14px;
             padding: 14px;
             box-shadow: 0 10px 28px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .06);
-            animation: fadeSlide .3s ease;
+            animation: fadeSlide var(--transition-med);
+            display: none;
+            /* مخفي افتراضياً */
+        }
+        .bank-panel.visible {
+            display: block;
         }
         .bank-tabs {
             display: grid;
@@ -1704,7 +1735,7 @@
             font-weight: 700;
             font-size: .78rem;
             cursor: pointer;
-            transition: .2s;
+            transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1734,6 +1765,7 @@
             padding: 8px 0;
             border-bottom: 1px dashed rgba(255, 255, 255, .10);
             font-size: .88rem;
+            flex-wrap: wrap;
         }
         .bank-row:last-child {
             border-bottom: none;
@@ -1754,6 +1786,7 @@
             font-size: 1rem;
             direction: ltr;
             unicode-bidi: embed;
+            word-break: break-all;
         }
         .copy-btn {
             background: rgba(245, 215, 110, .18);
@@ -1764,7 +1797,7 @@
             font-size: .74rem;
             font-weight: 800;
             cursor: pointer;
-            transition: .18s;
+            transition: background var(--transition-fast), color var(--transition-fast);
             display: inline-flex;
             align-items: center;
             gap: 4px;
@@ -1780,15 +1813,44 @@
             border-color: var(--green-bright);
         }
 
-        /* ── RECEIPT UPLOAD (inside modal) ── */
+        /* ── RECEIPT UPLOAD SECTION ── */
+        .receipt-section {
+            margin-top: 12px;
+            padding: 14px;
+            background: #fff9f0;
+            border: 1.5px dashed var(--orange);
+            border-radius: 12px;
+            display: none;
+            /* مخفي افتراضياً */
+            animation: fadeSlide var(--transition-med);
+        }
+        .receipt-section.visible {
+            display: block;
+        }
+        .receipt-section .section-label {
+            font-size: .82rem;
+            font-weight: 800;
+            color: var(--green-dark);
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .receipt-section .section-label::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(180deg, var(--orange), var(--orange-bright));
+            border-radius: 2px;
+        }
         .upload-drop-zone {
             border: 2px dashed var(--line);
             border-radius: 12px;
             padding: 16px;
             text-align: center;
             cursor: pointer;
-            transition: border-color .2s, background .2s;
-            background: rgba(255, 255, 255, .4);
+            transition: border-color var(--transition-fast), background var(--transition-fast);
+            background: rgba(255, 255, 255, .5);
             margin-top: 6px;
         }
         .upload-drop-zone:hover {
@@ -1832,7 +1894,7 @@
             cursor: pointer;
             padding: 2px 6px;
             border-radius: 6px;
-            transition: background .12s;
+            transition: background var(--transition-fast);
         }
         .file-preview .fp-remove:hover {
             background: rgba(193, 68, 58, .2);
@@ -1843,6 +1905,9 @@
             font-size: .82rem;
             margin-top: 10px;
             display: none;
+        }
+        #receiptErr.show {
+            display: block;
         }
 
         .section-label {
@@ -1860,65 +1925,73 @@
             height: 16px;
             background: linear-gradient(180deg, var(--orange), var(--orange-bright));
             border-radius: 2px;
+            flex-shrink: 0;
         }
-        
-        /* إزالة الـ outline الأزرق الافتراضي من المتصفح */
-         button, a, input, textarea, select, [role="button"], [tabindex] {
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-             user-select: none;
-}
 
-/* إزالة التركيز من جميع العناصر عند النقر بالماوس */
-            button:focus,
-            a:focus,
-            input:focus,
-            textarea:focus,
-            select:focus {
-            outline: none;
-            box-shadow: none;
-}
-
-/* إزالة التأثير الأزرق على الجوال */
-* {
-     -webkit-tap-highlight-color: transparent;
-}
-        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+                animation: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        @media (max-width: 700px) {
+            .dropdown {
+                min-width: 220px;
+                width: 82vw;
+                left: -20px;
+            }
+            .tabs-container .tab-btn {
+                padding: 8px 14px;
+                font-size: .82rem;
+                min-width: 80px;
+                max-width: 140px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: .95rem;
+            }
+            .trust-section h2 {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- ─── HEADER ─── -->
     <header class="site-header">
-        <a href="#" class="logo" id="logoHome">
-            <span class="logo-badge">🌿</span>
+        <a href="#" class="logo" id="logoHome" aria-label="خضرة - الرئيسية">
+            <span class="logo-badge" aria-hidden="true">🌿</span>
             <span class="logo-text">خُضرة</span>
         </a>
         <div class="header-right">
             <div class="menu-wrap" id="menuWrap">
                 <button class="menu-btn menu-btn-icon" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-label="القائمة">
                     <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
-                    <span class="chev">▾</span>
+                    <span class="chev" aria-hidden="true">▾</span>
                 </button>
-                <div class="dropdown" id="dropdown" role="menu">
+                <div class="dropdown" id="dropdown" role="menu" aria-label="قائمة التنقل">
                     <div class="dd-label">الفئات</div>
-                    <a href="#" data-tab="veg"><span class="dd-ico">🥬</span> خضروات</a>
-                    <a href="#" data-tab="fruit"><span class="dd-ico">🍎</span> فواكه</a>
-                    <a href="#" data-tab="dairy"><span class="dd-ico">🥛</span> ألبان</a>
-                    <a href="#" data-tab="grocery"><span class="dd-ico">🛒</span> بقالة</a>
-                    <a href="#" data-tab="all"><span class="dd-ico">🌟</span> الكل</a>
-                    <div class="dd-sep"></div>
+                    <a href="#" data-tab="veg" role="menuitem"><span class="dd-ico">🥬</span> خضروات</a>
+                    <a href="#" data-tab="fruit" role="menuitem"><span class="dd-ico">🍎</span> فواكه</a>
+                    <a href="#" data-tab="dairy" role="menuitem"><span class="dd-ico">🥛</span> ألبان</a>
+                    <a href="#" data-tab="grocery" role="menuitem"><span class="dd-ico">🛒</span> بقالة</a>
+                    <a href="#" data-tab="all" role="menuitem"><span class="dd-ico">🌟</span> الكل</a>
+                    <div class="dd-sep" aria-hidden="true"></div>
                     <div class="dd-label">معلومات</div>
-                    <a href="#" data-page="about"><span class="dd-ico">✨</span> من نحن</a>
-                    <a href="#" data-page="policy"><span class="dd-ico">📋</span> سياسة الإرجاع</a>
-                    <a href="#" data-page="privacy"><span class="dd-ico">🔒</span> سياسة الخصوصية</a>
+                    <a href="#" data-page="about" role="menuitem"><span class="dd-ico">✨</span> من نحن</a>
+                    <a href="#" data-page="policy" role="menuitem"><span class="dd-ico">📋</span> سياسة الإرجاع</a>
+                    <a href="#" data-page="privacy" role="menuitem"><span class="dd-ico">🔒</span> سياسة الخصوصية</a>
                 </div>
             </div>
             <button class="cart-btn" id="cartBtn" aria-label="فتح سلة المشتريات">
                 🧺
-                <span class="cart-badge" id="cartBadge">0</span>
+                <span class="cart-badge" id="cartBadge" aria-label="عدد المنتجات في السلة">0</span>
             </button>
         </div>
     </header>
@@ -1937,35 +2010,30 @@
         </section>
 
         <!-- ─── TABS CONTAINER ─── -->
-        <div class="tabs-container" id="tabBar">
-            <button class="tab-btn active" data-tab="veg">🥬 خضروات</button>
-            <button class="tab-btn" data-tab="fruit">🍎 فواكه</button>
-            <button class="tab-btn" data-tab="dairy">🥛 ألبان</button>
-            <button class="tab-btn" data-tab="grocery">🛒 بقالة</button>
+        <div class="tabs-container" id="tabBar" role="tablist" aria-label="فئات المنتجات">
+            <button class="tab-btn active" data-tab="veg" role="tab" aria-selected="true" aria-controls="tab-veg" id="tab-btn-veg">🥬 خضروات</button>
+            <button class="tab-btn" data-tab="fruit" role="tab" aria-selected="false" aria-controls="tab-fruit" id="tab-btn-fruit">🍎 فواكه</button>
+            <button class="tab-btn" data-tab="dairy" role="tab" aria-selected="false" aria-controls="tab-dairy" id="tab-btn-dairy">🥛 ألبان</button>
+            <button class="tab-btn" data-tab="grocery" role="tab" aria-selected="false" aria-controls="tab-grocery" id="tab-btn-grocery">🛒 بقالة</button>
         </div>
 
         <!-- ─── TAB CONTENT WRAPPER ─── -->
         <div class="tabs-wrapper">
-            <div id="tab-veg" class="tab-content active">
+            <div id="tab-veg" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-veg">
                 <div class="cat-header"><h2>🥬 خضروات طازجة</h2><p>مقطوفة صباح اليوم من الحقل مباشرة</p></div>
-                <div class="grid" id="grid-veg">
-                    <!-- سيتم استبدالها بالسكيلتون أو المنتجات -->
-                </div>
+                <div class="grid" id="grid-veg"></div>
             </div>
-            <div id="tab-fruit" class="tab-content">
+            <div id="tab-fruit" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-fruit">
                 <div class="cat-header"><h2>🍎 فاكهة موسمية</h2><p>أحلى وأطيب فاكهة الموسم بجودة عالية</p></div>
-                <div class="grid" id="grid-fruit">
-                </div>
+                <div class="grid" id="grid-fruit"></div>
             </div>
-            <div id="tab-dairy" class="tab-content">
+            <div id="tab-dairy" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-dairy">
                 <div class="cat-header"><h2>🥛 ألبان طازجة</h2><p>ألبان وأجبان بجودة عالية من المزارع المحلية</p></div>
-                <div class="grid" id="grid-dairy">
-                </div>
+                <div class="grid" id="grid-dairy"></div>
             </div>
-            <div id="tab-grocery" class="tab-content">
+            <div id="tab-grocery" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-grocery">
                 <div class="cat-header"><h2>🛒 منتجات غذائية</h2><p>أساسيات مطبخك اليومية بأثمنة معقولة</p></div>
-                <div class="grid" id="grid-grocery">
-                </div>
+                <div class="grid" id="grid-grocery"></div>
             </div>
         </div>
 
@@ -1974,22 +2042,22 @@
             <p class="sub">الزبناء كيثقو فينا كل نهار</p>
             <div class="trust-grid">
                 <div class="trust-card">
-                    <div class="ico">🌱</div>
+                    <div class="ico" aria-hidden="true">🌱</div>
                     <h4>جودة المنتجات</h4>
                     <p>كنجيبو المنتجات، بلا وسطاء، لضمان الطراوة والجودة اللي تستحق.</p>
                 </div>
                 <div class="trust-card">
-                    <div class="ico">🚚</div>
+                    <div class="ico" aria-hidden="true">🚚</div>
                     <h4>توصيل بسرعة وفي الوقت لي تختار</h4>
                     <p>طلبك كيوصلك نفس النهار، فالساعة المناسبة ليك.</p>
                 </div>
                 <div class="trust-card">
-                    <div class="ico">💵</div>
+                    <div class="ico" aria-hidden="true">💵</div>
                     <h4>دفع من غير قلق</h4>
                     <p>ما تخلص حتى توصل السلعة وتأكد من الجودة — إلى كنتي راضي عاد خلص.</p>
                 </div>
                 <div class="trust-card">
-                    <div class="ico">🤝</div>
+                    <div class="ico" aria-hidden="true">🤝</div>
                     <h4>ثقة وضمان 100%</h4>
                     <p>شي حاجة ما عجبتك؟ نتواصلو معاك ونحلو المشكل — خدمة الزبون أولوية خاصة بالنسبة لمتجر خضرة.</p>
                 </div>
@@ -1998,7 +2066,7 @@
     </div>
 
     <!-- ─── INFO PAGES ─── -->
-    <div class="info-page" id="page-about">
+    <div class="info-page" id="page-about" role="article">
         <a href="#" class="back-shop" data-back>← العودة للمتجر</a>
         <h2>من نحن</h2>
         <p><strong>خُضرة</strong> مشروع مغربي أصيل، تهدفنا نوصّل ليكم الخضر والفواكه الطازجة مباشرة من الحقل إلى باب داركم، بلا وسطاء ولا تعقيدات.</p>
@@ -2013,7 +2081,7 @@
         <p>خُضرة هي داركم الثانية في السوق، جربونا وكتأكدوا من الفرق بنفسكم!</p>
     </div>
 
-    <div class="info-page" id="page-policy">
+    <div class="info-page" id="page-policy" role="article">
         <a href="#" class="back-shop" data-back>← العودة للمتجر</a>
         <h2>سياسة الاستبدال والإرجاع</h2>
         <p>فخُضرة، رضاك هو أولويتنا القصوى. نضمن لك منتجات طازجة وبجودة عالية، ولكن إن حصل أي طارئ، عندنا سياسة واضحة وبسيطة:</p>
@@ -2027,7 +2095,7 @@
         <p><em>ملاحظة: الدفع عند الاستلام كيعطيك الحق باش تتفقد السلعة قبل ما تخلص، هادشي كيحمي حقك 100%.</em></p>
     </div>
 
-    <div class="info-page" id="page-privacy">
+    <div class="info-page" id="page-privacy" role="article">
         <a href="#" class="back-shop" data-back>← العودة للمتجر</a>
         <h2>سياسة الخصوصية</h2>
         <p>في <strong>خُضرة</strong>، خصوصيتك عندنا من أهم الأولويات. هذه السياسة كتوضح كيفاش كنجمعو ونستعملو ونحميو بياناتك الشخصية عند استعمالك للمتجر.</p>
@@ -2067,8 +2135,8 @@
     </footer>
 
     <!-- ─── STICKY CART ─── -->
-    <div class="sticky-cart-bar" id="stickyCartBar">
-        <button class="sticky-cart-info" id="stickyCartOpen">
+    <div class="sticky-cart-bar" id="stickyCartBar" aria-hidden="true">
+        <button class="sticky-cart-info" id="stickyCartOpen" aria-label="عرض السلة">
             <span class="lbl">🧺 <span id="stickyCount">0</span> منتج فالسلة</span>
             <span class="val" id="stickyTotal">0.00 د.م</span>
         </button>
@@ -2079,7 +2147,7 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- ─── CART DRAWER ─── -->
-    <aside class="cart-drawer" id="cartDrawer" aria-label="سلة المشتريات">
+    <aside class="cart-drawer" id="cartDrawer" aria-label="سلة المشتريات" role="dialog" aria-modal="true">
         <div class="drawer-head">
             <h2>سلة المشتريات</h2>
             <button class="close-btn" id="closeCart" aria-label="إغلاق السلة">✕</button>
@@ -2094,9 +2162,9 @@
     </aside>
 
     <!-- ─── CHECKOUT MODAL ─── -->
-    <div class="modal" id="checkoutModal" role="dialog" aria-modal="true">
-        <button class="modal-close" id="closeCheckout" aria-label="إغلاق">✕</button>
-        <h2>تأكيد الطلب</h2>
+    <div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+        <button class="modal-close" id="closeCheckout" aria-label="إغلاق نافذة إتمام الطلب">✕</button>
+        <h2 id="checkoutTitle">تأكيد الطلب</h2>
         <p class="sub">أدخل بياناتك واختر طريقة الدفع</p>
 
         <div class="section-label">🧺 منتجات السلة والإجمالي</div>
@@ -2105,64 +2173,66 @@
         <form id="checkoutForm" novalidate>
             <div class="section-label">👤 بياناتك</div>
             <div class="field" id="f-name">
-                <label for="c-name">الاسم الكامل</label>
-                <input type="text" id="c-name" placeholder="مثال: أمين العلوي" autocomplete="name">
+                <label for="c-name">الاسم الكامل <span style="color:var(--red);">*</span></label>
+                <input type="text" id="c-name" placeholder="مثال: أمين العلوي" autocomplete="name" required aria-required="true">
                 <div class="err-msg">يرجى إدخال الاسم الكامل</div>
             </div>
             <div class="field" id="f-phone">
-                <label for="c-phone">رقم الهاتف</label>
-                <input type="tel" id="c-phone" placeholder="0612345678" autocomplete="tel">
-                <div class="err-msg">يرجى إدخال رقم هاتف صحيح</div>
+                <label for="c-phone">رقم الهاتف <span style="color:var(--red);">*</span></label>
+                <input type="tel" id="c-phone" placeholder="0612345678" autocomplete="tel" required aria-required="true" inputmode="tel" pattern="[0-9+\s]{8,15}">
+                <div class="err-msg">يرجى إدخال رقم هاتف صحيح (8-15 أرقام)</div>
             </div>
             <div class="field" id="f-address">
-                <label for="c-address">عنوان الإقامة</label>
-                <textarea id="c-address" rows="2" placeholder="المدينة، الحي، الشارع، رقم المنزل" autocomplete="street-address"></textarea>
+                <label for="c-address">عنوان الإقامة <span style="color:var(--red);">*</span></label>
+                <textarea id="c-address" rows="2" placeholder="المدينة، الحي، الشارع، رقم المنزل" autocomplete="street-address" required aria-required="true"></textarea>
                 <div class="err-msg">يرجى إدخال العنوان بالتفصيل</div>
             </div>
 
             <div class="section-label">🕒 وقت التسليم</div>
             <div class="field" id="f-delivery">
-                <div class="delivery-options" id="deliveryOptions"></div>
+                <div class="delivery-options" id="deliveryOptions" role="radiogroup" aria-label="وقت التسليم"></div>
                 <div class="delivery-hint">💡 نحرص على التوصيل في الفترة المحددة</div>
                 <div class="err-msg">يرجى اختيار وقت التسليم</div>
             </div>
 
             <div class="section-label">💳 طريقة الدفع</div>
             <div class="field" id="f-payment">
-                <div class="pay-methods">
+                <div class="pay-methods" role="radiogroup" aria-label="طريقة الدفع">
                     <label class="pay-opt selected" data-pay="cod">
                         <input type="radio" name="payment" value="cod" checked>
-                        <span class="pay-ico">💵</span>
+                        <span class="pay-ico" aria-hidden="true">💵</span>
                         <span>الدفع عند الاستلام</span>
                     </label>
                     <label class="pay-opt" data-pay="bank">
                         <input type="radio" name="payment" value="bank">
-                        <span class="pay-ico">🏦</span>
+                        <span class="pay-ico" aria-hidden="true">🏦</span>
                         <span>الدفع عبر تحويل بنكي</span>
                     </label>
                 </div>
 
-                <div class="bank-panel" id="bankPanel" style="display:none;">
-                    <div class="bank-tabs" id="bankTabs">
-                        <button type="button" class="bank-tab active" data-bank="barid">BARID</button>
-                        <button type="button" class="bank-tab" data-bank="chaabi">CHAABI</button>
-                        <button type="button" class="bank-tab" data-bank="cih">CIH</button>
-                        <button type="button" class="bank-tab" data-bank="tijjari">TIJJARI</button>
-                        <button type="button" class="bank-tab" data-bank="boafrica">BOA</button>
-                        <button type="button" class="bank-tab" data-bank="cashplus">CASH+</button>
+                <!-- البنك بانل - مخفي افتراضياً -->
+                <div class="bank-panel" id="bankPanel">
+                    <div class="bank-tabs" id="bankTabs" role="tablist" aria-label="اختيار البنك">
+                        <button type="button" class="bank-tab active" data-bank="barid" role="tab" aria-selected="true">BARID</button>
+                        <button type="button" class="bank-tab" data-bank="chaabi" role="tab" aria-selected="false">CHAABI</button>
+                        <button type="button" class="bank-tab" data-bank="cih" role="tab" aria-selected="false">CIH</button>
+                        <button type="button" class="bank-tab" data-bank="tijjari" role="tab" aria-selected="false">TIJJARI</button>
+                        <button type="button" class="bank-tab" data-bank="boafrica" role="tab" aria-selected="false">BOA</button>
+                        <button type="button" class="bank-tab" data-bank="cashplus" role="tab" aria-selected="false">CASH+</button>
                     </div>
                     <div class="bank-info" id="bankInfo"></div>
                 </div>
 
-                <div style="margin-top:12px;">
+                <!-- قسم إثبات التحويل - مخفي افتراضياً -->
+                <div class="receipt-section" id="receiptSection">
                     <div class="section-label">📎 إثبات التحويل البنكي</div>
-                    <div id="uploadArea" class="upload-drop-zone">
+                    <div id="uploadArea" class="upload-drop-zone" role="button" tabindex="0" aria-label="رفع وصل التحويل البنكي">
                         <p>🔼 اسحب الملف هنا أو انقر للاختيار</p>
                         <p style="font-size: .85rem; color: var(--ink-soft); margin-top: 8px;">
                             PNG, JPG, PDF (حد أقصى 5MB)
                         </p>
                     </div>
-                    <input type="file" id="receiptFile" style="display:none;" accept=".png,.jpg,.jpeg,.pdf">
+                    <input type="file" id="receiptFile" style="display:none;" accept=".png,.jpg,.jpeg,.pdf" aria-hidden="true">
                     <div id="filePreview"></div>
                     <div id="receiptErr">⚠️ يرجى رفع وصل التحويل قبل المتابعة</div>
                 </div>
@@ -2173,10 +2243,10 @@
     </div>
 
     <!-- ─── CONFIRM MODAL ─── -->
-    <div class="modal confirm-modal" id="confirmModal" role="dialog" aria-modal="true">
-        <button class="modal-close" id="closeConfirm" aria-label="إغلاق">✕</button>
-        <div class="confirm-stamp">✓</div>
-        <h2>تم استلام طلبك!</h2>
+    <div class="modal confirm-modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <button class="modal-close" id="closeConfirm" aria-label="إغلاق نافذة التأكيد">✕</button>
+        <div class="confirm-stamp" aria-hidden="true">✓</div>
+        <h2 id="confirmTitle">تم استلام طلبك!</h2>
         <p class="sub">شكراً لك، سنتصل بك قريباً لتأكيد موعد التوصيل</p>
         <div class="order-id" id="orderId">#0000</div>
         <div class="modal-summary" id="confirmSummary" style="text-align:right;"></div>
@@ -2188,10 +2258,10 @@
 </div>
 
 <!-- ─── WARN MODAL ─── -->
-<div class="modal confirm-modal" id="warnModal" role="dialog" aria-modal="true">
-    <button class="modal-close" id="closeWarn" aria-label="إغلاق">✕</button>
-    <div class="warn-icon">⚠️</div>
-    <h2>تنبيه!</h2>
+<div class="modal confirm-modal" id="warnModal" role="alertdialog" aria-modal="true" aria-labelledby="warnTitle">
+    <button class="modal-close" id="closeWarn" aria-label="إغلاق نافذة التنبيه">✕</button>
+    <div class="warn-icon" aria-hidden="true">⚠️</div>
+    <h2 id="warnTitle">تنبيه!</h2>
     <p class="sub">سلة المشتريات فارغة. يرجى إضافة منتجات أولاً قبل إكمال الطلب.</p>
     <button class="submit-btn" id="warnOkBtn" style="background:var(--orange);">حسناً</button>
 </div>
@@ -2201,43 +2271,69 @@
     (function() {
         "use strict";
 
+        // ── Constants ──
         const SUPABASE_URL = "https://mbwbmgrdxpojcrsmsjdb.supabase.co";
         const SUPABASE_ANON_KEY =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1id2JtZ3JkeHBvamNyc21zamRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMTk4MzgsImV4cCI6MjEwMTU5NTgzOH0.NL_xnPjxikV3SFWKhrtq3bVojWvIws8QRdV_RQ5_0nc";
         const STORE_WHATSAPP_LINK = "https://wa.me/212704274830";
         const CART_STORAGE_KEY = "khodra_cart_v1";
-
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         const CURRENCY = "د.م";
         const WEIGHT_STEP = 0.5;
         const WEIGHT_MAX = 10;
         const FRESHNESS_MAX_ITEMS = 12;
 
+        // ── Supabase client (مع فحص التحميل) ──
+        let supabase = null;
+        try {
+            if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } else {
+                console.error('Supabase library failed to load');
+            }
+        } catch (e) {
+            console.error('Supabase initialization error:', e);
+        }
+
+        // ── State ──
         let allProducts = [];
         const selection = {};
         let cart = [];
 
+        // ── DOM Helpers ──
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => document.querySelectorAll(sel);
+
         // ── XSS protection ──
         function escapeHtml(str) {
-            if (!str) return '';
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
 
-        // ── localStorage ──
+        // ── localStorage helpers ──
         function saveCart() {
-            try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart)); } catch (e) { console.warn(
-                    'localStorage save failed', e); }
+            try {
+                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+            } catch (e) {
+                console.warn('localStorage save failed:', e);
+            }
         }
 
         function loadCart() {
             try {
                 const raw = localStorage.getItem(CART_STORAGE_KEY);
-                if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) cart = parsed; }
-            } catch (e) { console.warn('localStorage load failed', e);
-                cart = []; }
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) cart = parsed;
+                }
+            } catch (e) {
+                console.warn('localStorage load failed:', e);
+                cart = [];
+            }
         }
 
         // ── Stock helpers ──
@@ -2260,28 +2356,38 @@
             return cart.some(c => c.id === productId);
         }
 
+        function fmt(n) {
+            return Number(n).toFixed(2);
+        }
+
         // ── Skeleton Loader ──
         function renderSkeleton(gridId) {
             const grid = document.getElementById(gridId);
             if (!grid) return;
-            let html = '<div class="skeleton-grid">';
+            let html = '';
             for (let i = 0; i < 8; i++) {
                 html += `
-                    <div class="skeleton-card">
+                    <div class="skeleton-card" aria-hidden="true">
                         <div class="skeleton-circle"></div>
                         <div class="skeleton-line medium"></div>
                         <div class="skeleton-line short"></div>
                         <div class="skeleton-line full"></div>
                     </div>`;
             }
-            html += '</div>';
             grid.innerHTML = html;
         }
 
         // ── Load products ──
         async function loadProducts() {
-            // Show skeletons in all grids
-            ['grid-veg', 'grid-fruit', 'grid-dairy', 'grid-grocery'].forEach(id => renderSkeleton(id));
+            const gridIds = ['grid-veg', 'grid-fruit', 'grid-dairy', 'grid-grocery'];
+            gridIds.forEach(id => renderSkeleton(id));
+
+            if (!supabase) {
+                const errorHtml =
+                    `<p style="grid-column:1/-1; text-align:center; color:var(--red);">⚠️ تعذر الاتصال بقاعدة البيانات. يرجى تحديث الصفحة أو المحاولة لاحقاً.</p>`;
+                gridIds.forEach(id => { document.getElementById(id).innerHTML = errorHtml; });
+                return;
+            }
 
             try {
                 const { data, error } = await supabase
@@ -2294,48 +2400,41 @@
                 allProducts = data || [];
 
                 if (allProducts.length === 0) {
-                    document.querySelectorAll('.grid').forEach(grid => {
-                        grid.innerHTML =
-                            `<p style="grid-column:1/-1; text-align:center; color:var(--orange);">📭 لا توجد منتجات حالياً. تأكد من إضافة المنتجات في قاعدة البيانات.</p>`;
-                    });
+                    const emptyHtml =
+                        `<p style="grid-column:1/-1; text-align:center; color:var(--orange);">📭 لا توجد منتجات حالياً. تأكد من إضافة المنتجات في قاعدة البيانات.</p>`;
+                    gridIds.forEach(id => { document.getElementById(id).innerHTML = emptyHtml; });
                     return;
                 }
 
+                // تهيئة الاختيارات
                 allProducts.forEach(p => {
                     if (p.type === 'weight') selection[p.id] = WEIGHT_STEP;
                     else selection[p.id] = 1;
                 });
 
-                const veg = allProducts.filter(p => p.category === 'veg');
-                const fruit = allProducts.filter(p => p.category === 'fruit');
-                const dairy = allProducts.filter(p => p.category === 'dairy');
-                const grocery = allProducts.filter(p => p.category === 'grocery');
+                const categories = {
+                    'grid-veg': allProducts.filter(p => p.category === 'veg'),
+                    'grid-fruit': allProducts.filter(p => p.category === 'fruit'),
+                    'grid-dairy': allProducts.filter(p => p.category === 'dairy'),
+                    'grid-grocery': allProducts.filter(p => p.category === 'grocery')
+                };
 
-                renderGrid('grid-veg', veg);
-                renderGrid('grid-fruit', fruit);
-                renderGrid('grid-dairy', dairy);
-                renderGrid('grid-grocery', grocery);
+                Object.entries(categories).forEach(([gridId, products]) => {
+                    renderGrid(gridId, products);
+                });
+
                 renderCart();
                 updateAllAddButtons();
 
-                // Activate default tab without scrolling
-                const defaultTab = document.querySelector('.tabs-container .tab-btn[data-tab="veg"]');
-                if (defaultTab) {
-                    defaultTab.classList.add('active');
-                    document.getElementById('tab-veg').classList.add('active');
-                }
-
             } catch (err) {
                 console.error('فشل تحميل المنتجات:', err.message);
-                document.querySelectorAll('.grid').forEach(grid => {
-                    grid.innerHTML =
-                        `<p style="grid-column:1/-1; text-align:center; color:var(--red);">⚠️ تعذر تحميل المنتجات. تأكد من اتصالك بالإنترنت ومن إعدادات Supabase.<br><small style="color:var(--ink-soft);">${err.message}</small></p>`;
-                });
+                const errorHtml =
+                    `<p style="grid-column:1/-1; text-align:center; color:var(--red);">⚠️ تعذر تحميل المنتجات. تأكد من اتصالك بالإنترنت.<br><small style="color:var(--ink-soft);">${escapeHtml(err.message)}</small></p>`;
+                gridIds.forEach(id => { document.getElementById(id).innerHTML = errorHtml; });
             }
         }
 
-        function fmt(n) { return Number(n).toFixed(2); }
-
+        // ── Product rendering ──
         function computeLine(product) {
             if (product.type === 'weight') {
                 const w = selection[product.id] || WEIGHT_STEP;
@@ -2365,7 +2464,7 @@
         }
 
         function updateAllAddButtons() {
-            document.querySelectorAll('.product-card').forEach(card => {
+            $$('.product-card').forEach(card => {
                 const id = Number(card.dataset.id);
                 const product = allProducts.find(p => p.id === id);
                 if (!product) return;
@@ -2409,39 +2508,40 @@
 
             let variantHtml = '';
             if (st !== 'soldout') {
-                const maxVal = product.type === 'weight' ? Math.min(WEIGHT_MAX, Math.floor((product.stock || 100) / 1)) : Math
-                .min(20, product.stock || 100);
+                const maxVal = product.type === 'weight' ?
+                    Math.min(WEIGHT_MAX, Math.floor((product.stock || 100) / 1)) :
+                    Math.min(20, product.stock || 100);
                 if (product.type === 'weight') {
                     variantHtml = `
-                <div class="stepper">
-                  <button type="button" class="dec" aria-label="إنقاص الوزن">−</button>
-                  <span class="qty-val">${selection[product.id]} كغ</span>
-                  <button type="button" class="inc" aria-label="زيادة الوزن">+</button>
-                </div>`;
+                        <div class="stepper">
+                            <button type="button" class="dec" aria-label="إنقاص الوزن">−</button>
+                            <span class="qty-val">${selection[product.id]} كغ</span>
+                            <button type="button" class="inc" aria-label="زيادة الوزن">+</button>
+                        </div>`;
                 } else {
                     variantHtml = `
-                <div class="stepper">
-                  <button type="button" class="dec" aria-label="إنقاص الكمية">−</button>
-                  <span class="qty-val">${selection[product.id]}</span>
-                  <button type="button" class="inc" aria-label="زيادة الكمية">+</button>
-                </div>`;
+                        <div class="stepper">
+                            <button type="button" class="dec" aria-label="إنقاص الكمية">−</button>
+                            <span class="qty-val">${selection[product.id]}</span>
+                            <button type="button" class="inc" aria-label="زيادة الكمية">+</button>
+                        </div>`;
                 }
             }
 
             const badge = stockBadge(product);
 
-            const iconHtml = product.image_url
-                ? `<img src="${product.image_url}" alt="${safeName}" style="width:74px;height:74px;object-fit:cover;border-radius:50%;" loading="lazy">`
-                : `<div class="p-icon" aria-hidden="true">${safeIcon}</div>`;
+            const iconHtml = product.image_url ?
+                `<div class="p-img"><img src="${escapeHtml(product.image_url)}" alt="${safeName}" loading="lazy" onerror="this.parentElement.innerHTML='${safeIcon}'"></div>` :
+                `<div class="p-icon" aria-hidden="true">${safeIcon}</div>`;
 
             card.innerHTML = `
-            <div class="tag ${badge.cls}">${badge.text}</div>
-            ${iconHtml}
-            <h3>${safeName}</h3>
-            <p class="unit-label">${unitText}</p>
-            ${variantHtml}
-            <button type="button" class="add-btn">أضف إلى السلة</button>
-          `;
+                <div class="tag ${badge.cls}">${badge.text}</div>
+                ${iconHtml}
+                <h3>${safeName}</h3>
+                <p class="unit-label">${unitText}</p>
+                ${variantHtml}
+                <button type="button" class="add-btn">أضف إلى السلة</button>
+            `;
 
             const addBtn = card.querySelector('.add-btn');
             setAddButtonState(addBtn, product);
@@ -2450,8 +2550,9 @@
                 const decBtn = card.querySelector('.dec');
                 const incBtn = card.querySelector('.inc');
                 const qtyVal = card.querySelector('.qty-val');
-                const maxVal = product.type === 'weight' ? Math.min(WEIGHT_MAX, Math.floor((product.stock || 100) / 1)) : Math
-                    .min(20, product.stock || 100);
+                const maxVal = product.type === 'weight' ?
+                    Math.min(WEIGHT_MAX, Math.floor((product.stock || 100) / 1)) :
+                    Math.min(20, product.stock || 100);
 
                 let rafPending = false;
 
@@ -2469,25 +2570,19 @@
                 }
 
                 decBtn.addEventListener('click', () => {
-                    let current = selection[product.id];
-                    let newVal;
-                    if (product.type === 'weight') {
-                        newVal = Math.max(WEIGHT_STEP, +(current - WEIGHT_STEP).toFixed(2));
-                    } else {
-                        newVal = Math.max(1, current - 1);
-                    }
+                    const current = selection[product.id];
+                    const newVal = product.type === 'weight' ?
+                        Math.max(WEIGHT_STEP, +(current - WEIGHT_STEP).toFixed(2)) :
+                        Math.max(1, current - 1);
                     selection[product.id] = newVal;
                     updateDisplay(newVal);
                 });
 
                 incBtn.addEventListener('click', () => {
-                    let current = selection[product.id];
-                    let newVal;
-                    if (product.type === 'weight') {
-                        newVal = Math.min(maxVal, +(current + WEIGHT_STEP).toFixed(2));
-                    } else {
-                        newVal = Math.min(maxVal, current + 1);
-                    }
+                    const current = selection[product.id];
+                    const newVal = product.type === 'weight' ?
+                        Math.min(maxVal, +(current + WEIGHT_STEP).toFixed(2)) :
+                        Math.min(maxVal, current + 1);
                     selection[product.id] = newVal;
                     updateDisplay(newVal);
                 });
@@ -2505,10 +2600,9 @@
             el.innerHTML = '';
             if (products.length === 0) {
                 el.innerHTML =
-                    `<p style="grid-column:1/-1; text-align:center; color:var(--ink-soft);">📭 لا توجد منتجات في هذا القسم</p>`;
+                    `<p style="grid-column:1/-1; text-align:center; color:var(--ink-soft); padding:20px;">📭 لا توجد منتجات في هذا القسم</p>`;
                 return;
             }
-            // Use a document fragment for performance
             const fragment = document.createDocumentFragment();
             products.forEach(p => fragment.appendChild(renderCard(p)));
             el.appendChild(fragment);
@@ -2516,23 +2610,17 @@
 
         // ── Tab Switching ──
         function switchTab(tab) {
-            // Update tab buttons
-            document.querySelectorAll('.tabs-container .tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.tab === tab) {
-                    btn.classList.add('active');
-                }
+            $$('.tabs-container .tab-btn').forEach(btn => {
+                const isActive = btn.dataset.tab === tab;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
             });
-
-            // Update tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
+            $$('.tab-content').forEach(content => {
+                content.classList.toggle('active', content.id === 'tab-' + tab);
             });
-            const target = document.getElementById('tab-' + tab);
-            if (target) target.classList.add('active');
         }
 
-        // ── Cart ──
+        // ── Cart operations ──
         function addToCart(product) {
             const line = computeLine(product);
             const key = product.id + '|' + line.variantLabel;
@@ -2563,7 +2651,6 @@
             cartBtn.style.transition = 'transform 0.15s, box-shadow 0.3s';
             cartBtn.style.boxShadow = '0 0 0 4px rgba(217,118,43,0.3), 0 8px 24px rgba(58,90,64,0.3)';
             setTimeout(() => { cartBtn.style.boxShadow = ''; }, 500);
-            // Trigger total animation
             animateTotal();
         }
 
@@ -2579,16 +2666,18 @@
             const item = cart.find(c => c.key === key);
             if (!item) return;
             item.qty += delta;
-            if (item.qty <= 0) { removeFromCart(key); return; }
+            if (item.qty <= 0) {
+                removeFromCart(key);
+                return;
+            }
             item.lineTotal = item.unitTotal * item.qty;
             saveCart();
             renderCart();
             animateTotal();
         }
 
-        function cartTotal() { return cart.reduce((sum, c) => sum + c.lineTotal, 0); }
-
-        function cartCount() { return cart.reduce((sum, c) => sum + c.qty, 0); }
+        const cartTotal = () => cart.reduce((sum, c) => sum + c.lineTotal, 0);
+        const cartCount = () => cart.reduce((sum, c) => sum + c.qty, 0);
 
         function freshnessPercent() {
             const n = cart.length;
@@ -2625,38 +2714,38 @@
 
             if (cart.length === 0) {
                 itemsEl.innerHTML =
-                    `<div class="cart-empty"><span class="emoji">🧺</span>سلتك فارغة حالياً<br>أضف بعض المنتجات الطازجة!</div>`;
+                    `<div class="cart-empty"><span class="emoji" aria-hidden="true">🧺</span>سلتك فارغة حالياً<br>أضف بعض المنتجات الطازجة!</div>`;
                 return;
             }
 
             const pct = freshnessPercent();
             let html = `
-            <div class="freshness-wrap">
-              <div class="freshness-label">
-                <span>🌱 مقياس الطراوة</span>
-                <span class="val">${pct}%</span>
-              </div>
-              <div class="freshness-bar"><div class="freshness-fill" style="width:${pct}%"></div></div>
-            </div>`;
+                <div class="freshness-wrap">
+                    <div class="freshness-label">
+                        <span>🌱 مقياس الطراوة</span>
+                        <span class="val">${pct}%</span>
+                    </div>
+                    <div class="freshness-bar"><div class="freshness-fill" style="width:${pct}%"></div></div>
+                </div>`;
 
             cart.forEach(item => {
                 const safeName = escapeHtml(item.name);
                 const safeIcon = escapeHtml(item.icon);
                 html += `
-              <div class="cart-line" data-key="${item.key}">
-                <div class="ico">${safeIcon}</div>
-                <div class="info">
-                  <h4>${safeName}</h4>
-                  <p>${item.variantLabel}</p>
-                  <div class="mini-stepper">
-                    <button type="button" class="mini-dec" aria-label="إنقاص">−</button>
-                    <span class="mini-val">${item.qty}</span>
-                    <button type="button" class="mini-inc" aria-label="زيادة">+</button>
-                  </div>
-                </div>
-                <div class="cart-line-price">${fmt(item.lineTotal)} ${CURRENCY}</div>
-                <button class="remove-btn" aria-label="إزالة ${safeName}">🗑</button>
-              </div>`;
+                    <div class="cart-line" data-key="${escapeHtml(item.key)}">
+                        <div class="ico" aria-hidden="true">${safeIcon}</div>
+                        <div class="info">
+                            <h4>${safeName}</h4>
+                            <p>${escapeHtml(item.variantLabel)}</p>
+                            <div class="mini-stepper">
+                                <button type="button" class="mini-dec" aria-label="إنقاص كمية ${safeName}">−</button>
+                                <span class="mini-val">${item.qty}</span>
+                                <button type="button" class="mini-inc" aria-label="زيادة كمية ${safeName}">+</button>
+                            </div>
+                        </div>
+                        <div class="cart-line-price">${fmt(item.lineTotal)} ${CURRENCY}</div>
+                        <button class="remove-btn" aria-label="إزالة ${safeName} من السلة">🗑</button>
+                    </div>`;
             });
             itemsEl.innerHTML = html;
 
@@ -2672,10 +2761,12 @@
             const bar = document.getElementById('stickyCartBar');
             document.getElementById('stickyCount').textContent = cartCount();
             document.getElementById('stickyTotal').textContent = fmt(cartTotal()) + ' ' + CURRENCY;
-            bar.classList.toggle('show', cart.length > 0);
+            const hasItems = cart.length > 0;
+            bar.classList.toggle('show', hasItems);
+            bar.setAttribute('aria-hidden', hasItems ? 'false' : 'true');
         }
 
-        // ── Drawer / Modal ──
+        // ── Drawer / Modal management ──
         const overlay = document.getElementById('overlay');
         const cartDrawer = document.getElementById('cartDrawer');
         const checkoutModal = document.getElementById('checkoutModal');
@@ -2709,14 +2800,6 @@
             }
             unlockScroll();
         }
-        document.getElementById('cartBtn').addEventListener('click', openDrawer);
-        document.getElementById('closeCart').addEventListener('click', closeDrawer);
-        overlay.addEventListener('click', () => {
-            closeDrawer();
-            closeModal(checkoutModal);
-            closeModal(confirmModal);
-            closeModal(warnModal);
-        });
 
         function openModal(modal) {
             modal.classList.add('show');
@@ -2726,46 +2809,91 @@
 
         function closeModal(modal) {
             modal.classList.remove('show');
-            if (!cartDrawer.classList.contains('open')) { overlay.classList.remove('show'); }
+            if (!cartDrawer.classList.contains('open')) {
+                overlay.classList.remove('show');
+            }
             unlockScroll();
         }
 
+        // ── Event listeners for drawer/overlay ──
+        document.getElementById('cartBtn').addEventListener('click', openDrawer);
+        document.getElementById('closeCart').addEventListener('click', closeDrawer);
+        document.getElementById('stickyCartOpen').addEventListener('click', openDrawer);
+        overlay.addEventListener('click', () => {
+            closeDrawer();
+            closeModal(checkoutModal);
+            closeModal(confirmModal);
+            closeModal(warnModal);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDrawer();
+                closeModal(checkoutModal);
+                closeModal(confirmModal);
+                closeModal(warnModal);
+                closeMenu();
+            }
+        });
+
+        // ── Checkout flow ──
         function openCheckout() {
-            if (cart.length === 0) { openModal(warnModal); return; }
+            if (cart.length === 0) {
+                openModal(warnModal);
+                return;
+            }
             const summary = document.getElementById('checkoutSummary');
             summary.innerHTML = cart.map(i =>
-                    `<div class="foot-row"><span>${escapeHtml(i.name)} (${i.variantLabel}${i.qty>1?' ×'+i.qty:''})</span><span>${fmt(i.lineTotal)} ${CURRENCY}</span></div>`
+                    `<div class="foot-row"><span>${escapeHtml(i.name)} (${escapeHtml(i.variantLabel)}${i.qty > 1 ? ' ×' + i.qty : ''})</span><span>${fmt(i.lineTotal)} ${CURRENCY}</span></div>`
                 ).join('') +
                 `<div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;"><span>الإجمالي</span><span class="total-amount">${fmt(cartTotal())} ${CURRENCY}</span></div>`;
             renderDeliveryOptions();
+            resetPaymentUI();
             closeDrawer();
             openModal(checkoutModal);
         }
 
+        function resetPaymentUI() {
+            // إعادة ضبط واجهة الدفع إلى الدفع عند الاستلام
+            const codOpt = document.querySelector('.pay-opt[data-pay="cod"]');
+            const bankOpt = document.querySelector('.pay-opt[data-pay="bank"]');
+            if (codOpt) {
+                codOpt.classList.add('selected');
+                codOpt.querySelector('input').checked = true;
+            }
+            if (bankOpt) {
+                bankOpt.classList.remove('selected');
+                bankOpt.querySelector('input').checked = false;
+            }
+            document.getElementById('bankPanel').classList.remove('visible');
+            document.getElementById('receiptSection').classList.remove('visible');
+            document.getElementById('submitOrderBtn').textContent = 'تأكيد الطلب — الدفع عند الاستلام';
+            uploadedReceipt = null;
+            document.getElementById('filePreview').innerHTML = '';
+            document.getElementById('uploadArea').classList.remove('has-file');
+            document.getElementById('receiptFile').value = '';
+            document.getElementById('receiptErr').classList.remove('show');
+        }
+
         document.getElementById('checkoutBtn').addEventListener('click', openCheckout);
         document.getElementById('stickyCheckoutBtn').addEventListener('click', openCheckout);
-        document.getElementById('stickyCartOpen').addEventListener('click', openDrawer);
         document.getElementById('closeCheckout').addEventListener('click', () => closeModal(checkoutModal));
         document.getElementById('closeWarn').addEventListener('click', () => closeModal(warnModal));
         document.getElementById('warnOkBtn').addEventListener('click', () => closeModal(warnModal));
+        document.getElementById('closeConfirm').addEventListener('click', () => closeModal(confirmModal));
+        document.getElementById('newOrderBtn').addEventListener('click', () => closeModal(confirmModal));
 
+        // ── Form validation ──
         function validateField(inputId, condition) {
             const field = document.getElementById('f-' + inputId);
             field.classList.toggle('error', !condition);
             return condition;
         }
 
-        async function saveOrder(orderData) {
-            const { error } = await supabase.from('orders').insert([orderData]);
-            if (error) throw error;
-            return true;
-        }
-
-        // ── Delivery time options ──
+        // ── Delivery slots ──
         const DELIVERY_SLOTS = [
-            { id: 'today_10_13', label: 'اليوم بين 10:00 و 13:00', cutoffHour: 10 },
-            { id: 'today_15_18', label: 'اليوم بين 15:00 و 18:00', cutoffHour: 15 },
-            { id: 'today_18_21', label: 'اليوم بين 18:00 و 21:00', cutoffHour: 19 },
+            { id: 'today_10_13', label: 'اليوم بين 10:00 و 13:00', cutoffHour: 9 },
+            { id: 'today_15_18', label: 'اليوم بين 15:00 و 18:00', cutoffHour: 14 },
+            { id: 'today_18_21', label: 'اليوم بين 18:00 و 21:00', cutoffHour: 17 },
             { id: 'tomorrow_10_13', label: 'غداً بين 10:00 و 13:00', cutoffHour: null }
         ];
 
@@ -2775,8 +2903,7 @@
             const nowHour = new Date().getHours();
             let firstEnabled = null;
             box.innerHTML = DELIVERY_SLOTS.map(slot => {
-                let disabled = false;
-                if (slot.cutoffHour !== null && nowHour >= slot.cutoffHour) disabled = true;
+                const disabled = slot.cutoffHour !== null && nowHour >= slot.cutoffHour;
                 if (!disabled && firstEnabled === null) firstEnabled = slot.id;
                 return `
                     <label class="delivery-opt${disabled ? ' disabled' : ''}" data-slot="${slot.id}">
@@ -2827,12 +2954,12 @@
             el.innerHTML = `
                 <div class="bank-row">
                     <div class="lbl">البنك</div>
-                    <div class="val">🏦 ${b.name}</div>
+                    <div class="val">🏦 ${escapeHtml(b.name)}</div>
                 </div>
                 <div class="bank-row">
                     <div class="lbl">رقم الحساب (RIB)</div>
-                    <div class="val account" dir="ltr">${b.rib}</div>
-                    <button type="button" class="copy-btn" data-copy="${b.rib.replace(/\s/g,'')}">نسخ</button>
+                    <div class="val account" dir="ltr">${escapeHtml(b.rib)}</div>
+                    <button type="button" class="copy-btn" data-copy="${escapeHtml(b.rib.replace(/\s/g, ''))}">نسخ</button>
                 </div>
             `;
             const btn = el.querySelector('.copy-btn');
@@ -2840,33 +2967,37 @@
                 btn.addEventListener('click', function() {
                     const val = this.dataset.copy;
                     const btnEl = this;
-                    if (navigator.clipboard) {
-                        navigator.clipboard.writeText(val).then(() => {
-                            btnEl.classList.add('copied');
-                            btnEl.innerHTML = 'مُنْسوخ';
-                            setTimeout(() => {
-                                btnEl.classList.remove('copied');
-                                btnEl.innerHTML = 'نسخ';
-                            }, 1600);
-                        });
+                    const copySuccess = () => {
+                        btnEl.classList.add('copied');
+                        btnEl.innerHTML = 'مُنْسوخ';
+                        setTimeout(() => {
+                            btnEl.classList.remove('copied');
+                            btnEl.innerHTML = 'نسخ';
+                        }, 1600);
+                    };
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(val).then(copySuccess).catch(() => fallbackCopy(val, copySuccess));
                     } else {
-                        const ta = document.createElement('textarea');
-                        ta.value = val;
-                        document.body.appendChild(ta);
-                        ta.select();
-                        try {
-                            document.execCommand('copy');
-                            btnEl.classList.add('copied');
-                            btnEl.innerHTML = 'مُنْسوخ';
-                            setTimeout(() => {
-                                btnEl.classList.remove('copied');
-                                btnEl.innerHTML = 'نسخ';
-                            }, 1600);
-                        } catch (e) {}
-                        ta.remove();
+                        fallbackCopy(val, copySuccess);
                     }
                 });
             }
+        }
+
+        function fallbackCopy(text, callback) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                callback();
+            } catch (e) {
+                console.warn('Copy failed:', e);
+            }
+            ta.remove();
         }
 
         // ── Payment method switching ──
@@ -2874,37 +3005,56 @@
         let uploadedReceipt = null;
 
         function initPaymentMethods() {
-            const opts = document.querySelectorAll('.pay-opt');
+            const payOpts = $$('.pay-opt');
             const bankPanel = document.getElementById('bankPanel');
+            const receiptSection = document.getElementById('receiptSection');
             const submitBtn = document.getElementById('submitOrderBtn');
             const uploadArea = document.getElementById('uploadArea');
             const fileInput = document.getElementById('receiptFile');
             const preview = document.getElementById('filePreview');
             const receiptErr = document.getElementById('receiptErr');
 
-            opts.forEach(opt => {
+            function updatePaymentUI(paymentMethod) {
+                const isBank = paymentMethod === 'bank';
+                bankPanel.classList.toggle('visible', isBank);
+                receiptSection.classList.toggle('visible', isBank);
+                submitBtn.textContent = isBank ? 'تأكيد الطلب — تحويل بنكي' : 'تأكيد الطلب — الدفع عند الاستلام';
+                if (isBank) {
+                    renderBankInfo(currentBank);
+                } else {
+                    receiptErr.classList.remove('show');
+                }
+            }
+
+            payOpts.forEach(opt => {
                 opt.addEventListener('click', (e) => {
                     setTimeout(() => {
-                        opts.forEach(o => o.classList.remove('selected'));
+                        payOpts.forEach(o => o.classList.remove('selected'));
                         opt.classList.add('selected');
                         const val = opt.dataset.pay;
-                        if (val === 'bank') {
-                            bankPanel.style.display = 'block';
-                            submitBtn.textContent = 'تأكيد الطلب — تحويل بنكي';
-                            renderBankInfo(currentBank);
-                        } else {
-                            bankPanel.style.display = 'none';
-                            submitBtn.textContent = 'تأكيد الطلب — الدفع عند الاستلام';
-                            receiptErr.style.display = 'none';
-                        }
+                        updatePaymentUI(val);
                     }, 0);
                 });
+                // دعم لوحة المفاتيح
+                const radioInput = opt.querySelector('input[type="radio"]');
+                if (radioInput) {
+                    radioInput.addEventListener('change', () => {
+                        payOpts.forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        updatePaymentUI(opt.dataset.pay);
+                    });
+                }
             });
 
+            // Bank tabs
             document.querySelectorAll('.bank-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
-                    document.querySelectorAll('.bank-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.bank-tab').forEach(t => {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
                     tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
                     currentBank = tab.dataset.bank;
                     renderBankInfo(currentBank);
                 });
@@ -2912,6 +3062,12 @@
 
             // File upload
             uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    fileInput.click();
+                }
+            });
 
             fileInput.addEventListener('change', function() {
                 const file = this.files[0];
@@ -2925,21 +3081,28 @@
                 uploadArea.classList.add('has-file');
                 preview.innerHTML = `
                     <div class="file-preview">
-                        <span>📎</span>
+                        <span aria-hidden="true">📎</span>
                         <span class="fp-name">${escapeHtml(file.name)}</span>
-                        <span style="font-size:.72rem; opacity:.7;">${(file.size/1024).toFixed(1)} KB</span>
-                        <button type="button" class="fp-remove" id="fpRemove" aria-label="إزالة">✕</button>
+                        <span style="font-size:.72rem; opacity:.7;">${(file.size / 1024).toFixed(1)} KB</span>
+                        <button type="button" class="fp-remove" id="fpRemove" aria-label="إزالة الملف">✕</button>
                     </div>`;
-                receiptErr.style.display = 'none';
-                document.getElementById('fpRemove').addEventListener('click', () => {
-                    uploadedReceipt = null;
-                    fileInput.value = '';
-                    preview.innerHTML = '';
-                    uploadArea.classList.remove('has-file');
-                });
+                receiptErr.classList.remove('show');
+                const removeBtn = document.getElementById('fpRemove');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', () => {
+                        uploadedReceipt = null;
+                        fileInput.value = '';
+                        preview.innerHTML = '';
+                        uploadArea.classList.remove('has-file');
+                    });
+                }
             });
+
+            // التهيئة الأولى: الدفع عند الاستلام
+            updatePaymentUI('cod');
         }
 
+        // ── Order submission ──
         document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -2957,15 +3120,26 @@
 
             const paymentInput = document.querySelector('input[name="payment"]:checked');
             const paymentMethod = paymentInput ? paymentInput.value : 'cod';
-            const paymentLabel = paymentMethod === 'bank' ? ('تحويل بنكي — ' + BANKS[currentBank].name) : 'الدفع عند الاستلام';
+            const paymentLabel = paymentMethod === 'bank' ?
+                ('تحويل بنكي — ' + BANKS[currentBank].name) :
+                'الدفع عند الاستلام';
 
             let okReceipt = true;
             if (paymentMethod === 'bank') {
                 okReceipt = !!uploadedReceipt;
-                document.getElementById('receiptErr').style.display = okReceipt ? 'none' : 'block';
+                document.getElementById('receiptErr').classList.toggle('show', !okReceipt);
             }
 
-            if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) return;
+            if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) {
+                // تمرير إلى أول حقل به خطأ
+                const firstError = document.querySelector('.field.error');
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitOrderBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ جارٍ إرسال الطلب...';
 
             const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
             const items = cart.map(i => ({
@@ -3000,22 +3174,33 @@
             };
 
             try {
-                await saveOrder(orderData);
+                if (supabase) {
+                    const { error } = await supabase.from('orders').insert([orderData]);
+                    if (error) throw error;
+                } else {
+                    throw new Error('قاعدة البيانات غير متاحة');
+                }
 
                 document.getElementById('orderId').textContent = orderCode;
                 const totalLbl = paymentMethod === 'bank' ? 'الإجمالي (تحويل بنكي)' : 'الإجمالي (عند الاستلام)';
                 document.getElementById('confirmSummary').innerHTML = `
-              <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
-              <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
-              <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
-              <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
-              <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
-              <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
-                <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
-              </div>`;
+                    <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
+                    <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
+                    <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
+                    <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
+                    <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
+                    <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
+                        <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
+                    </div>`;
 
-                const orderText = buildOrderMessage(orderCode, { name, phone, address, deliveryLabel, paymentLabel,
-                    receipt: uploadedReceipt });
+                const orderText = buildOrderMessage(orderCode, {
+                    name,
+                    phone,
+                    address,
+                    deliveryLabel,
+                    paymentLabel,
+                    receipt: uploadedReceipt
+                });
                 const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
                 document.getElementById('whatsappBtn').href = waLink;
 
@@ -3023,6 +3208,7 @@
                 closeDrawer();
                 openModal(confirmModal);
 
+                // تنظيف الحالة
                 cart = [];
                 saveCart();
                 renderCart();
@@ -3032,21 +3218,15 @@
                     const el = document.getElementById('f-' + f);
                     if (el) el.classList.remove('error');
                 });
-                document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
-                const codOpt = document.querySelector('.pay-opt[data-pay="cod"]');
-                if (codOpt) { codOpt.classList.add('selected');
-                    codOpt.querySelector('input').checked = true; }
-                document.getElementById('bankPanel').style.display = 'none';
-                document.getElementById('submitOrderBtn').textContent = 'تأكيد الطلب — الدفع عند الاستلام';
-                uploadedReceipt = null;
-                document.getElementById('filePreview').innerHTML = '';
-                document.getElementById('uploadArea').classList.remove('has-file');
-                document.getElementById('receiptFile').value = '';
-                document.getElementById('receiptErr').style.display = 'none';
+                resetPaymentUI();
 
             } catch (err) {
                 alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
-                console.error(err);
+                console.error('Order save error:', err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = paymentMethod === 'bank' ? 'تأكيد الطلب — تحويل بنكي' :
+                    'تأكيد الطلب — الدفع عند الاستلام';
             }
         });
 
@@ -3060,7 +3240,7 @@
                 `💳 طريقة الدفع: ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
                 ``,
                 `*المنتجات:*`,
-                ...cart.map(i => `• ${i.name} (${i.variantLabel}${i.qty>1 ? ' ×'+i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
+                ...cart.map(i => `• ${i.name} (${i.variantLabel}${i.qty > 1 ? ' ×' + i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
                 ``,
                 `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`
             ];
@@ -3069,19 +3249,6 @@
             }
             return lines.join('\n');
         }
-
-        document.getElementById('closeConfirm').addEventListener('click', () => closeModal(confirmModal));
-        document.getElementById('newOrderBtn').addEventListener('click', () => closeModal(confirmModal));
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeDrawer();
-                closeModal(checkoutModal);
-                closeModal(confirmModal);
-                closeModal(warnModal);
-                closeMenu();
-            }
-        });
 
         // ── Dropdown menu ──
         const menuWrap = document.getElementById('menuWrap');
@@ -3102,7 +3269,8 @@
 
         // ── Info pages ──
         function showPage(pageId) {
-            document.getElementById('shopView').style.display = pageId ? 'none' : '';
+            const shopView = document.getElementById('shopView');
+            shopView.style.display = pageId ? 'none' : '';
             ['about', 'policy', 'privacy'].forEach(p => {
                 const el = document.getElementById('page-' + p);
                 if (el) el.classList.toggle('show', p === pageId);
@@ -3111,13 +3279,13 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        document.querySelectorAll('[data-page]').forEach(el => {
+        $$('[data-page]').forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
                 showPage(el.getAttribute('data-page'));
             });
         });
-        document.querySelectorAll('[data-back]').forEach(el => {
+        $$('[data-back]').forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
                 showPage(null);
@@ -3129,7 +3297,7 @@
         });
 
         // ── Tab events ──
-        document.querySelectorAll('.tabs-container .tab-btn').forEach(btn => {
+        $$('.tabs-container .tab-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const tab = this.dataset.tab;
@@ -3138,7 +3306,7 @@
         });
 
         // ── Dropdown menu tab links ──
-        document.querySelectorAll('.dropdown a[data-tab]').forEach(link => {
+        $$('.dropdown a[data-tab]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const tab = this.dataset.tab;
@@ -3158,9 +3326,10 @@
         document.getElementById('shopNowBtn').addEventListener('click', function(e) {
             e.preventDefault();
             switchTab('veg');
+            document.getElementById('shopView').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
-        // ── Vibrant JS effects (optimized) ──
+        // ── Subtle card glow effect (optimized) ──
         document.addEventListener('mouseover', (e) => {
             const card = e.target.closest('.product-card');
             if (card && !card.dataset.vibrant) {
@@ -3188,3 +3357,4 @@
 </script>
 </body>
 </html>
+```
