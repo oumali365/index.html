@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
     <title>خُضرة | خضر وفواكه طازجة توصل لبابك</title>
 
     <!-- Google Analytics & Tag Manager -->
@@ -66,10 +67,19 @@
         }
     </script>
 
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://mbwbmgrdxpojcrsmsjdb.supabase.co">
 
+<!-- Google Fonts غير محظور -->
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="..." rel="stylesheet"></noscript>
+
+    <!-- Scripts خارجية -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNL0B7G424"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         /* ── RESET & ROOT ── */
         * {
@@ -573,27 +583,34 @@
 
         /* ── PRODUCT CARD ── */
         .product-card {
-            position: relative;
-            background: var(--paper);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 15px 13px 13px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform .12s ease, box-shadow .12s ease, border-color .25s ease;
-            will-change: transform;
-        }
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 15px 13px 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform .12s ease, box-shadow .12s ease, border-color .25s ease;
+    will-change: transform;
+}
+
         .product-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(42, 39, 33, .14);
-            border-color: var(--orange-bright);
-        }
-        .product-card.out-of-stock {
-            opacity: .72;
-        }
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(42, 39, 33, .14);
+    border-color: var(--orange-bright);
+}
+
+.product-card.out-of-stock {
+    opacity: .72;
+}
+
+/* للعناصر الأخرى */
+.cart-badge, .cta, .menu-btn, .stepper button {
+    will-change: transform;
+}
         .product-card .p-icon {
             font-size: 2.6rem;
             line-height: 1;
@@ -1844,6 +1861,31 @@
             background: linear-gradient(180deg, var(--orange), var(--orange-bright));
             border-radius: 2px;
         }
+        
+        /* إزالة الـ outline الأزرق الافتراضي من المتصفح */
+         button, a, input, textarea, select, [role="button"], [tabindex] {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+             user-select: none;
+}
+
+/* إزالة التركيز من جميع العناصر عند النقر بالماوس */
+            button:focus,
+            a:focus,
+            input:focus,
+            textarea:focus,
+            select:focus {
+            outline: none;
+            box-shadow: none;
+}
+
+/* إزالة التأثير الأزرق على الجوال */
+* {
+     -webkit-tap-highlight-color: transparent;
+}
+        
     </style>
 </head>
 <body>
