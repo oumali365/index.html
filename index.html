@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -3133,151 +3132,192 @@
         }
 
         // ── Order submission ──
-        document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-            const name = document.getElementById('c-name').value.trim();
-            const phone = document.getElementById('c-phone').value.trim();
-            const address = document.getElementById('c-address').value.trim();
+    const name = document.getElementById('c-name').value.trim();
+    const phone = document.getElementById('c-phone').value.trim();
+    const address = document.getElementById('c-address').value.trim();
 
-            const okName = validateField('name', name.length >= 3);
-            const okPhone = validateField('phone', /^[0-9+\s]{8,15}$/.test(phone));
-            const okAddress = validateField('address', address.length >= 8);
+    const okName = validateField('name', name.length >= 3);
+    const okPhone = validateField('phone', /^[0-9+\s]{8,15}$/.test(phone));
+    const okAddress = validateField('address', address.length >= 8);
 
-            const deliveryLabel = getSelectedDeliveryLabel();
-            const okDelivery = !!deliveryLabel;
-            document.getElementById('f-delivery').classList.toggle('error', !okDelivery);
+    const deliveryLabel = getSelectedDeliveryLabel();
+    const okDelivery = !!deliveryLabel;
+    document.getElementById('f-delivery').classList.toggle('error', !okDelivery);
 
-            const paymentInput = document.querySelector('input[name="payment"]:checked');
-            const paymentMethod = paymentInput ? paymentInput.value : 'cod';
-            const paymentLabel = paymentMethod === 'bank' ?
-                ('تحويل بنكي — ' + BANKS[currentBank].name) :
-                'الدفع عند الاستلام';
+    const paymentInput = document.querySelector('input[name="payment"]:checked');
+    const paymentMethod = paymentInput ? paymentInput.value : 'cod';
+    const paymentLabel = paymentMethod === 'bank' ?
+        ('تحويل بنكي — ' + BANKS[currentBank].name) :
+        'الدفع عند الاستلام';
 
-            let okReceipt = true;
-            if (paymentMethod === 'bank') {
-                okReceipt = !!uploadedReceipt;
-                document.getElementById('receiptErr').classList.toggle('show', !okReceipt);
-            }
+    let okReceipt = true;
+    if (paymentMethod === 'bank') {
+        okReceipt = !!uploadedReceipt;
+        document.getElementById('receiptErr').classList.toggle('show', !okReceipt);
+    }
 
-            if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) {
-                const firstError = document.querySelector('.field.error');
-                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
+    if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) {
+        const firstError = document.querySelector('.field.error');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
 
-            const submitBtn = document.getElementById('submitOrderBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ جارٍ إرسال الطلب...';
+    const submitBtn = document.getElementById('submitOrderBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ جارٍ إرسال الطلب...';
 
-            const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
-            const items = cart.map(i => ({
-                id: i.id,
-                name: i.name,
-                variant: i.variantLabel,
-                qty: i.qty,
-                unitTotal: i.unitTotal,
-                lineTotal: i.lineTotal
-            }));
-            const total = cartTotal();
+    const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
+    const items = cart.map(i => ({
+        id: i.id,
+        name: i.name,
+        variant: i.variantLabel,
+        qty: i.qty,
+        unitTotal: i.unitTotal,
+        lineTotal: i.lineTotal
+    }));
+    const total = cartTotal();
 
-            const noteParts = [
-                'وقت التسليم: ' + deliveryLabel,
-                'طريقة الدفع: ' + paymentLabel
-            ];
-            if (paymentMethod === 'bank' && uploadedReceipt) {
-                noteParts.push('وصل التحويل: ' + uploadedReceipt.name + ' (' + Math.round(uploadedReceipt.size / 1024) +
-                    'KB)');
-            }
+    const noteParts = [
+        'وقت التسليم: ' + deliveryLabel,
+        'طريقة الدفع: ' + paymentLabel
+    ];
+    if (paymentMethod === 'bank' && uploadedReceipt) {
+        noteParts.push('وصل التحويل: ' + uploadedReceipt.name + ' (' + Math.round(uploadedReceipt.size / 1024) +
+            'KB)');
+    }
 
-            const orderData = {
-                order_code: orderCode,
-                customer_name: name,
-                phone: phone,
-                city: address.split(/[،,]/)[0].trim() || '—',
-                address: address,
-                note: noteParts.join(' | '),
-                items: items,
-                total: total,
-                status: 'جديد'
-            };
+    const orderData = {
+        order_code: orderCode,
+        customer_name: name,
+        phone: phone,
+        city: address.split(/[،,]/)[0].trim() || '—',
+        address: address,
+        note: noteParts.join(' | '),
+        items: items,
+        total: total,
+        status: 'جديد'
+    };
 
-            try {
-                if (supabase) {
-                    const { error } = await supabase.from('orders').insert([orderData]);
-                    if (error) throw error;
-                } else {
-                    throw new Error('قاعدة البيانات غير متاحة');
-                }
-
-                document.getElementById('orderId').textContent = orderCode;
-                const totalLbl = paymentMethod === 'bank' ? 'الإجمالي (تحويل بنكي)' : 'الإجمالي (عند الاستلام)';
-                document.getElementById('confirmSummary').innerHTML = `
-                    <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
-                    <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
-                    <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
-                    <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
-                    <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
-                    <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
-                        <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
-                    </div>`;
-
-                const orderText = buildOrderMessage(orderCode, {
-                    name,
-                    phone,
-                    address,
-                    deliveryLabel,
-                    paymentLabel,
-                    receipt: uploadedReceipt
-                });
-                const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
-                document.getElementById('whatsappBtn').href = waLink;
-
-                closeModal(checkoutModal);
-                closeDrawer();
-                openModal(confirmModal);
-
-                cart = [];
-                saveCart();
-                renderCart();
-                updateAllAddButtons();
-                this.reset();
-                ['name', 'phone', 'address', 'delivery'].forEach(f => {
-                    const el = document.getElementById('f-' + f);
-                    if (el) el.classList.remove('error');
-                });
-                resetPaymentUI();
-
-            } catch (err) {
-                alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
-                console.error('Order save error:', err);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = paymentMethod === 'bank' ? 'تأكيد الطلب — تحويل بنكي' :
-                    'تأكيد الطلب — الدفع عند الاستلام';
-            }
-        });
-
-        function buildOrderMessage(orderId, customer) {
-            const lines = [
-                `🛒 *طلب جديد ${orderId}*`,
-                `👤 الاسم: ${customer.name}`,
-                `📞 الهاتف: ${customer.phone}`,
-                `📍 العنوان: ${customer.address}`,
-                `🕒 وقت التسليم: ${customer.deliveryLabel || '—'}`,
-                `💳 طريقة الدفع: ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
-                ``,
-                `*المنتجات:*`,
-                ...cart.map(i => `• ${i.name} (${i.variantLabel}${i.qty > 1 ? ' ×' + i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
-                ``,
-                `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`
-            ];
-            if (customer.receipt) {
-                lines.push('', `📎 وصل التحويل: ${customer.receipt.name}`);
-            }
-            return lines.join('\n');
+    try {
+        // 1. حفظ الطلب في قاعدة البيانات (اختياري)
+        if (supabase) {
+            const { error } = await supabase.from('orders').insert([orderData]);
+            if (error) throw error;
         }
 
+        // 2. بناء رسالة واتساب
+        const orderText = buildOrderMessage(orderCode, {
+            name,
+            phone,
+            address,
+            deliveryLabel,
+            paymentLabel,
+            receipt: uploadedReceipt
+        }, items, total);
+
+        // 3. إرسال تلقائي إلى واتساب
+        const whatsappNumber = '212704274830'; // رقم المتجر
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderText)}`;
+        
+        // فتح واتساب في نافذة جديدة تلقائياً
+        window.open(whatsappUrl, '_blank');
+        
+        // أو استخدام رابط مباشر للواتساب ويب
+        // window.location.href = whatsappUrl;
+
+        // 4. تحديث واجهة المستخدم
+        document.getElementById('orderId').textContent = orderCode;
+        const totalLbl = paymentMethod === 'bank' ? 'الإجمالي (تحويل بنكي)' : 'الإجمالي (عند الاستلام)';
+        document.getElementById('confirmSummary').innerHTML = `
+            <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
+            <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
+            <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
+            <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
+            <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
+            <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
+                <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
+            </div>`;
+
+        // 5. تحديث رابط زر واتساب اليدوي (كخيار احتياطي)
+        document.getElementById('whatsappBtn').href = whatsappUrl;
+
+        // 6. إغلاق النوافذ وفتح نافذة التأكيد
+        closeModal(checkoutModal);
+        closeDrawer();
+        openModal(confirmModal);
+
+        // 7. تنظيف الحالة
+        cart = [];
+        saveCart();
+        renderCart();
+        updateAllAddButtons();
+        this.reset();
+        ['name', 'phone', 'address', 'delivery'].forEach(f => {
+            const el = document.getElementById('f-' + f);
+            if (el) el.classList.remove('error');
+        });
+        resetPaymentUI();
+
+    } catch (err) {
+        console.error('Order save error:', err);
+        
+        // حتى لو فشل الحفظ في قاعدة البيانات، نقوم بإرسال الواتساب
+        const orderText = buildOrderMessage(orderCode, {
+            name,
+            phone,
+            address,
+            deliveryLabel,
+            paymentLabel,
+            receipt: uploadedReceipt
+        }, items, total);
+        
+        const whatsappNumber = '212704274830';
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderText)}`;
+        window.open(whatsappUrl, '_blank');
+        
+        // عرض رسالة نجاح بديلة
+        alert('✅ تم تجهيز طلبك وسيتم فتح واتساب لإرساله');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = paymentMethod === 'bank' ? 'تأكيد الطلب — تحويل بنكي' :
+            'تأكيد الطلب — الدفع عند الاستلام';
+    }
+});
+
+        function buildOrderMessage(orderId, customer, items, total) {
+    const lines = [
+        `🛒 *طلب جديد ${orderId}*`,
+        `━━━━━━━━━━━━━━━`,
+        ``,
+        `👤 *معلومات العميل:*`,
+        `الاسم: ${customer.name}`,
+        `الهاتف: ${customer.phone}`,
+        `العنوان: ${customer.address}`,
+        ``,
+        `🕒 *وقت التسليم:* ${customer.deliveryLabel || '—'}`,
+        `💳 *طريقة الدفع:* ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
+        ``,
+        `📦 *المنتجات المطلوبة:*`,
+        ...items.map(i => `• ${i.name} (${i.variantLabel}${i.qty > 1 ? ' ×' + i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
+        ``,
+        `━━━━━━━━━━━━━━━`,
+        `💰 *الإجمالي:* ${fmt(total)} ${CURRENCY}`,
+        ``,
+        `📍 *المدينة:* ${customer.address.split(/[،,]/)[0].trim() || '—'}`,
+        ``,
+        `🙏 شكراً لثقتكم في خضرة!`
+    ];
+    
+    if (customer.receipt) {
+        lines.push(``, `📎 *وصل التحويل:* ${customer.receipt.name}`);
+    }
+    
+    return lines.join('\n');
+}
+             
         // ── Dropdown menu ──
         const menuWrap = document.getElementById('menuWrap');
         const menuBtn = document.getElementById('menuBtn');
@@ -3364,4 +3404,3 @@
 </script>
 </body>
 </html>
-```
