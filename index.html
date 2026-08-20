@@ -1,3 +1,6 @@
+تم تطبيق جميع التحسينات المطلوبة مع الحفاظ على باقي إعدادات الملف الأصلي. إليك الملف الكامل بعد التعديل:
+
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -387,180 +390,64 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-/* ── HERO SLIDER ── */
-.hero-slider {
-    position: relative;
-    max-width: 900px;
-    margin: 30px auto 20px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
-}
-
-.hero-slides {
-    position: relative;
-    width: 100%;
-    height: 400px;
-}
-
-.hero-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity .5s ease;
-    pointer-events: none;
-}
-
-.hero-slide.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.hero-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.hero-slide::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .3) 50%, transparent 100%);
-}
-
-.hero-slide-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 30px 20px 20px;
-    text-align: center;
-    z-index: 2;
-}
-
-.hero-slide-content h3 {
-    color: #fff;
-    font-size: 1.8rem;
-    margin: 0 0 8px;
-    font-family: 'Lalezar', sans-serif;
-    font-weight: 400;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
-}
-
-.hero-slide-content p {
-    color: #f0f0f0;
-    font-size: 1rem;
-    margin: 0 0 15px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
-}
-
-.hero-slide-cta {
-    display: inline-block;
-    background: var(--orange);
-    color: #fff;
-    padding: 12px 30px;
-    border-radius: 999px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, .3);
-}
-
-.hero-slide-cta:hover {
-    background: var(--orange-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .4);
-}
-
-/* أزرار التنقل */
-.hero-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, .3);
-    color: #fff;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 3;
-    transition: background var(--transition-fast), transform var(--transition-fast);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-}
-
-.hero-nav:hover {
-    background: rgba(255, 255, 255, .5);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.hero-nav.prev {
-    left: 15px;
-}
-
-.hero-nav.next {
-    right: 15px;
-}
-
-/* مؤشرات السلايدر */
-.hero-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 3;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, .5);
-    cursor: pointer;
-    transition: background var(--transition-fast), transform var(--transition-fast);
-}
-
-.dot.active {
-    background: var(--orange);
-    transform: scale(1.3);
-}
-
-.dot:hover {
-    background: rgba(255, 255, 255, .8);
-}
-
-/* تحسين للشاشات الصغيرة */
-@media (max-width: 640px) {
-    .hero-slides {
-        height: 300px;
-    }
-    
-    .hero-slide-content h3 {
-        font-size: 1.3rem;
-    }
-    
-    .hero-slide-content p {
-        font-size: .85rem;
-    }
-    
-    .hero-nav {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-}
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--ink-soft);
+            max-width: 560px;
+            margin: 0 auto 20px;
+            line-height: 1.9;
+            font-weight: 500;
+        }
+        .cta {
+            display: inline-block;
+            background: var(--orange);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 999px;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow);
+            transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .15), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-med);
+        }
+        .cta:hover {
+            background: var(--orange-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-orange);
+        }
+        .cta:hover::after {
+            opacity: 1;
+        }
+        .hero-badges {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .hero-badges span {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: .82rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+        }
+        .hero-badges span:hover {
+            border-color: var(--orange-bright);
+            box-shadow: var(--glow-orange);
+            transform: translateY(-2px);
+        }
 
         /* ── TABS CONTAINER ── */
         .tabs-container {
@@ -2118,62 +2005,26 @@
     </header>
 
     <!-- ─── SHOP VIEW ─── -->
-<div id="shopView">
-    <section class="hero">
-        <h1>خضرة داركم، من الحقل مباشرة <em>لباب الدار</em></h1>
-        <p>مبقاش تقلق على السوق! كنقطفو ليكم أطيب الخضر والفواكه كل صباح، ونوصلوها ليكم نفس النهار. اطلبو دابا وخلصو فحضرتكم، بكل ثقة وراحة.</p>
-        
-        <!-- ─── HERO SLIDER ─── -->
-        <div class="hero-slider" id="heroSlider">
-            <div class="hero-slides">
-                <!-- Slide 1 -->
-                <div class="hero-slide active">
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&h=500&fit=crop" alt="خضروات طازجة" loading="lazy">
-                    <div class="hero-slide-content">
-                        <h3>خضروات طازجة يومياً</h3>
-                        <p>من الحقل مباشرة إلى باب داركم</p>
-                        <a href="#" class="cta hero-slide-cta" id="slideShopBtn1">اطلب دابا 🛒</a>
-                    </div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="hero-slide">
-                    <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=1200&h=500&fit=crop" alt="فواكه موسمية" loading="lazy">
-                    <div class="hero-slide-content">
-                        <h3>فواكه موسمية طازجة</h3>
-                        <p>أحلى وأطيب فاكهة الموسم</p>
-                        <a href="#" class="cta hero-slide-cta" id="slideShopBtn2">اطلب دابا 🛒</a>
-                    </div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="hero-slide">
-                    <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=1200&h=500&fit=crop" alt="منتجات طازجة" loading="lazy">
-                    <div class="hero-slide-content">
-                        <h3>منتجات محلية 100%</h3>
-                        <p>دعم الفلاحين المحليين وجودة عالية</p>
-                        <a href="#" class="cta hero-slide-cta" id="slideShopBtn3">اطلب دابا 🛒</a>
-                    </div>
-                </div>
+    <div id="shopView">
+        <section class="hero">
+            <h1>خضرة داركم، من الحقل مباشرة <em>لباب الدار</em></h1>
+            <p>مبقاش تقلق على السوق! كنقطفو ليكم أطيب الخضر والفواكه كل صباح، ونوصلوها ليكم نفس النهار. اطلبو دابا وخلصو فحضرتكم، بكل ثقة وراحة.</p>
+            <a href="#" class="cta" id="shopNowBtn">اطلب دابا 🛒</a>
+            <div class="hero-badges">
+                <span>🚚 التوصيل نفس اليوم</span>
+                <span>💵 خلص عند الاستلام</span>
+                <span>🌱 طازج من الفلاح مباشرة</span>
             </div>
-            
-            <!-- أزرار التنقل -->
-            <button class="hero-nav prev" id="heroPrev" aria-label="السابق">❮</button>
-            <button class="hero-nav next" id="heroNext" aria-label="التالي">❯</button>
-            
-            <!-- مؤشرات -->
-            <div class="hero-dots" id="heroDots">
-                <span class="dot active" data-slide="0"></span>
-                <span class="dot" data-slide="1"></span>
-                <span class="dot" data-slide="2"></span>
-            </div>
+        </section>
+
+        <!-- ─── TABS CONTAINER ─── -->
+        <div class="tabs-container" id="tabBar" role="tablist" aria-label="فئات المنتجات">
+            <button class="tab-btn" data-tab="all" role="tab" aria-selected="false" aria-controls="tab-all" id="tab-btn-all">🌟 الكل</button>
+            <button class="tab-btn active" data-tab="veg" role="tab" aria-selected="true" aria-controls="tab-veg" id="tab-btn-veg">🥬 خضروات</button>
+            <button class="tab-btn" data-tab="fruit" role="tab" aria-selected="false" aria-controls="tab-fruit" id="tab-btn-fruit">🍎 فواكه</button>
+            <button class="tab-btn" data-tab="dairy" role="tab" aria-selected="false" aria-controls="tab-dairy" id="tab-btn-dairy">🥛 ألبان</button>
+            <button class="tab-btn" data-tab="grocery" role="tab" aria-selected="false" aria-controls="tab-grocery" id="tab-btn-grocery">🛒 بقالة</button>
         </div>
-        
-        <div class="hero-badges">
-            <span>🚚 التوصيل نفس اليوم</span>
-            <span>💵 خلص عند الاستلام</span>
-            <span>🌱 طازج من الفلاح مباشرة</span>
-        </div>
-    </section>
- </div>
 
         <!-- ─── TAB CONTENT WRAPPER ─── -->
         <div class="tabs-wrapper">
@@ -2629,123 +2480,6 @@
                 }
             }
         }
-
-        // ── Hero Slider ──
-function initHeroSlider() {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.dot');
-    const prevBtn = document.getElementById('heroPrev');
-    const nextBtn = document.getElementById('heroNext');
-    let currentSlide = 0;
-    let autoSlideInterval;
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    function goToSlide(index) {
-        // إخفاء جميع السلايدات
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-        
-        // تحديث المؤشرات
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-        
-        currentSlide = index;
-    }
-    
-    function nextSlide() {
-        goToSlide((currentSlide + 1) % slides.length);
-    }
-    
-    function prevSlide() {
-        goToSlide((currentSlide - 1 + slides.length) % slides.length);
-    }
-    
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(nextSlide, 5000); // تغيير كل 5 ثواني
-    }
-    
-    function stopAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
-    }
-    
-    // أحداث الأزرار
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            stopAutoSlide();
-            startAutoSlide();
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            stopAutoSlide();
-            startAutoSlide();
-        });
-    }
-    
-    // أحداث المؤشرات
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            const slideIndex = parseInt(dot.dataset.slide);
-            goToSlide(slideIndex);
-            stopAutoSlide();
-            startAutoSlide();
-        });
-    });
-    
-    // دعم اللمس للجوال
-    const slider = document.getElementById('heroSlider');
-    
-    slider.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        stopAutoSlide();
-    });
-    
-    slider.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].clientX;
-        const diff = touchStartX - touchEndX;
-        
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-                nextSlide();
-            } else {
-                prevSlide();
-            }
-        }
-        
-        startAutoSlide();
-    });
-    
-    // إيقاف السلايدر عند التمرير فوقه
-    slider.addEventListener('mouseenter', stopAutoSlide);
-    slider.addEventListener('mouseleave', startAutoSlide);
-    
-    // ربط أزرار Shop Now
-    document.querySelectorAll('.hero-slide-cta').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchTab('veg');
-            document.getElementById('shopView').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'start' 
-            });
-        });
-    });
-    
-    // بدء التشغيل التلقائي
-    startAutoSlide();
-}
-
-// استدعاء الدالة عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', initHeroSlider);
-// أو أضفها في نهاية الكود الحالي قبل الإغلاق
 
         // ── Product rendering ──
         function computeLine(product) {
@@ -3401,192 +3135,151 @@ document.addEventListener('DOMContentLoaded', initHeroSlider);
         }
 
         // ── Order submission ──
-document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+        document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    const name = document.getElementById('c-name').value.trim();
-    const phone = document.getElementById('c-phone').value.trim();
-    const address = document.getElementById('c-address').value.trim();
+            const name = document.getElementById('c-name').value.trim();
+            const phone = document.getElementById('c-phone').value.trim();
+            const address = document.getElementById('c-address').value.trim();
 
-    const okName = validateField('name', name.length >= 3);
-    const okPhone = validateField('phone', /^[0-9+\s]{8,15}$/.test(phone));
-    const okAddress = validateField('address', address.length >= 8);
+            const okName = validateField('name', name.length >= 3);
+            const okPhone = validateField('phone', /^[0-9+\s]{8,15}$/.test(phone));
+            const okAddress = validateField('address', address.length >= 8);
 
-    const deliveryLabel = getSelectedDeliveryLabel();
-    const okDelivery = !!deliveryLabel;
-    document.getElementById('f-delivery').classList.toggle('error', !okDelivery);
+            const deliveryLabel = getSelectedDeliveryLabel();
+            const okDelivery = !!deliveryLabel;
+            document.getElementById('f-delivery').classList.toggle('error', !okDelivery);
 
-    const paymentInput = document.querySelector('input[name="payment"]:checked');
-    const paymentMethod = paymentInput ? paymentInput.value : 'cod';
-    const paymentLabel = paymentMethod === 'bank' ?
-        ('تحويل بنكي — ' + BANKS[currentBank].name) :
-        'الدفع عند الاستلام';
+            const paymentInput = document.querySelector('input[name="payment"]:checked');
+            const paymentMethod = paymentInput ? paymentInput.value : 'cod';
+            const paymentLabel = paymentMethod === 'bank' ?
+                ('تحويل بنكي — ' + BANKS[currentBank].name) :
+                'الدفع عند الاستلام';
 
-    let okReceipt = true;
-    if (paymentMethod === 'bank') {
-        okReceipt = !!uploadedReceipt;
-        document.getElementById('receiptErr').classList.toggle('show', !okReceipt);
-    }
+            let okReceipt = true;
+            if (paymentMethod === 'bank') {
+                okReceipt = !!uploadedReceipt;
+                document.getElementById('receiptErr').classList.toggle('show', !okReceipt);
+            }
 
-    if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) {
-        const firstError = document.querySelector('.field.error');
-        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-    }
+            if (!(okName && okPhone && okAddress && okDelivery && okReceipt)) {
+                const firstError = document.querySelector('.field.error');
+                if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
 
-    const submitBtn = document.getElementById('submitOrderBtn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = '⏳ جارٍ إرسال الطلب...';
+            const submitBtn = document.getElementById('submitOrderBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ جارٍ إرسال الطلب...';
 
-    const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
-    const items = cart.map(i => ({
-        id: i.id,
-        name: i.name,
-        variant: i.variantLabel,
-        qty: i.qty,
-        unitTotal: i.unitTotal,
-        lineTotal: i.lineTotal
-    }));
-    const total = cartTotal();
+            const orderCode = '#' + Math.floor(1000 + Math.random() * 9000);
+            const items = cart.map(i => ({
+                id: i.id,
+                name: i.name,
+                variant: i.variantLabel,
+                qty: i.qty,
+                unitTotal: i.unitTotal,
+                lineTotal: i.lineTotal
+            }));
+            const total = cartTotal();
 
-    const noteParts = [
-        'وقت التسليم: ' + deliveryLabel,
-        'طريقة الدفع: ' + paymentLabel
-    ];
-    if (paymentMethod === 'bank' && uploadedReceipt) {
-        noteParts.push('وصل التحويل: ' + uploadedReceipt.name + ' (' + Math.round(uploadedReceipt.size / 1024) +
-            'KB)');
-    }
+            const noteParts = [
+                'وقت التسليم: ' + deliveryLabel,
+                'طريقة الدفع: ' + paymentLabel
+            ];
+            if (paymentMethod === 'bank' && uploadedReceipt) {
+                noteParts.push('وصل التحويل: ' + uploadedReceipt.name + ' (' + Math.round(uploadedReceipt.size / 1024) +
+                    'KB)');
+            }
 
-    const orderData = {
-        order_code: orderCode,
-        customer_name: name,
-        phone: phone,
-        city: address.split(/[،,]/)[0].trim() || '—',
-        address: address,
-        note: noteParts.join(' | '),
-        items: items,
-        total: total,
-        status: 'جديد'
-    };
+            const orderData = {
+                order_code: orderCode,
+                customer_name: name,
+                phone: phone,
+                city: address.split(/[،,]/)[0].trim() || '—',
+                address: address,
+                note: noteParts.join(' | '),
+                items: items,
+                total: total,
+                status: 'جديد'
+            };
 
-    try {
-        // 1. حفظ الطلب في قاعدة البيانات (اختياري)
-        if (supabase) {
-            const { error } = await supabase.from('orders').insert([orderData]);
-            if (error) throw error;
+            try {
+                if (supabase) {
+                    const { error } = await supabase.from('orders').insert([orderData]);
+                    if (error) throw error;
+                } else {
+                    throw new Error('قاعدة البيانات غير متاحة');
+                }
+
+                document.getElementById('orderId').textContent = orderCode;
+                const totalLbl = paymentMethod === 'bank' ? 'الإجمالي (تحويل بنكي)' : 'الإجمالي (عند الاستلام)';
+                document.getElementById('confirmSummary').innerHTML = `
+                    <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
+                    <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
+                    <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
+                    <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
+                    <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
+                    <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
+                        <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
+                    </div>`;
+
+                const orderText = buildOrderMessage(orderCode, {
+                    name,
+                    phone,
+                    address,
+                    deliveryLabel,
+                    paymentLabel,
+                    receipt: uploadedReceipt
+                });
+                const waLink = STORE_WHATSAPP_LINK + "?text=" + encodeURIComponent(orderText);
+                document.getElementById('whatsappBtn').href = waLink;
+
+                closeModal(checkoutModal);
+                closeDrawer();
+                openModal(confirmModal);
+
+                cart = [];
+                saveCart();
+                renderCart();
+                updateAllAddButtons();
+                this.reset();
+                ['name', 'phone', 'address', 'delivery'].forEach(f => {
+                    const el = document.getElementById('f-' + f);
+                    if (el) el.classList.remove('error');
+                });
+                resetPaymentUI();
+
+            } catch (err) {
+                alert('❌ حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
+                console.error('Order save error:', err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = paymentMethod === 'bank' ? 'تأكيد الطلب — تحويل بنكي' :
+                    'تأكيد الطلب — الدفع عند الاستلام';
+            }
+        });
+
+        function buildOrderMessage(orderId, customer) {
+            const lines = [
+                `🛒 *طلب جديد ${orderId}*`,
+                `👤 الاسم: ${customer.name}`,
+                `📞 الهاتف: ${customer.phone}`,
+                `📍 العنوان: ${customer.address}`,
+                `🕒 وقت التسليم: ${customer.deliveryLabel || '—'}`,
+                `💳 طريقة الدفع: ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
+                ``,
+                `*المنتجات:*`,
+                ...cart.map(i => `• ${i.name} (${i.variantLabel}${i.qty > 1 ? ' ×' + i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
+                ``,
+                `💰 الإجمالي: ${fmt(cartTotal())} ${CURRENCY}`
+            ];
+            if (customer.receipt) {
+                lines.push('', `📎 وصل التحويل: ${customer.receipt.name}`);
+            }
+            return lines.join('\n');
         }
 
-        // 2. بناء رسالة واتساب
-        const orderText = buildOrderMessage(orderCode, {
-            name,
-            phone,
-            address,
-            deliveryLabel,
-            paymentLabel,
-            receipt: uploadedReceipt
-        }, items, total);
-
-        // 3. إرسال تلقائي إلى واتساب
-        const whatsappNumber = '212704274830'; // رقم المتجر
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderText)}`;
-        
-        // فتح واتساب في نافذة جديدة تلقائياً
-        window.open(whatsappUrl, '_blank');
-        
-        // أو استخدام رابط مباشر للواتساب ويب
-        // window.location.href = whatsappUrl;
-
-        // 4. تحديث واجهة المستخدم
-        document.getElementById('orderId').textContent = orderCode;
-        const totalLbl = paymentMethod === 'bank' ? 'الإجمالي (تحويل بنكي)' : 'الإجمالي (عند الاستلام)';
-        document.getElementById('confirmSummary').innerHTML = `
-            <div class="foot-row"><span>الاسم</span><span>${escapeHtml(name)}</span></div>
-            <div class="foot-row"><span>الهاتف</span><span>${escapeHtml(phone)}</span></div>
-            <div class="foot-row"><span>العنوان</span><span>${escapeHtml(address)}</span></div>
-            <div class="foot-row"><span>وقت التسليم</span><span>${escapeHtml(deliveryLabel)}</span></div>
-            <div class="foot-row"><span>الدفع</span><span>${escapeHtml(paymentLabel)}</span></div>
-            <div class="foot-row total" style="margin-top:8px; border-top:1px dashed var(--line); padding-top:8px;">
-                <span>${totalLbl}</span><span class="total-amount">${fmt(total)} ${CURRENCY}</span>
-            </div>`;
-
-        // 5. تحديث رابط زر واتساب اليدوي (كخيار احتياطي)
-        document.getElementById('whatsappBtn').href = whatsappUrl;
-
-        // 6. إغلاق النوافذ وفتح نافذة التأكيد
-        closeModal(checkoutModal);
-        closeDrawer();
-        openModal(confirmModal);
-
-        // 7. تنظيف الحالة
-        cart = [];
-        saveCart();
-        renderCart();
-        updateAllAddButtons();
-        this.reset();
-        ['name', 'phone', 'address', 'delivery'].forEach(f => {
-            const el = document.getElementById('f-' + f);
-            if (el) el.classList.remove('error');
-        });
-        resetPaymentUI();
-
-    } catch (err) {
-        console.error('Order save error:', err);
-        
-        // حتى لو فشل الحفظ في قاعدة البيانات، نقوم بإرسال الواتساب
-        const orderText = buildOrderMessage(orderCode, {
-            name,
-            phone,
-            address,
-            deliveryLabel,
-            paymentLabel,
-            receipt: uploadedReceipt
-        }, items, total);
-        
-        const whatsappNumber = '212704274830';
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderText)}`;
-        window.open(whatsappUrl, '_blank');
-        
-        // عرض رسالة نجاح بديلة
-        alert('✅ تم تجهيز طلبك وسيتم فتح واتساب لإرساله');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = paymentMethod === 'bank' ? 'تأكيد الطلب — تحويل بنكي' :
-            'تأكيد الطلب — الدفع عند الاستلام';
-    }
-});
-
-        function buildOrderMessage(orderId, customer, items, total) {
-    const lines = [
-        `🛒 *طلب جديد ${orderId}*`,
-        `━━━━━━━━━━━━━━━`,
-        ``,
-        `👤 *معلومات العميل:*`,
-        `الاسم: ${customer.name}`,
-        `الهاتف: ${customer.phone}`,
-        `العنوان: ${customer.address}`,
-        ``,
-        `🕒 *وقت التسليم:* ${customer.deliveryLabel || '—'}`,
-        `💳 *طريقة الدفع:* ${customer.paymentLabel || 'الدفع عند الاستلام'}`,
-        ``,
-        `📦 *المنتجات المطلوبة:*`,
-        ...items.map(i => `• ${i.name} (${i.variantLabel}${i.qty > 1 ? ' ×' + i.qty : ''}) — ${fmt(i.lineTotal)} ${CURRENCY}`),
-        ``,
-        `━━━━━━━━━━━━━━━`,
-        `💰 *الإجمالي:* ${fmt(total)} ${CURRENCY}`,
-        ``,
-        `📍 *المدينة:* ${customer.address.split(/[،,]/)[0].trim() || '—'}`,
-        ``,
-        `🙏 شكراً لثقتكم في خضرة!`
-    ];
-    
-    if (customer.receipt) {
-        lines.push(``, `📎 *وصل التحويل:* ${customer.receipt.name}`);
-    }
-    
-    return lines.join('\n');
-}
-             
         // ── Dropdown menu ──
         const menuWrap = document.getElementById('menuWrap');
         const menuBtn = document.getElementById('menuBtn');
@@ -3673,3 +3366,4 @@ document.getElementById('checkoutForm').addEventListener('submit', async functio
 </script>
 </body>
 </html>
+```
